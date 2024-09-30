@@ -1,0 +1,62 @@
+[
+    {
+        "id": 1,
+        "name": "Veredas rotas",
+        "url_svg": "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/iconos%2Fcallescontaminadas.svg?alt=media&token=630fcf1b-c4f3-489b-bda2-1bb29ea3be65" 
+    },
+    {
+        "id": 2,
+        "name": "Calles contaminadas",
+        "url_svg": "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/iconos%2Fcallescontaminadas.svg?alt=media&token=630fcf1b-c4f3-489b-bda2-1bb29ea3be65"
+    },
+    {
+        "id": 3,
+        "name": "Poste de Luces apagadas",
+        "url_svg": "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/iconos%2Fcallescontaminadas.svg?alt=media&token=630fcf1b-c4f3-489b-bda2-1bb29ea3be65" 
+    },
+    {
+        "id": 4,
+        "name": "Construcción sin licencia",
+        "url_svg": "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/iconos%2Fcallescontaminadas.svg?alt=media&token=630fcf1b-c4f3-489b-bda2-1bb29ea3be65"
+    },
+    {
+        "id": 5,
+        "name": "Comercio ilegal",
+        "url_svg": "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/iconos%2Fcallescontaminadas.svg?alt=media&token=630fcf1b-c4f3-489b-bda2-1bb29ea3be65"
+    },
+    {
+        "id": 6,
+        "name": "Invasión no autorizada de lugares públicos",
+        "url_svg": "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/iconos%2Fcallescontaminadas.svg?alt=media&token=630fcf1b-c4f3-489b-bda2-1bb29ea3be65"
+    },
+    {
+        "id": 7,
+        "name": "Árboles obstruyen la circulación",
+        "url_svg": "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/iconos%2Fcallescontaminadas.svg?alt=media&token=630fcf1b-c4f3-489b-bda2-1bb29ea3be65"
+    },
+    {
+        "id": 8,
+        "name": "Vehiculo abandonado",
+        "url_svg": "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/iconos%2Fcallescontaminadas.svg?alt=media&token=630fcf1b-c4f3-489b-bda2-1bb29ea3be65"
+    },
+    {
+        "id": 9,
+        "name": "Mascota perdida",
+        "url_svg": "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/iconos%2Fcallescontaminadas.svg?alt=media&token=630fcf1b-c4f3-489b-bda2-1bb29ea3be65"
+    },
+    {
+        "id": 10,
+        "name": "Inmueble abandonado",
+        "url_svg": "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/iconos%2Fcallescontaminadas.svg?alt=media&token=630fcf1b-c4f3-489b-bda2-1bb29ea3be65"
+    },
+    {
+        "id": 11,
+        "name": "Propiedad en mal estado",
+        "url_svg": "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/iconos%2Fcallescontaminadas.svg?alt=media&token=630fcf1b-c4f3-489b-bda2-1bb29ea3be65"
+    },
+    {
+        "id": 12,
+        "name": "Otros",
+        "url_svg": "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/iconos%2Fcallescontaminadas.svg?alt=media&token=630fcf1b-c4f3-489b-bda2-1bb29ea3be65"
+    }
+]
