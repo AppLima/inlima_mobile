@@ -55,7 +55,7 @@ Para asegurarte de que todo está configurado correctamente:
    flutter doctor
 
 ## Diagrama de despliegue 🌐
-![Diagrama de despliegue](./assets/New%20folder/diagramadedespliegue.png)
+![Diagrama de despliegue](./assets/readme_images/diagramadedespliegue.png)
 
 ## Requerimientos no funcionales 📋
 ## RENDIMIENTO
@@ -130,33 +130,33 @@ Para asegurarte de que todo está configurado correctamente:
 
 
 ## Diagrama relacional
-![Diagrama relacional](./assets/image.png)
+![Diagrama relacional](./assets/readme_images/image.png)
 
 ## Diagrama de casos de uso 🛠️
-![Diagrama de casos de uso](./assets/diagrama_casos_uso.png)
+![Diagrama de casos de uso](./assets/readme_images/diagrama_casos_uso.png)
 
 ## Descripción de casos de uso 📝
 
 ### 1. Registro de Usuario
 - **RF1:** El sistema debe permitir al ciudadano registrarse proporcionando correo, contraseña, DNI, nombre, apellidos y distrito actual.
 
-![Diagrama de casos de uso](./assets/registrarseasd.png)
-![Diagrama de casos de uso](./assets/registrarse%20Confirmaciónasd.png)
+![Diagrama de casos de uso](./assets/readme_images/registrarseasd.png)
+![Diagrama de casos de uso](./assets/readme_images/registrarse%20Confirmaciónasd.png)
 
 ### 2. Autenticación de Usuario
 - **RF2:** El sistema debe permitir al usuario iniciar sesión validando el correo y la contraseña proporcionados con los datos de la base de datos.
 
-![Diagrama de casos de uso](/assets/iniciar%20sesionasd.png)
+![Diagrama de casos de uso](/assets/readme_images/iniciar%20sesionasd.png)
 
 - **RF3:** El sistema debe permitir al usuario iniciar sesión utilizando identificación facial.
 
-![Diagrama de casos de uso](./assets/Iniciar%20sesion%20-%20Identificadorasd.png)
-![Diagrama de casos de uso](/assets/Iniciar%20sesion%20-%20Identificador%20Registroasd.png)
+![Diagrama de casos de uso](./assets/readme_images/Iniciar%20sesion%20-%20Identificadorasd.png)
+![Diagrama de casos de uso](/assets/readme_images/Iniciar%20sesion%20-%20Identificador%20Registroasd.png)
 
 - **RF4:** El sistema debe proporcionar una opción de recuperación de contraseña. Al hacer clic en "Olvidé mi contraseña", el usuario debe poder ingresar su correo electrónico para recibir un enlace de restablecimiento de contraseña.
 
-![Diagrama de casos de uso](/assets/olvidaste%20tu%20contraseñaasd.png)
-![Diagrama de casos de uso](/assets/olvidaste%20tu%20contraseña%20confirmacionasd.png)
+![Diagrama de casos de uso](/assets/readme_images/olvidaste%20tu%20contraseñaasd.png)
+![Diagrama de casos de uso](/assets/readme_images/olvidaste%20tu%20contraseña%20confirmacionasd.png)
 
 ### 3. Acceso al Menú Principal
 - **RF5:** El sistema debe llevar al usuario al **menú principal** después de iniciar sesión, donde podrá acceder a las siguientes opciones:
@@ -165,78 +165,78 @@ Para asegurarte de que todo está configurado correctamente:
    - **Sondeos:** Acceso a encuestas y votaciones.
    - **Historial:** Acceso al historial de quejas propio del usuario (en caso sea ciudadano).
  
-![Diagrama de casos de uso](/assets/Homeasd.png)
-![Diagrama de casos de uso](/assets/Home-adminasd.png)
+![Diagrama de casos de uso](/assets/readme_images/Homeasd.png)
+![Diagrama de casos de uso](/assets/readme_images/Home-adminasd.png)
 
 ### 4. Gestión de Quejas y Sugerencias
 - **RF6:** El sistema debe permitir al ciudadano seleccionar el tipo de queja o sugerencia desde una lista de opciones predefinidas o la opción 'Otros'.
 
-![Diagrama de casos de uso](/assets/Quejas%204_usuarioasd.png)
+![Diagrama de casos de uso](/assets/readme_images/Quejas%204_usuarioasd.png)
 
 - **RF7:** El sistema debe permitir al ciudadano detallar el problema o sugerencia relacionado con el tipo seleccionado.
 
-![Diagrama de casos de uso](/assets/Quejas%203.1asd.png)
-![Diagrama de casos de uso](/assets/Quejas%203.1%20Confirmacionasd.png)
+![Diagrama de casos de uso](/assets/readme_images/Quejas%203.1asd.png)
+![Diagrama de casos de uso](/assets/readme_images/Quejas%203.1%20Confirmacionasd.png)
 
 - **RF8:** El sistema debe mostrar al ciudadano el historial de quejas previas enviadas, incluyendo detalles como una imagen asociada.
 
-![Diagrama de casos de uso](/assets/Quejas%203.1asd-1.png)
+![Diagrama de casos de uso](/assets/readme_images/Quejas%203.1asd-1.png)
 
 - **RF9:** El sistema debe permitir al administrador revisar una lista de quejas o sugerencias recibidas, clasificadas por tipo de queja.
 
-![Diagrama de casos de uso](./assets/Quejas%204_admasd.png)
-![Diagrama de casos de uso](/assets/Quejas%203.1asd-1.png)
+![Diagrama de casos de uso](./assets/readme_images/Quejas%204_admasd.png)
+![Diagrama de casos de uso](/assets/readme_images/Quejas%203.1asd-1.png)
 
 - **RF10:** El sistema debe permitir al administrador modificar el estado de las quejas.
 
-![Diagrama de casos de uso](/assets/Editar%20queja3.1/Adminasd.png)
-![Diagrama de casos de uso](/assets/Editar%20queja3.1/Adminasd-1.png)
+![Diagrama de casos de uso](/assets/readme_images/Editar%20queja3.1/Adminasd.png)
+![Diagrama de casos de uso](/assets/readme_images/Editar%20queja3.1/Adminasd-1.png)
 
 ### 5. Gestión de Encuestas y Votaciones
 - **RF11:** El sistema debe mostrar al ciudadano una lista de proyectos disponibles para votar, acompañados de imágenes y descripciones.
 
-![Sondeos](./assets/Sondeosasd.png)
+![Sondeos](./assets/readme_images/Sondeosasd.png)
 
 - **RF12:** El sistema debe permitir al ciudadano votar a favor o en contra de los proyectos mediante botones de "De acuerdo" o "Desacuerdo".
 
-![Sondeos2](./assets/Sondeos%202asd.png) ![Sondeos3](./assets/Sondeos%20Confirmacionasd.png)
+![Sondeos2](./assets/readme_images/Sondeos%202asd.png) ![Sondeos3](./assets/readme_images/Sondeos%20Confirmacionasd.png)
 
 - **RF13:** El sistema debe permitir al administrador crear encuestas ingresando el título y el detalle o descripción del sondeo.
 
-![Sondeos4](./assets/Realizar%20sondeo_admasd.png) ![Sondeos5](./assets/crear_sondeo_confirmasd.png)
+![Sondeos4](./assets/readme_images/Realizar%20sondeo_admasd.png) ![Sondeos5](./assets/readme_images/crear_sondeo_confirmasd.png)
  
 - **RF14:** El sistema debe permitir al administrador consultar los resultados de las encuestas.
 
-![Sondeos6](./assets/sondeo_mainasd.png) ![Sondeos7](./assets/sondeo_detalle_adminasd.png)
+![Sondeos6](./assets/readme_images/sondeo_mainasd.png) ![Sondeos7](./assets/readme_images/sondeo_detalle_adminasd.png)
 
 ### 6. Acceso a Servicios de Emergencia
 - **RF15:** El sistema debe permitir al ciudadano visualizar una lista de servicios de emergencia disponibles, como SAMU, PNP, Bomberos y Central de Serenazgo.
 
-![SOS](./assets/SOSasd.png)
+![SOS](./assets/readme_images/SOSasd.png)
 
 ### 7. Configuración y Preferencias del Usuario
 
 - **RF16:** El sistema debe permitir al usuario acceder a una barra lateral con diferentes opciones de configuración después de iniciar sesión. El usuario podrá desplegar esta barra lateral desde el ícono de menú y acceder a las opciones de "Añadir o actualizar rostro", "Términos y condiciones", "Notificaciones" y "Cerrar sesión".
 
-![Settings](./assets/Settingsasd.png)
+![Settings](./assets/readme_images/Settingsasd.png)
 
 - **RF17:** El sistema debe permitir al ciudadano activar o desactivar las notificaciones push desde la configuración.
 
-![Settings2](./assets/Settings%20notificacionesasd.png)
+![Settings2](./assets/readme_images/Settings%20notificacionesasd.png)
 
 - **RF18:** El sistema debe mostrar el nombre del usuario y permitirle agregar o actualizar su rostro para el inicio de sesión con identificación facial.
 
-![Settings2.1](./assets/Identificador%20de%20rostro/validaciónasd.png) ![Settings2.2](./assets/Identificador%20de%20rostro/agregando%201asd.png)
-![Settings2.3](./assets/Identificador%20de%20rostro/actualizadoasd.png) ![Settings2.4](./assets/Identificador%20de%20rostro/validación%20por%20emailasd.png)
-![Settings2.5](./assets/Identificador%20de%20rostro/agregando%202asd.png) ![Settings2.1](./assets/Identificador%20de%20rostro/agregadoasd.png)
+![Settings2.1](./assets/readme_images/Identificador%20de%20rostro/validaciónasd.png) ![Settings2.2](./assets/readme_images/Identificador%20de%20rostro/agregando%201asd.png)
+![Settings2.3](./assets/readme_images/Identificador%20de%20rostro/actualizadoasd.png) ![Settings2.4](./assets/readme_images/Identificador%20de%20rostro/validación%20por%20emailasd.png)
+![Settings2.5](./assets/readme_images/Identificador%20de%20rostro/agregando%202asd.png) ![Settings2.1](./assets/readme_images/Identificador%20de%20rostro/agregadoasd.png)
 
 - **RF19:** El sistema debe permitir al ciudadano visualizar y gestionar los "Términos y condiciones".
 
-![Settings3](./assets/Settings%20terminos%20y%20condicionesasd.png)
+![Settings3](./assets/readme_images/Settings%20terminos%20y%20condicionesasd.png)
 
 - **RF20:** El sistema debe permitir al ciudadano cerrar sesión desde la pantalla de ajustes.
 
-![Settings](./assets/Settingsasd.png)
+![Settings](./assets/readme_images/Settingsasd.png)
 
 ## Integrantes 👥
 

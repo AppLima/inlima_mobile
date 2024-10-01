@@ -14,6 +14,6 @@ class ComplaintController extends GetxController {
 
   void listComplaints() async {
     complaints.value = await quejaService.fetchAll();
-    print(complaints.value);
+    //print(complaints.value);
   }
 }

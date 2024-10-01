@@ -16,12 +16,21 @@ class Queja {
     return 'Queja{id: $id, name: $name, urlSvg: $urlSvg}';
   }
 
-  Map<String, dynamic> toJson() {
+  /*Map<String, dynamic> toJson() {
     return {
       'id': id,
       'name': name,
       'url_svg': urlSvg,
     };
+  }*/
+
+  String toJSON(){
+    final map = {
+      'id': id,
+      'name': name,
+      'url_svg': urlSvg,
+    };
+    return jsonEncode(map);
   }
 
   factory Queja.fromMap(Map<String, dynamic> map) {
