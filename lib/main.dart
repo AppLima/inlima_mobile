@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'pages/complaint/complaint_page.dart';
-//import 'pages/description/description_page.dart'
+import 'pages/description/description_page.dart';
 
 void main(){
   runApp(const MyApp());
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(title: const Text('Inlima')),
       ),
 
-      initialRoute: '/complaint',
+      initialRoute: '/description',
       
       routes: {
         //'/home':  (context) => HomePage(),
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         //'/sign-up': (context) => SignUpPage(),
         //'/reset': (context) => ResetPage(),
         '/complaint': (context) => ComplaintPage(),
-        //'/description': (context) => DescriptionPage(),
+        '/description': (context) => DescriptionPage(),
       }
     );
   }
