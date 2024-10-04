@@ -8,6 +8,6 @@ class AppColors {
   static const Color lightGreyInlima = Color(0xFFDCE0E6);
   static const Color textColorWhite = Color(0xFFFFFFFF);
   static const Color textColorBlack = Color(0x00000000);
-  static const Color textColorLightGray = Color(0xFFA9A9A9); 
+  static const Color textColorLightGray = Color(0xFFA9A9A9);
 }
   

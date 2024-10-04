@@ -189,8 +189,8 @@ Para asegurarte de que todo está configurado correctamente:
 
 - **RF10:** El sistema debe permitir al administrador modificar el estado de las quejas.
 
-![Diagrama de casos de uso](/assets/readme_images/Editar%20queja3.1/Adminasd.png)
-![Diagrama de casos de uso](/assets/readme_images/Editar%20queja3.1/Adminasd-1.png)
+![Diagrama de casos de uso](/assets/readme_images/Adminasd-0.png)
+![Diagrama de casos de uso](/assets/readme_images/Adminasd-1.png)
 
 ### 5. Gestión de Encuestas y Votaciones
 - **RF11:** El sistema debe mostrar al ciudadano una lista de proyectos disponibles para votar, acompañados de imágenes y descripciones.
@@ -226,9 +226,9 @@ Para asegurarte de que todo está configurado correctamente:
 
 - **RF18:** El sistema debe mostrar el nombre del usuario y permitirle agregar o actualizar su rostro para el inicio de sesión con identificación facial.
 
-![Settings2.1](./assets/readme_images/Identificador%20de%20rostro/validaciónasd.png) ![Settings2.2](./assets/readme_images/Identificador%20de%20rostro/agregando%201asd.png)
-![Settings2.3](./assets/readme_images/Identificador%20de%20rostro/actualizadoasd.png) ![Settings2.4](./assets/readme_images/Identificador%20de%20rostro/validación%20por%20emailasd.png)
-![Settings2.5](./assets/readme_images/Identificador%20de%20rostro/agregando%202asd.png) ![Settings2.1](./assets/readme_images/Identificador%20de%20rostro/agregadoasd.png)
+![Settings2.1](./assets/readme_images/validaciónasd.png) ![Settings2.2](./assets/readme_images/agregando%201asd.png)
+![Settings2.3](./assets/readme_images/actualizadoasd.png) ![Settings2.4](./assets/readme_images/validación%20por%20emailasd.png)
+![Settings2.5](./assets/readme_images/agregando%202asd.png) ![Settings2.1](./assets/readme_images/agregadoasd.png)
 
 - **RF19:** El sistema debe permitir al ciudadano visualizar y gestionar los "Términos y condiciones".
 
