@@ -24,7 +24,7 @@ class LargeButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: width ?? double.infinity,  // Se mantiene el valor por defecto de `double.infinity` si no se especifica el width
+      width: width ?? double.infinity,  // Se mantiene el valor por defecto de double.infinity si no se especifica el width
       height: height ?? 30.0,  // Si no se especifica el height, se usa 30 píxeles por defecto
       child: ElevatedButton(
         style: ButtonStyle(

@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(title: const Text('Inlima')),
       ),
 
-      initialRoute: '/login/pagina_principal',
+      initialRoute: '/description',
       
       routes: {
         //'/home':  (context) => HomePage(),
@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
         //'/reset': (context) => ResetPage(),
         '/complaint': (context) => ComplaintPage(),
         '/description': (context) => DescriptionPage(),
-        '/login/inicio': (context) => InicioPage(),
+        '/login/inicio': (context) => InicioPage(isRegister: false),
         '/login/pagina_principal': (context) => PaginaPrincipalPage(),
       }
     );

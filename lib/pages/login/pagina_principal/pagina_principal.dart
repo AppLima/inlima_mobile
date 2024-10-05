@@ -26,8 +26,7 @@ class PaginaPrincipalPage extends StatelessWidget {
           Column(
             children: [
               Padding(
-                padding: const EdgeInsets.only(
-                    top: 100.0),
+                padding: const EdgeInsets.only(top: 100.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -52,7 +51,7 @@ class PaginaPrincipalPage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(100),
                   height: 50,
                   onPressed: () {
-                    control.navigateToHome(context);
+                    control.navigateToHome(context, isRegister: false);
                   },
                 ),
               ),
@@ -62,7 +61,7 @@ class PaginaPrincipalPage extends StatelessWidget {
                     style: TextStyle(color: Colors.white)),
                 GestureDetector(
                   onTap: () {
-                    control.navigateToHome(context);
+                    control.navigateToHome(context, isRegister: true);
                   },
                   child: Text(
                     'Regístrate',
