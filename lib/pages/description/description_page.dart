@@ -43,6 +43,9 @@ class _DescriptionPageState extends State<DescriptionPage> {
 
   @override
   Widget build(BuildContext context) {
+    // Recibe el asunto pasado como argumento
+    final String? asunto = ModalRoute.of(context)?.settings.arguments as String?;
+
     return Scaffold(
       appBar: const InLimaAppBar(),
       body: Padding(
@@ -51,13 +54,19 @@ class _DescriptionPageState extends State<DescriptionPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Muestra el asunto como el título de la pantalla
+              Text(
+                asunto ?? 'Descripción',
+                style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 16),
               const Text(
                 'Descripción:',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
               TextField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: 'Escribe la descripción aquí...',
                 ),
@@ -70,7 +79,7 @@ class _DescriptionPageState extends State<DescriptionPage> {
               ),
               const SizedBox(height: 8),
               TextField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: 'Escribe la ubicación aquí...',
                 ),
@@ -82,7 +91,7 @@ class _DescriptionPageState extends State<DescriptionPage> {
               ),
               const SizedBox(height: 8),
               TextField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: 'Escriba el distrito del incidente aquí...',
                 ),
@@ -119,7 +128,7 @@ class _DescriptionPageState extends State<DescriptionPage> {
                       itemBuilder: (context, index) {
                         final imageFile = _selectedImages[index];
                         return ListTile(
-                          leading: Icon(Icons.image),
+                          leading: const Icon(Icons.image),
                           title: Text('Foto ${index + 1}'),
                           trailing: IconButton(
                             icon: const Icon(Icons.delete, color: Colors.red),
