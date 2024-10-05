@@ -75,6 +75,10 @@ flutter:
   assets:
     - assets/img_app/inlima_logo.png
     - assets/json/quejas.json
+    - assets/json/usuarios.json
+    - assets/json/ciudadanos.json
+    - assets/json/usuarios_2.json
+    - assets/json/ciudadanos_2.json
     - assets/login/fondo.png
     - assets/login/inlima_icon.png
     - assets/login/inlima.png
