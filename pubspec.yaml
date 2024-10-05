@@ -73,24 +73,9 @@ flutter:
   uses-material-design: true
   # To add assets to your application, add an assets section, like this:
   assets:
-<<<<<<< HEAD
-    - assets/img_app/inlima_logo.png
-    - assets/json/quejas.json
-    - assets/json/usuarios.json
-    - assets/json/ciudadanos.json
-    - assets/json/usuarios_2.json
-    - assets/json/ciudadanos_2.json
-    - assets/login/fondo.png
-    - assets/login/inlima_icon.png
-    - assets/login/inlima.png
-    - assets/login/LI_3.svg
-    - assets/login/nombre_logo.svg
-=======
     - assets/img_app/
     - assets/json/
     - assets/login/
-
->>>>>>> 4c50c64a3fbd9cab84d0bbee5b0ce619557caade
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
