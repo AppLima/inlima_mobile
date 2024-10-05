@@ -2,20 +2,15 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
 class InicioController extends GetxController {
-  // Estado observable para manejar el login o registro
   RxBool isLogin = true.obs;
-
-  // Método para cambiar entre login y registro
   void toggleTab() {
     isLogin.value = !isLogin.value;
   }
 
-  // Método para obtener el título de bienvenida
   String getWelcomeText() {
     return isLogin.value ? 'Bienvenido a inLima' : 'Regístrate en inLima';
   }
 
-  // Método para obtener los campos de texto adicionales si es registro
   List<Widget> getAdditionalFields() {
     if (isLogin.value) {
       return [];
@@ -35,7 +30,6 @@ class InicioController extends GetxController {
     }
   }
 
-  // Método para construir un campo de texto reutilizable
   Widget _buildTextField(String labelText) {
     return TextField(
       decoration: InputDecoration(
@@ -47,7 +41,6 @@ class InicioController extends GetxController {
     );
   }
 
-  // Método para manejar el botón de acción
   void handleAction() {
     if (isLogin.value) {
       // Lógica de inicio de sesión
@@ -56,7 +49,6 @@ class InicioController extends GetxController {
     }
   }
 
-  // Método para obtener el texto del botón
   String getButtonText() {
     return isLogin.value ? 'Entrar' : 'Registrarse';
   }

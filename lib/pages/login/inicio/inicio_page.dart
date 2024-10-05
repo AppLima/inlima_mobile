@@ -70,7 +70,11 @@ class InicioPage extends StatelessWidget {
                     padding: const EdgeInsets.all(20.0),
                     child: Column(
                       children: [
-                        Tabs(), // Usamos el TabsComponent aquí
+                        Obx(() => Tabs(
+                              isLogin: control.isLogin.value,
+                              onLoginTap: () => control.isLogin.value = true,
+                              onRegisterTap: () => control.isLogin.value = false,
+                            )),
                         SizedBox(height: 20),
                         Obx(() => Text(
                               control.getWelcomeText(),
