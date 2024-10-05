@@ -24,7 +24,7 @@ class ComplaintPage extends StatelessWidget {
               const Text(
                 'Elige el tipo de queja:',
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -32,10 +32,10 @@ class ComplaintPage extends StatelessWidget {
               Expanded(
                 child: GridView.builder(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 1,
+                    crossAxisCount: 3,
                     crossAxisSpacing: 16,
                     mainAxisSpacing: 16,
-                    childAspectRatio: 3,
+                    childAspectRatio: 0.6,
                   ),
                   itemCount: complaintController.complaints.length,
                   itemBuilder: (context, index) {

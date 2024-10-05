@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import '../../components/inlima_appbar.dart';
-import '../../components/button_simple.dart'; // Importar tu botón personalizado
+import '../../components/button_simple.dart';
 
 class DescriptionPage extends StatefulWidget {
   const DescriptionPage({Key? key}) : super(key: key);
@@ -13,34 +13,31 @@ class DescriptionPage extends StatefulWidget {
 
 class _DescriptionPageState extends State<DescriptionPage> {
   final ImagePicker _picker = ImagePicker();
-  List<File> _selectedImages = []; // Lista para almacenar las imágenes seleccionadas
+  List<File> _selectedImages = [];
 
-  // Función para tomar una foto con la cámara
   Future<void> _takePhoto() async {
     final pickedImage = await _picker.pickImage(source: ImageSource.camera);
 
     if (pickedImage != null) {
       setState(() {
-        _selectedImages.add(File(pickedImage.path)); // Añadir la imagen a la lista
+        _selectedImages.add(File(pickedImage.path));
       });
     }
   }
 
-  // Función para seleccionar una imagen desde la galería
   Future<void> _selectPhoto() async {
     final pickedImage = await _picker.pickImage(source: ImageSource.gallery);
 
     if (pickedImage != null) {
       setState(() {
-        _selectedImages.add(File(pickedImage.path)); // Añadir la imagen a la lista
+        _selectedImages.add(File(pickedImage.path));
       });
     }
   }
 
-  // Función para eliminar una imagen seleccionada
   void _removePhoto(int index) {
     setState(() {
-      _selectedImages.removeAt(index); // Remover la imagen de la lista
+      _selectedImages.removeAt(index);
     });
   }
 
@@ -112,22 +109,21 @@ class _DescriptionPageState extends State<DescriptionPage> {
                 ],
               ),
               
-              // Mostrar la lista de fotos seleccionadas o tomadas
               const SizedBox(height: 16),
               _selectedImages.isEmpty
                   ? const Text('No se han adjuntado fotos.')
                   : ListView.builder(
-                      shrinkWrap: true, // Hace que el ListView se ajuste a su contenido
-                      physics: const NeverScrollableScrollPhysics(), // Evita que el ListView se desplace
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
                       itemCount: _selectedImages.length,
                       itemBuilder: (context, index) {
                         final imageFile = _selectedImages[index];
                         return ListTile(
                           leading: Icon(Icons.image),
-                          title: Text('Foto ${index + 1}'), // Nombre de la foto
+                          title: Text('Foto ${index + 1}'),
                           trailing: IconButton(
                             icon: const Icon(Icons.delete, color: Colors.red),
-                            onPressed: () => _removePhoto(index), // Eliminar la foto
+                            onPressed: () => _removePhoto(index),
                           ),
                         );
                       },
@@ -136,11 +132,10 @@ class _DescriptionPageState extends State<DescriptionPage> {
               const SizedBox(height: 16),
               ButtonSimple(
                 text: 'Enviar',
-                enabled: true, // Habilitar el botón
-                adviseContent: 'Queja enviada con éxito', // Mensaje del aviso
+                enabled: true,
+                adviseContent: 'Queja enviada con éxito',
                 onPressed: () {
                   print('Botón Enviar presionado');
-                  // No se navega a ninguna parte por ahora
                 },
               ),
             ],
