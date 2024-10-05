@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:inlima_mobile/pages/login/inicio/inicio_page.dart';
+import 'package:inlima_mobile/pages/login/pagina_principal/pagina_principal.dart';
 import 'pages/complaint/complaint_page.dart';
 import 'pages/description/description_page.dart';
 
@@ -22,7 +24,7 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(title: const Text('Inlima')),
       ),
 
-      initialRoute: '/complaint',
+      initialRoute: '/login/pagina_principal',
       
       routes: {
         //'/home':  (context) => HomePage(),
@@ -31,6 +33,8 @@ class MyApp extends StatelessWidget {
         //'/reset': (context) => ResetPage(),
         '/complaint': (context) => ComplaintPage(),
         '/description': (context) => DescriptionPage(),
+        '/login/inicio': (context) => InicioPage(),
+        '/login/pagina_principal': (context) => PaginaPrincipalPage(),
       }
     );
   }
