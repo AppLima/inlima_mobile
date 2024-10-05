@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../configs/colors.dart';
+
 
 class InLimaAppBar extends StatelessWidget implements PreferredSizeWidget {
   const InLimaAppBar({Key? key}) : super(key: key);
@@ -6,15 +8,13 @@ class InLimaAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      centerTitle: true,
-      title: const Text(
-        'InLima',
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 20,
-        ),
+      centerTitle: false,
+      title: Image.asset(
+        'assets/img_app/inlima_logo.png',
+        height: 60,
+        fit: BoxFit.contain,
       ),
-      backgroundColor: Colors.blueAccent,
+      backgroundColor: AppColors.tertiaryColorInlima,
       elevation: 0,
     );
   }

@@ -8,8 +8,8 @@ class CameraButton extends StatefulWidget {
 }
 
 class _CameraButtonState extends State<CameraButton> {
-  File? _image; // Aquí se guardará la imagen capturada
-  final ImagePicker _picker = ImagePicker(); // Inicializa el selector de imágenes
+  File? _image;
+  final ImagePicker _picker = ImagePicker();
 
   Future<void> _openCamera() async {
     // Abre la cámara del dispositivo
@@ -17,7 +17,7 @@ class _CameraButtonState extends State<CameraButton> {
 
     if (pickedImage != null) {
       setState(() {
-        _image = File(pickedImage.path); // Guarda la imagen en un archivo
+        _image = File(pickedImage.path);
       });
     }
   }
@@ -34,7 +34,7 @@ class _CameraButtonState extends State<CameraButton> {
         _image == null
             ? Text('No se ha capturado ninguna imagen.')
             : Image.file(
-                _image!, // Muestra la imagen capturada
+                _image!,
                 width: 300,
                 height: 300,
               ),

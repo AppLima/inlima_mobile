@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'pages/complaint/complaint_page.dart';
 import 'pages/description/description_page.dart';
+import 'configs/app_theme.dart';
 
 void main(){
   runApp(const MyApp());
@@ -13,10 +14,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'InLima',
+
+      theme: AppTheme.lightTheme(), // Tema claro
+      darkTheme: AppTheme.darkTheme(), // Tema oscuro
+      themeMode: ThemeMode.system,
+      /*
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         useMaterial3: true,
-      ),
+      ),*/
       
       home: Scaffold(
         appBar: AppBar(title: const Text('Inlima')),
