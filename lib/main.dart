@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inlima_mobile/models/sondeo.dart';
 import 'package:inlima_mobile/pages/home/home_page.dart';
 import 'package:inlima_mobile/pages/login/inicio/inicio_page.dart';
 import 'package:inlima_mobile/pages/login/pagina_principal/pagina_principal.dart';
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
       themeMode: ThemeMode.system,
 
       initialRoute: '/login/pagina_principal',
+      //initialRoute: '/survey',
 
       onGenerateRoute: (settings) {
         if (settings.name == '/home') {
@@ -33,6 +35,14 @@ class MyApp extends StatelessWidget {
           return MaterialPageRoute(
             builder: (context) {
               return HomePage(usuario: usuario);
+            },
+          );
+        }
+        if (settings.name == '/survey_description') {
+          final Sondeo sondeo = settings.arguments as Sondeo;
+          return MaterialPageRoute(
+            builder: (context) {
+             return SurveyDescription(sondeo: sondeo);
             },
           );
         }
@@ -46,9 +56,11 @@ class MyApp extends StatelessWidget {
               case '/complaint':
                 return ComplaintPage();
               case '/description':
-                return DescriptionPage();
+                return const DescriptionPage();
+              case '/survey':
+                return SurveyPage();
               default:
-                return Scaffold(
+                return const Scaffold(
                   body: Center(child: Text('Ruta no encontrada')),
                 );
             }

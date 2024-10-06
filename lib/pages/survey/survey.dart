@@ -27,7 +27,7 @@ class SurveyPage extends StatelessWidget {
           Sondeo sondeo = control.sondeosDisponibles[index];
           return GestureDetector(
             onTap: () {
-              Navigator.pushNamed(context, '/survey_description', arguments: sondeo.toJSON());
+              Navigator.pushNamed(context, '/survey_description', arguments: sondeo);
             },
             child: SurveyInfo(
               imageUrl: sondeo.foto,
