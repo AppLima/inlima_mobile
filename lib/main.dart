@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:inlima_mobile/models/sondeo.dart';
 import 'package:inlima_mobile/pages/home/home_page.dart';
 import 'package:inlima_mobile/pages/login/inicio/inicio_page.dart';
 import 'package:inlima_mobile/pages/login/pagina_principal/pagina_principal.dart';
+import 'package:inlima_mobile/pages/survey/survey.dart';
+import 'package:inlima_mobile/pages/survey_creation/survey_creation.dart';
+import 'package:inlima_mobile/pages/survey_description/survey_description.dart';
 import 'pages/complaint/complaint_page.dart';
 import 'pages/description/description_page.dart';
 import 'configs/app_theme.dart';
@@ -25,7 +29,7 @@ class MyApp extends StatelessWidget {
       darkTheme: AppTheme.darkTheme(), // Tema oscuro
       themeMode: ThemeMode.system,
 
-      initialRoute: '/login/inicio',
+      initialRoute: '/login/pagina_principal',
 
       onGenerateRoute: (settings) {
         if (settings.name == '/home') {
@@ -34,6 +38,14 @@ class MyApp extends StatelessWidget {
           return MaterialPageRoute(
             builder: (context) {
               return HomePage(usuario: usuario);
+            },
+          );
+        }
+        if (settings.name == '/survey_description') {
+          final Sondeo sondeo = settings.arguments as Sondeo;
+          return MaterialPageRoute(
+            builder: (context) {
+             return SurveyDescription(sondeo: sondeo);
             },
           );
         }
@@ -47,9 +59,13 @@ class MyApp extends StatelessWidget {
               case '/complaint':
                 return ComplaintPage();
               case '/description':
-                return DescriptionPage();
+                return const DescriptionPage();
+              case '/survey':
+                return SurveyPage();
+              case '/survey_creation':
+                return SurveyCreationPage();
               default:
-                return Scaffold(
+                return const Scaffold(
                   body: Center(child: Text('Ruta no encontrada')),
                 );
             }

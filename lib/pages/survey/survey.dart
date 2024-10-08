@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:inlima_mobile/_global_controllers/sesion_controller.dart';
 import 'package:inlima_mobile/components/survey_info.dart';
 import 'package:inlima_mobile/models/sondeo.dart';
 import 'survey_controller.dart';
 
 class SurveyPage extends StatelessWidget {
   final SurveyController control = Get.put(SurveyController());
+  final SesionController sesion= Get.find<SesionController>();
+
   SurveyPage({super.key});
 
   Widget _buildBody(BuildContext context) {
@@ -27,7 +30,7 @@ class SurveyPage extends StatelessWidget {
           Sondeo sondeo = control.sondeosDisponibles[index];
           return GestureDetector(
             onTap: () {
-              Navigator.pushNamed(context, '/survey_description', arguments: sondeo.toJSON());
+              Navigator.pushNamed(context, '/survey_description', arguments: sondeo);
             },
             child: SurveyInfo(
               imageUrl: sondeo.foto,
@@ -40,10 +43,22 @@ class SurveyPage extends StatelessWidget {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(title: const Text('Sondeos disponibles')),
-        body: _buildBody(context));
-  }
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    appBar: AppBar(title: const Text('Sondeos disponibles')),
+    body: _buildBody(context),
+    floatingActionButton: Obx(() {
+      if (sesion.usuario.rolId == 1) {
+        return FloatingActionButton(
+          onPressed: () {
+            Navigator.pushNamed(context, '/survey_creation');
+          },
+          child: const Icon(Icons.add),
+        );
+      }
+      return const SizedBox.shrink();
+    }),
+  );
+}
 }

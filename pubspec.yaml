@@ -56,7 +56,7 @@ dev_dependencies:
 flutter_launcher_icons:
   android: true
   #ios: true
-  image_path: "assets/img/icon.png"
+  image_path: "assets/img_app/inlima_icon.png"
   min_sdk_android: 21
 
 
@@ -87,7 +87,10 @@ flutter:
     - assets/img_app/
     - assets/json/
     - assets/login/
-    
+    - assets/img_app/
+    - assets/json/
+    - assets/login/
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 
