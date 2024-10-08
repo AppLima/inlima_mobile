@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:inlima_mobile/_global_controllers/sesion_controller.dart';
 import 'package:inlima_mobile/models/ciudadano.dart';
 import 'package:inlima_mobile/models/usuario.dart';
 import 'package:inlima_mobile/services/usuario_service.dart';
 import 'package:inlima_mobile/services/ciudadano_service.dart';
-import 'dart:convert'; // Necesario para convertir a JSON
 
 class InicioController {
   ValueNotifier<bool> isLogin = ValueNotifier(true);
+  final SesionController sesion = Get.put(SesionController());
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -16,6 +18,7 @@ class InicioController {
   final apellidoMaternoController = TextEditingController();
   final telefonoController = TextEditingController();
   final distritoController = TextEditingController();
+  final sexoController = TextEditingController();
   final UsuarioService usuarioService = UsuarioService();
   final CiudadanoService ciudadanoService = CiudadanoService();
   
@@ -34,6 +37,7 @@ class InicioController {
       await register(context);
     }
   }
+  
   List<Widget> getAdditionalFields() {
     return [
       const SizedBox(height: 20),
@@ -61,18 +65,12 @@ class InicioController {
         _showError(context, "Correo y contraseña son obligatorios");
         return;
       }
-      List<Usuario> usuarios = await usuarioService.fetchAll();
-      List<Usuario> coincidencias = usuarios
-          .where((user) =>
-              user.email == emailController.text &&
-              user.password == passwordController.text)
-          .toList();
-
-      if (coincidencias.isNotEmpty) {
-        Usuario usuarioEncontrado = coincidencias.first;
+      Usuario usuario = await usuarioService.findByEmail(emailController.text);
+      if (usuario.password == passwordController.text) {
+        Usuario usuarioEncontrado = usuario;
+        sesion.iniciarSesion(usuario); //guarda usuario en global controller
         _showSuccess(context, "Inicio de sesión exitoso");
-        Navigator.of(context)
-            .pushReplacementNamed('/home', arguments: usuarioEncontrado);
+        Navigator.of(context).pushReplacementNamed('/home', arguments: usuarioEncontrado);
       } else {
         _showError(context, "Correo o contraseña incorrectos");
       }
@@ -105,7 +103,7 @@ class InicioController {
         apellidoPaterno: apellidoPaternoController.text,
         apellidoMaterno: apellidoMaternoController.text,
         rolId: 2,
-        sexoId: 2,
+        sexoId: 1,
       );
 
       final ciudadano = Ciudadano(
@@ -115,19 +113,10 @@ class InicioController {
         usuarioId: usuario.idUsuario,
       );
 
-      await usuarioService.addUsuario(usuario);
-      await ciudadanoService.addCiudadano(ciudadano);
-
-      List<Usuario> usuarios = await usuarioService.fetchAll();
-      List<Ciudadano> ciudadanos = await ciudadanoService.fetchAll();
-      print("Usuarios registrados:");
-      usuarios.forEach((user) {
-        print(jsonEncode(user.toJson()));
-      });
-      print("Ciudadanos registrados:");
-      ciudadanos.forEach((ciudadano) {
-        print(jsonEncode(ciudadano.toJson()));
-      });
+      //await usuarioService.addUsuario(usuario);
+      //await ciudadanoService.addCiudadano(ciudadano);
+      print("========== Usuario registrado ============");
+      print(usuario.toJson());
       _showSuccess(context, "Registro exitoso");
       limpiarCampos();
       isLogin.value = true;

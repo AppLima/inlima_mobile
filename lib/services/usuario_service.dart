@@ -1,34 +1,16 @@
 import 'dart:convert';
-import 'dart:io';
-import 'package:path_provider/path_provider.dart';
+import 'package:flutter/services.dart';
 import 'package:inlima_mobile/models/usuario.dart';
 
 class UsuarioService {
-  final String _fileName = 'usuarios3.json';
+  final String _file = 'assets/json/usuarios.json';
 
   Future<List<Usuario>> fetchAll() async {
-    final file = await _getFile();
-    if (!await file.exists()) {
-      return [];
-    }
-    final String content = await file.readAsString();
-    final List<dynamic> data = jsonDecode(content);
-    return data.map((user) => Usuario.fromMap(user)).toList();
-  }
-
-  Future<void> addUsuario(Usuario usuario) async {
-    final file = await _getFile();
-    List<Usuario> usuarios = await fetchAll();
-    usuarios.add(usuario);
-
-    String updatedJson =
-        jsonEncode(usuarios.map((user) => user.toJson()).toList());
-    await file.writeAsString(updatedJson);
-  }
-
-  Future<int> getNewId() async {
-    List<Usuario> usuarios = await fetchAll();
-    return usuarios.isNotEmpty ? usuarios.last.idUsuario + 1 : 1;
+    List<Usuario> usuarios = [];
+    final String response = await rootBundle.loadString(_file);
+    final List<dynamic> data = jsonDecode(response);
+    usuarios = data.map((map) => Usuario.fromMap(map as Map <String, dynamic>)).toList();
+    return usuarios;
   }
 
   Future<bool> isEmailAlreadyRegistered(String email) async {
@@ -36,8 +18,13 @@ class UsuarioService {
     return usuarios.any((usuario) => usuario.email == email);
   }
 
-  Future<File> _getFile() async {
-    final directory = await getApplicationDocumentsDirectory();
-    return File('${directory.path}/$_fileName');
+  Future<Usuario> findByEmail(String email) async {
+    List<Usuario> usuarios = await fetchAll();
+    return usuarios.firstWhere((usuario) => usuario.email == email);
+  }
+
+    Future<int> getNewId() async {
+    List<Usuario> usuarios = await fetchAll();
+    return usuarios.isNotEmpty ? usuarios.last.idUsuario + 1 : 1;
   }
 }

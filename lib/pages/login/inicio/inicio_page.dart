@@ -8,7 +8,7 @@ class InicioPage extends StatelessWidget {
   final InicioController control = InicioController();
   final bool isRegister;
 
-  InicioPage({required this.isRegister}) {
+  InicioPage({super.key, required this.isRegister}) {
     control.isLogin.value = !isRegister;
   }
 
