@@ -18,13 +18,13 @@ class InicioController {
   final distritoController = TextEditingController();
   final UsuarioService usuarioService = UsuarioService();
   final CiudadanoService ciudadanoService = CiudadanoService();
-  
-  void toggleTab() {
-    isLogin.value = !isLogin.value;
-  }
 
   String getWelcomeText() {
     return isLogin.value ? 'Bienvenido a inLima' : 'Regístrate en inLima';
+  }
+
+  String getButtonText() {
+    return isLogin.value ? 'Entrar' : 'Registrarse';
   }
 
   Future<void> handleAction(BuildContext context) async {
@@ -33,26 +33,6 @@ class InicioController {
     } else {
       await register(context);
     }
-  }
-  List<Widget> getAdditionalFields() {
-    return [
-      const SizedBox(height: 20),
-      _buildTextField(dniController, 'DNI'),
-      const SizedBox(height: 20),
-      _buildTextField(nombresController, 'Nombres'),
-      const SizedBox(height: 20),
-      _buildTextField(apellidoPaternoController, 'Apellido Paterno'),
-      const SizedBox(height: 20),
-      _buildTextField(apellidoMaternoController, 'Apellido Materno'),
-      const SizedBox(height: 20),
-      _buildTextField(telefonoController, 'Teléfono'),
-      const SizedBox(height: 20),
-      _buildTextField(distritoController, 'Distrito Actual'),
-    ];
-  }
-
-  String getButtonText() {
-    return isLogin.value ? 'Entrar' : 'Registrarse';
   }
 
   Future<void> login(BuildContext context) async {
@@ -118,16 +98,6 @@ class InicioController {
       await usuarioService.addUsuario(usuario);
       await ciudadanoService.addCiudadano(ciudadano);
 
-      List<Usuario> usuarios = await usuarioService.fetchAll();
-      List<Ciudadano> ciudadanos = await ciudadanoService.fetchAll();
-      print("Usuarios registrados:");
-      usuarios.forEach((user) {
-        print(jsonEncode(user.toJson()));
-      });
-      print("Ciudadanos registrados:");
-      ciudadanos.forEach((ciudadano) {
-        print(jsonEncode(ciudadano.toJson()));
-      });
       _showSuccess(context, "Registro exitoso");
       limpiarCampos();
       isLogin.value = true;
@@ -209,17 +179,5 @@ class InicioController {
   void _showSuccess(BuildContext context, String message) {
     ScaffoldMessenger.of(context)
         .showSnackBar(SnackBar(content: Text(message)));
-  }
-
-  Widget _buildTextField(TextEditingController controller, String labelText) {
-    return TextField(
-      controller: controller,
-      decoration: InputDecoration(
-        labelText: labelText,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-      ),
-    );
   }
 }

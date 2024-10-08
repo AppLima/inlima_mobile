@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inlima_mobile/components/customtextfield.dart';
 import 'package:inlima_mobile/components/large_button.dart';
 import 'package:inlima_mobile/components/tab.dart';
 import 'package:inlima_mobile/configs/colors.dart';
@@ -66,20 +67,26 @@ class InicioPage extends StatelessWidget {
                     ],
                   ),
                   child: SingleChildScrollView(
-                    padding: const EdgeInsets.all(20.0),
+                    padding: EdgeInsets.only(left: 30, top: 20, bottom: 20, right: 30),
                     child: Column(
                       children: [
+                        // Tabs para cambiar entre Login y Register
                         ValueListenableBuilder<bool>(
                           valueListenable: control.isLogin,
                           builder: (context, isLogin, child) {
                             return Tabs(
                               isLogin: isLogin,
-                              onLoginTap: () => control.isLogin.value = true,
-                              onRegisterTap: () => control.isLogin.value = false,
+                              onLoginTap: () {
+                                control.isLogin.value = true;
+                              },
+                              onRegisterTap: () {
+                                control.isLogin.value = false;
+                              },
                             );
                           },
                         ),
                         const SizedBox(height: 20),
+                        // Título del formulario
                         ValueListenableBuilder<bool>(
                           valueListenable: control.isLogin,
                           builder: (context, isLogin, child) {
@@ -93,38 +100,30 @@ class InicioPage extends StatelessWidget {
                           },
                         ),
                         const SizedBox(height: 20),
-                        TextField(
-                          controller: control.emailController,
-                          decoration: InputDecoration(
-                            labelText: 'Correo',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        TextField(
-                          controller: control.passwordController,
-                          decoration: InputDecoration(
-                            labelText: 'Contraseña',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                          obscureText: true,
-                        ),
+                        CustomTextField(labelText: 'Correo',inputType: TextInputType.emailAddress,controller: control.emailController,),
+                        CustomTextField(labelText: 'Contraseña',inputType: TextInputType.text,controller: control.passwordController,obscureText: true,),
+                        // Si no es login, mostramos los campos adicionales
                         ValueListenableBuilder<bool>(
                           valueListenable: control.isLogin,
                           builder: (context, isLogin, child) {
                             if (!isLogin) {
                               return Column(
-                                children: control.getAdditionalFields(),
+                                children: [
+                                  CustomTextField(labelText: 'DNI',inputType: TextInputType.number,controller: control.dniController,),
+                                  CustomTextField(labelText: 'Nombres',inputType: TextInputType.text,controller: control.nombresController,),
+                                  CustomTextField(labelText: 'Apellido Paterno',inputType: TextInputType.text,controller: control.apellidoPaternoController,),
+                                  CustomTextField(labelText: 'Apellido Materno',inputType: TextInputType.text,controller: control.apellidoMaternoController,),
+                                  CustomTextField(labelText: 'Teléfono',inputType: TextInputType.phone,controller: control.telefonoController,),
+                                  CustomTextField(labelText: 'Distrito Actual',inputType: TextInputType.text,controller: control.distritoController,),
+                                ],
                               );
+                            } else {
+                              return Container();
                             }
-                            return Container();
                           },
                         ),
                         const SizedBox(height: 30),
+                        // Botón de acción
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 30),
                           child: LargeButton(
@@ -154,6 +153,7 @@ class InicioPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false, 
       body: _buildBody(context),
     );
   }
