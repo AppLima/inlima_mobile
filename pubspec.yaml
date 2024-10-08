@@ -73,20 +73,6 @@ flutter:
   uses-material-design: true
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/img_app/inlima_logo.png
-    - assets/json/quejas.json
-    - assets/json/usuarios.json
-    - assets/json/ciudadanos.json
-    - assets/json/usuarios_2.json
-    - assets/json/ciudadanos_2.json
-    - assets/login/fondo.png
-    - assets/login/inlima_icon.png
-    - assets/login/inlima.png
-    - assets/login/LI_3.svg
-    - assets/login/nombre_logo.svg
-    - assets/img_app/
-    - assets/json/
-    - assets/login/
     - assets/img_app/
     - assets/json/
     - assets/login/
