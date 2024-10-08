@@ -6,16 +6,13 @@ import 'package:image_picker/image_picker.dart';
 class SurveyCreationController extends GetxController {
   final tituloController = TextEditingController();
   final detalleController = TextEditingController();
-  var imagenSeleccionada =
-      Rx<File?>(null); // Para almacenar la imagen seleccionada
+  var imagenSeleccionada = Rx<File?>(null); // Para almacenar la imagen seleccionada
 
   // Método para seleccionar una imagen
   Future<void> seleccionarImagen() async {
     final ImagePicker picker = ImagePicker();
     final XFile? imagen = await picker.pickImage(
-        source: ImageSource
-            .gallery); // Puedes usar ImageSource.camera para la cámara
-
+        source: ImageSource.gallery);
     if (imagen != null) {
       imagenSeleccionada.value = File(imagen.path);
     }
@@ -30,9 +27,8 @@ class SurveyCreationController extends GetxController {
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("Todos los campos son obligatorios")));
     } else {
-      // Aquí podrías enviar la información al servidor o hacer algo con los datos
       print("===== SONDEO CREADO ========");
-      print('Título: $titulo');
+      print('Titulo: $titulo');
       print('Detalle: $detalle');
       print('Imagen seleccionada: ${imagenSeleccionada.value?.path}');
       print("============================");

@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:inlima_mobile/_global_controllers/sesion_controller.dart';
-import 'package:inlima_mobile/models/usuario.dart';
 import 'package:inlima_mobile/pages/complaint/complaint_page.dart';
 import 'package:inlima_mobile/pages/survey/survey.dart';
 
 class HomePage extends StatelessWidget {
-  final Usuario usuario;
-  HomePage({super.key, required this.usuario});
+  HomePage({super.key});
   final SesionController sesion = Get.find<SesionController>();
   
 @override
 Widget build(BuildContext context) {
   return Scaffold(
     appBar: AppBar(
-      title: Text('Bienvenido, ${usuario.nombre}'),
+      title: Text('Bienvenido, ${sesion.usuario.nombre}'),
       leadingWidth: 70,
       automaticallyImplyLeading: false,
       leading: Padding(

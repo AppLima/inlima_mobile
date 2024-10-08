@@ -12,6 +12,7 @@ class PaginaPrincipalPage extends StatelessWidget {
 
   Widget _buildBody(BuildContext context) {
     return SafeArea(
+      top: false,
       child: Stack(
         children: [
           Container(

@@ -7,12 +7,10 @@ import 'package:inlima_mobile/pages/survey_description/survey_description_contro
 class SurveyDescription extends StatelessWidget {
   final SurveyDescriptionController control =
       Get.put(SurveyDescriptionController());
-  final Sondeo sondeo;
-  SurveyDescription({super.key, required this.sondeo});
+  SurveyDescription({super.key});
 
-  Widget _buildBody(BuildContext context) {
-    final size =
-        MediaQuery.of(context).size; // Para obtener el tamaño de la pantalla
+  Widget _buildBody(BuildContext context, Sondeo sondeo) {
+    final size = MediaQuery.of(context).size; // Para obtener el tamaño de la pantalla
 
     return Scaffold(
       appBar: AppBar(
@@ -122,9 +120,7 @@ class SurveyDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /*final Map<String, dynamic> args =
-        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-    Sondeo sondeo = Sondeo.fromMap(args);*/
-    return _buildBody(context);
+  final Sondeo sondeo = ModalRoute.of(context)!.settings.arguments as Sondeo;
+    return _buildBody(context, sondeo);
   }
 }

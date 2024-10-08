@@ -24,7 +24,7 @@ class Sondeo {
   });
 
   // Método toJSON
-  Map<String, dynamic> toJSON() {
+  String toJSON() {
     final map = {
       'id_sondeo': idSondeo,
       'titulo': titulo,
@@ -36,7 +36,7 @@ class Sondeo {
       'disponible': disponible,
       'id_municipalidad': idMunicipalidad,
     };
-    return map;
+    return jsonEncode(map);
   }
 
   // Método fromMap
