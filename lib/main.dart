@@ -10,8 +10,11 @@ import 'pages/complaint/complaint_page.dart';
 import 'pages/description/description_page.dart';
 import 'configs/app_theme.dart';
 import 'package:inlima_mobile/models/usuario.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -37,7 +40,7 @@ class MyApp extends StatelessWidget {
         '/description': (context) => const DescriptionPage(), //Realizar queja
         '/survey': (context) => SurveyPage(), //Sondeos disponibles
         '/survey_description' : (context) => SurveyDescription(),//Detalles de sondeo
-        '/survey_creation' : (context) => SurveyCreationPage(),//Crear sondeo (Admin)
+        '/survey_creation' : (context) => SurveyCreationPage()//Crear sondeo (Admin)
       },
     );
   }

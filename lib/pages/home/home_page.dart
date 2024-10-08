@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:inlima_mobile/_global_controllers/sesion_controller.dart';
 import 'package:inlima_mobile/pages/complaint/complaint_page.dart';
 import 'package:inlima_mobile/pages/survey/survey.dart';
-
 class HomePage extends StatelessWidget {
   HomePage({super.key});
   final SesionController sesion = Get.find<SesionController>();
@@ -53,5 +52,4 @@ Widget build(BuildContext context) {
     )
   );
 }
-
 }

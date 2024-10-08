@@ -3,6 +3,7 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import '../../components/inlima_appbar.dart';
 import '../../components/button_simple.dart';
+import './description_controller.dart';
 
 class DescriptionPage extends StatefulWidget {
   const DescriptionPage({Key? key}) : super(key: key);
@@ -14,6 +15,64 @@ class DescriptionPage extends StatefulWidget {
 class _DescriptionPageState extends State<DescriptionPage> {
   final ImagePicker _picker = ImagePicker();
   List<File> _selectedImages = [];
+  final DescriptionController _controller = DescriptionController();
+
+  final _descriptionController = TextEditingController();
+  final _locationController = TextEditingController();
+  final _districtController = TextEditingController();
+
+  String? _descriptionError;
+  String? _locationError;
+  String? _districtError;
+  String? _adviseContent;
+
+  Future<void> _enviar() async {
+
+    bool isValid = false;
+
+    setState(() {
+      isValid = _validateFields();
+    });
+
+    if (isValid) {
+      List<String> downloadUrls = [];
+
+      if (_selectedImages.isNotEmpty) {
+        downloadUrls = await _controller.uploadImages(_selectedImages);
+      }
+
+      final description = _descriptionController.text.trim();
+      final location = _locationController.text.trim();
+      final district = _districtController.text.trim();
+      _controller.printDetails(description, location, district, downloadUrls);
+
+      setState(() {
+        _adviseContent = "Queja enviada con éxito";
+      });
+    }
+  }
+
+  String? _getAdviseContent() {
+    return _adviseContent;
+  }
+
+  String? _getAdviseRoute() {
+    return _adviseContent != null ? "/complaint" : null;
+  }
+
+  bool _validateFields() {
+    final description = _descriptionController.text.trim();
+    final location = _locationController.text.trim();
+    final district = _districtController.text.trim();
+
+    setState(() {
+      _descriptionError = description.isEmpty ? 'Por favor ingrese una descripción.' : null;
+      _locationError = location.isEmpty ? 'Por favor ingrese una ubicación.' : null;
+      _districtError = district.isEmpty ? 'Por favor ingrese el distrito.' : null;
+    });
+
+    return _descriptionError == null && _locationError == null && _districtError == null;
+  }
 
   Future<void> _takePhoto() async {
     final pickedImage = await _picker.pickImage(source: ImageSource.camera);
@@ -43,8 +102,8 @@ class _DescriptionPageState extends State<DescriptionPage> {
 
   @override
   Widget build(BuildContext context) {
-    // Recibe el asunto pasado como argumento
     final String? asunto = ModalRoute.of(context)?.settings.arguments as String?;
+    print(asunto);
 
     return Scaffold(
       appBar: const InLimaAppBar(),
@@ -54,7 +113,6 @@ class _DescriptionPageState extends State<DescriptionPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Muestra el asunto como el título de la pantalla
               Text(
                 asunto ?? 'Descripción',
                 style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
@@ -66,9 +124,11 @@ class _DescriptionPageState extends State<DescriptionPage> {
               ),
               const SizedBox(height: 8),
               TextField(
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
+                controller: _descriptionController,
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
                   hintText: 'Escribe la descripción aquí...',
+                  errorText: _descriptionError,
                 ),
                 maxLines: 3,
               ),
@@ -79,9 +139,11 @@ class _DescriptionPageState extends State<DescriptionPage> {
               ),
               const SizedBox(height: 8),
               TextField(
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
+                controller: _locationController,
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
                   hintText: 'Escribe la ubicación aquí...',
+                  errorText: _locationError,
                 ),
               ),
               const SizedBox(height: 16),
@@ -91,9 +153,11 @@ class _DescriptionPageState extends State<DescriptionPage> {
               ),
               const SizedBox(height: 8),
               TextField(
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
+                controller: _districtController,
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
                   hintText: 'Escriba el distrito del incidente aquí...',
+                  errorText: _districtError,
                 ),
               ),
               const SizedBox(height: 16),
@@ -102,8 +166,6 @@ class _DescriptionPageState extends State<DescriptionPage> {
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
-              
-              // Botones para tomar o seleccionar fotos
               Row(
                 children: [
                   ElevatedButton(
@@ -117,7 +179,6 @@ class _DescriptionPageState extends State<DescriptionPage> {
                   ),
                 ],
               ),
-              
               const SizedBox(height: 16),
               _selectedImages.isEmpty
                   ? const Text('No se han adjuntado fotos.')
@@ -137,15 +198,16 @@ class _DescriptionPageState extends State<DescriptionPage> {
                         );
                       },
                     ),
-              
               const SizedBox(height: 16),
+
               ButtonSimple(
                 text: 'Enviar',
                 enabled: true,
-                adviseContent: 'Queja enviada con éxito',
-                onPressed: () {
-                  print('Botón Enviar presionado');
+                adviseContent: _getAdviseContent(),
+                onPressed: () async {
+                  await _enviar();
                 },
+                adviseRoute: _getAdviseRoute(),
               ),
             ],
           ),
