@@ -9,7 +9,7 @@ class InicioPage extends StatelessWidget {
   final InicioController control = InicioController();
   final bool isRegister;
 
-  InicioPage({required this.isRegister}) {
+  InicioPage({super.key, required this.isRegister}) {
     control.isLogin.value = !isRegister;
   }
 
@@ -66,79 +66,35 @@ class InicioPage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  child: SingleChildScrollView(
-                    padding: EdgeInsets.only(left: 30, top: 20, bottom: 20, right: 30),
-                    child: Column(
-                      children: [
-                        // Tabs para cambiar entre Login y Register
-                        ValueListenableBuilder<bool>(
-                          valueListenable: control.isLogin,
-                          builder: (context, isLogin, child) {
-                            return Tabs(
-                              isLogin: isLogin,
-                              onLoginTap: () {
-                                control.isLogin.value = true;
-                              },
-                              onRegisterTap: () {
-                                control.isLogin.value = false;
-                              },
-                            );
-                          },
-                        ),
-                        const SizedBox(height: 20),
-                        // Título del formulario
-                        ValueListenableBuilder<bool>(
-                          valueListenable: control.isLogin,
-                          builder: (context, isLogin, child) {
-                            return Text(
-                              control.getWelcomeText(),
-                              style: const TextStyle(
-                                fontSize: 22,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            );
-                          },
-                        ),
-                        const SizedBox(height: 20),
-                        CustomTextField(labelText: 'Correo',inputType: TextInputType.emailAddress,controller: control.emailController,),
-                        CustomTextField(labelText: 'Contraseña',inputType: TextInputType.text,controller: control.passwordController,obscureText: true,),
-                        // Si no es login, mostramos los campos adicionales
-                        ValueListenableBuilder<bool>(
-                          valueListenable: control.isLogin,
-                          builder: (context, isLogin, child) {
-                            if (!isLogin) {
-                              return Column(
-                                children: [
-                                  CustomTextField(labelText: 'DNI',inputType: TextInputType.number,controller: control.dniController,),
-                                  CustomTextField(labelText: 'Nombres',inputType: TextInputType.text,controller: control.nombresController,),
-                                  CustomTextField(labelText: 'Apellido Paterno',inputType: TextInputType.text,controller: control.apellidoPaternoController,),
-                                  CustomTextField(labelText: 'Apellido Materno',inputType: TextInputType.text,controller: control.apellidoMaternoController,),
-                                  CustomTextField(labelText: 'Teléfono',inputType: TextInputType.phone,controller: control.telefonoController,),
-                                  CustomTextField(labelText: 'Distrito Actual',inputType: TextInputType.text,controller: control.distritoController,),
-                                ],
-                              );
-                            } else {
-                              return Container();
-                            }
-                          },
-                        ),
-                        const SizedBox(height: 30),
-                        // Botón de acción
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 30),
-                          child: LargeButton(
-                            title: control.getButtonText(),
-                            onPressed: () {
-                              control.handleAction(context);
-                            },
-                            backgroundColor: AppColors.primaryColorInlima,
-                            borderRadius: BorderRadius.circular(30),
-                            textColor: Colors.white,
-                            height: 50.0,
-                          ),
-                        ),
-                      ],
-                    ),
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      // Se usa scroll solo si es registro
+                      return ValueListenableBuilder<bool>(
+                        valueListenable: control.isLogin,
+                        builder: (context, isLogin, child) {
+                          return isLogin
+                              ? Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 30, vertical: 20),
+                                  child:
+                                      _buildLoginContent(constraints, context),
+                                )
+                              : SingleChildScrollView(
+                                  padding: EdgeInsets.only(
+                                    left: 30,
+                                    top: 20,
+                                    bottom: MediaQuery.of(context)
+                                            .viewInsets
+                                            .bottom +
+                                        20,
+                                    right: 30,
+                                  ),
+                                  child: _buildRegisterContent(
+                                      constraints, context),
+                                );
+                        },
+                      );
+                    },
                   ),
                 ),
               ),
@@ -150,10 +106,97 @@ class InicioPage extends StatelessWidget {
     );
   }
 
+  Widget _buildLoginContent(BoxConstraints constraints, BuildContext context) {
+    return Column(
+      children: [
+        Tabs(
+          isLogin: true,
+          onLoginTap: () {},
+          onRegisterTap: () {
+            control.isLogin.value = false;
+          },
+        ),
+        const SizedBox(height: 20),
+        Text(
+          control.getWelcomeText(),
+          style: const TextStyle(
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 20),
+        CustomTextField(labelText: 'Correo',inputType: TextInputType.emailAddress,controller: control.emailController,),
+        CustomTextField(labelText: 'Contraseña',inputType: TextInputType.text,controller: control.passwordController,obscureText: true,),
+        const SizedBox(height: 30),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30),
+          child: LargeButton(
+            title: control.getButtonText(),
+            onPressed: () {
+              control.handleAction(context);
+            },
+            backgroundColor: AppColors.primaryColorInlima,
+            borderRadius: BorderRadius.circular(30),
+            textColor: Colors.white,
+            height: 50.0,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildRegisterContent(
+      BoxConstraints constraints, BuildContext context) {
+    return IntrinsicHeight(
+      child: Column(
+        children: [
+          Tabs(
+            isLogin: false,
+            onLoginTap: () {
+              control.isLogin.value = true;
+            },
+            onRegisterTap: () {},
+          ),
+          const SizedBox(height: 20),
+          Text(
+            control.getWelcomeText(),
+            style: const TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 20),
+          CustomTextField(labelText: 'Correo',inputType: TextInputType.emailAddress,controller: control.emailController,),
+          CustomTextField(labelText: 'Contraseña',inputType: TextInputType.text,controller: control.passwordController,obscureText: true,),
+          CustomTextField(labelText: 'DNI',inputType: TextInputType.number,controller: control.dniController,),
+          CustomTextField(labelText: 'Nombres',inputType: TextInputType.text,controller: control.nombresController,),
+          CustomTextField(labelText: 'Apellido Paterno',inputType: TextInputType.text,controller: control.apellidoPaternoController,),
+          CustomTextField(labelText: 'Apellido Materno',inputType: TextInputType.text,controller: control.apellidoMaternoController,),
+          CustomTextField(labelText: 'Teléfono',inputType: TextInputType.phone,controller: control.telefonoController,),
+          CustomTextField(labelText: 'Distrito Actual',inputType: TextInputType.text,controller: control.distritoController,),
+          const SizedBox(height: 30),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30),
+            child: LargeButton(
+              title: control.getButtonText(),
+              onPressed: () {
+                control.handleAction(context);
+              },
+              backgroundColor: AppColors.primaryColorInlima,
+              borderRadius: BorderRadius.circular(30),
+              textColor: Colors.white,
+              height: 50.0,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false, 
+      resizeToAvoidBottomInset: false,
       body: _buildBody(context),
     );
   }
