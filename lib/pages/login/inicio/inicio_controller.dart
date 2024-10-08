@@ -95,12 +95,34 @@ class InicioController {
         usuarioId: usuario.idUsuario,
       );
 
+      // Guardar el usuario y ciudadano en sus respectivos servicios
       await usuarioService.addUsuario(usuario);
       await ciudadanoService.addCiudadano(ciudadano);
 
+      // Mostrar éxito
       _showSuccess(context, "Registro exitoso");
+
+      // Limpiar los campos después del registro
       limpiarCampos();
       isLogin.value = true;
+
+      // Obtener y mostrar todos los usuarios
+      List<Usuario> usuarios = await usuarioService.fetchAll();
+      List<Ciudadano> ciudadanos = await ciudadanoService.fetchAll();
+
+      print("Usuarios registrados:");
+      for (var user in usuarios) {
+        print(user
+            .toJson()); // Aquí asumo que tienes un método toJson() o puedes personalizar cómo mostrar los datos
+      }
+
+      print("Ciudadanos registrados:");
+      for (var citizen in ciudadanos) {
+        print(
+            citizen.toJson()); // Aquí también puedes personalizar la impresión
+      }
+
+      // Navegar a la página de inicio después del registro
       Navigator.of(context).pushReplacementNamed('/login/inicio');
     } catch (e) {
       _showError(context, "Error al registrar usuario: $e");
