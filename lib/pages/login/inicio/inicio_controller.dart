@@ -5,10 +5,10 @@ import 'package:inlima_mobile/models/ciudadano.dart';
 import 'package:inlima_mobile/models/usuario.dart';
 import 'package:inlima_mobile/services/usuario_service.dart';
 import 'package:inlima_mobile/services/ciudadano_service.dart';
+import 'dart:convert'; // Necesario para convertir a JSON
 
 class InicioController {
   ValueNotifier<bool> isLogin = ValueNotifier(true);
-  final SesionController sesion = Get.put(SesionController());
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -18,16 +18,15 @@ class InicioController {
   final apellidoMaternoController = TextEditingController();
   final telefonoController = TextEditingController();
   final distritoController = TextEditingController();
-  final sexoController = TextEditingController();
   final UsuarioService usuarioService = UsuarioService();
   final CiudadanoService ciudadanoService = CiudadanoService();
-  
-  void toggleTab() {
-    isLogin.value = !isLogin.value;
-  }
-
+  final SesionController sesion = Get.put(SesionController());  
   String getWelcomeText() {
     return isLogin.value ? 'Bienvenido a inLima' : 'Regístrate en inLima';
+  }
+
+  String getButtonText() {
+    return isLogin.value ? 'Entrar' : 'Registrarse';
   }
 
   Future<void> handleAction(BuildContext context) async {
@@ -37,40 +36,26 @@ class InicioController {
       await register(context);
     }
   }
-  
-  List<Widget> getAdditionalFields() {
-    return [
-      const SizedBox(height: 20),
-      _buildTextField(dniController, 'DNI'),
-      const SizedBox(height: 20),
-      _buildTextField(nombresController, 'Nombres'),
-      const SizedBox(height: 20),
-      _buildTextField(apellidoPaternoController, 'Apellido Paterno'),
-      const SizedBox(height: 20),
-      _buildTextField(apellidoMaternoController, 'Apellido Materno'),
-      const SizedBox(height: 20),
-      _buildTextField(telefonoController, 'Teléfono'),
-      const SizedBox(height: 20),
-      _buildTextField(distritoController, 'Distrito Actual'),
-    ];
-  }
-
-  String getButtonText() {
-    return isLogin.value ? 'Entrar' : 'Registrarse';
-  }
 
   Future<void> login(BuildContext context) async {
     try {
+      // Verifica si los campos están vacíos
       if (_areFieldsEmpty([emailController, passwordController])) {
         _showError(context, "Correo y contraseña son obligatorios");
         return;
       }
-      Usuario usuario = await usuarioService.findByEmail(emailController.text);
-      if (usuario.password == passwordController.text) {
-        Usuario usuarioEncontrado = usuario;
-        sesion.iniciarSesion(usuario); //guarda usuario en global controller
+
+      // Busca el usuario por correo
+      Usuario usuarioEncontrado =
+          await usuarioService.findByEmail(emailController.text);
+
+      // Si el usuario se encuentra, procede a verificar la contraseña (ejemplo básico)
+      if (usuarioEncontrado != null &&
+          usuarioEncontrado.password == passwordController.text) {
+        // Actualiza el controlador de sesión con el usuario logueado
+        sesion.iniciarSesion(usuarioEncontrado);
         _showSuccess(context, "Inicio de sesión exitoso");
-        Navigator.of(context).pushReplacementNamed('/home', arguments: usuarioEncontrado);
+        Navigator.of(context).pushReplacementNamed('/home');
       } else {
         _showError(context, "Correo o contraseña incorrectos");
       }
@@ -103,7 +88,7 @@ class InicioController {
         apellidoPaterno: apellidoPaternoController.text,
         apellidoMaterno: apellidoMaternoController.text,
         rolId: 2,
-        sexoId: 1,
+        sexoId: 2,
       );
 
       final ciudadano = Ciudadano(
@@ -113,13 +98,34 @@ class InicioController {
         usuarioId: usuario.idUsuario,
       );
 
-      //await usuarioService.addUsuario(usuario);
-      //await ciudadanoService.addCiudadano(ciudadano);
-      print("========== Usuario registrado ============");
-      print(usuario.toJson());
+      // Guardar el usuario y ciudadano en sus respectivos servicios
+      await usuarioService.addUsuario(usuario);
+      await ciudadanoService.addCiudadano(ciudadano);
+
+      // Mostrar éxito
       _showSuccess(context, "Registro exitoso");
+
+      // Limpiar los campos después del registro
       limpiarCampos();
       isLogin.value = true;
+
+      // Obtener y mostrar todos los usuarios
+      List<Usuario> usuarios = await usuarioService.fetchAll();
+      List<Ciudadano> ciudadanos = await ciudadanoService.fetchAll();
+
+      print("Usuarios registrados:");
+      for (var user in usuarios) {
+        print(user
+            .toJson()); // Aquí asumo que tienes un método toJson() o puedes personalizar cómo mostrar los datos
+      }
+
+      print("Ciudadanos registrados:");
+      for (var citizen in ciudadanos) {
+        print(
+            citizen.toJson()); // Aquí también puedes personalizar la impresión
+      }
+
+      // Navegar a la página de inicio después del registro
       Navigator.of(context).pushReplacementNamed('/login/inicio');
     } catch (e) {
       _showError(context, "Error al registrar usuario: $e");
@@ -198,17 +204,5 @@ class InicioController {
   void _showSuccess(BuildContext context, String message) {
     ScaffoldMessenger.of(context)
         .showSnackBar(SnackBar(content: Text(message)));
-  }
-
-  Widget _buildTextField(TextEditingController controller, String labelText) {
-    return TextField(
-      controller: controller,
-      decoration: InputDecoration(
-        labelText: labelText,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-      ),
-    );
   }
 }
