@@ -32,7 +32,7 @@ dependencies:
   flutter:
     sdk: flutter
   firebase_core: ^2.15.0
-  firebase_storage: ^11.0.16
+  firebase_storage: ^11.6.5
   cached_network_image: ^3.2.3
   image_picker: ^1.0.4+1
   cupertino_icons: ^1.0.8
@@ -73,7 +73,6 @@ flutter:
   uses-material-design: true
   # To add assets to your application, add an assets section, like this:
   assets:
-<<<<<<< HEAD
     - assets/img_app/inlima_logo.png
     - assets/json/quejas.json
     - assets/json/usuarios.json
@@ -85,13 +84,10 @@ flutter:
     - assets/login/inlima.png
     - assets/login/LI_3.svg
     - assets/login/nombre_logo.svg
-=======
     - assets/img_app/
     - assets/json/
     - assets/login/
-
->>>>>>> 4c50c64a3fbd9cab84d0bbee5b0ce619557caade
-
+    
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 

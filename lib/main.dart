@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:inlima_mobile/pages/home/home_page.dart';
 import 'package:inlima_mobile/pages/login/inicio/inicio_page.dart';
 import 'package:inlima_mobile/pages/login/pagina_principal/pagina_principal.dart';
-import 'package:inlima_mobile/pages/survey/survey.dart';
-import 'package:inlima_mobile/pages/survey_description/survey_description.dart';
 import 'pages/complaint/complaint_page.dart';
 import 'pages/description/description_page.dart';
 import 'configs/app_theme.dart';
 import 'package:inlima_mobile/models/usuario.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
       darkTheme: AppTheme.darkTheme(), // Tema oscuro
       themeMode: ThemeMode.system,
 
-      initialRoute: '/login/pagina_principal',
+      initialRoute: '/login/inicio',
 
       onGenerateRoute: (settings) {
         if (settings.name == '/home') {
