@@ -8,6 +8,7 @@ import 'package:inlima_mobile/pages/perfil/perfil_page.dart';
 import 'package:inlima_mobile/pages/survey/survey.dart';
 import 'package:inlima_mobile/pages/survey_creation/survey_creation.dart';
 import 'package:inlima_mobile/pages/survey_description/survey_description.dart';
+import 'pages/search/search_page.dart';
 import 'pages/complaint/complaint_page.dart';
 import 'pages/description/description_page.dart';
 import 'configs/app_theme.dart';
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(title: const Text('Inlima')),
       ),
-      initialRoute: '/login/pagina_principal',
+      initialRoute: '/search',
       routes: {
         '/login/pagina_principal': (context) => PaginaPrincipalPage(),
         '/login/inicio': (context) => InicioPage(isRegister: false), //login - register
@@ -44,7 +45,8 @@ class MyApp extends StatelessWidget {
         '/description': (context) => const DescriptionPage(), //Realizar queja
         '/survey': (context) => SurveyPage(), //Sondeos disponibles
         '/survey_description' : (context) => SurveyDescription(),//Detalles de sondeo
-        '/survey_creation' : (context) => SurveyCreationPage()//Crear sondeo (Admin)
+        '/survey_creation' : (context) => SurveyCreationPage(),//Crear sondeo (Admin)
+        '/search' : (context) => SearchPage(),
       },
     );
   }

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../components/complaint_button_card.dart';
 import './complaint_controller.dart';
-import '../../components/inlima_appbar.dart';
 
 class ComplaintPage extends StatelessWidget {
   final ComplaintController complaintController = Get.put(ComplaintController());
