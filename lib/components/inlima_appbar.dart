@@ -3,14 +3,14 @@ import '../configs/colors.dart';
 
 
 class InLimaAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const InLimaAppBar({Key? key}) : super(key: key);
+  const InLimaAppBar({super.key});
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       centerTitle: false,
       title: Image.asset(
-        'assets/img_app/inlima_logo.png',
+        'assets/img_app/inLima_text.png',
         height: 60,
         fit: BoxFit.contain,
       ),

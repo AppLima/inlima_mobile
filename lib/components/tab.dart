@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:inlima_mobile/configs/colors.dart';
 
 class Tabs extends StatelessWidget {
-  final bool isLogin; 
-  final VoidCallback onLoginTap; 
-  final VoidCallback onRegisterTap; 
+  final bool isLogin;
+  final VoidCallback onLoginTap;
+  final VoidCallback onRegisterTap;
 
   Tabs({
     required this.isLogin,
@@ -15,17 +15,18 @@ class Tabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: MediaQuery.of(context).size.width * 0.85,
       decoration: BoxDecoration(
-        color: AppColors.lightGreyInlima, 
+        color: AppColors.lightGreyInlima,
         borderRadius: BorderRadius.circular(100),
       ),
       child: Stack(
         children: [
           AnimatedAlign(
-            duration: Duration(milliseconds: 300),
+            duration: const Duration(milliseconds: 180),
             alignment: isLogin ? Alignment.centerLeft : Alignment.centerRight,
             child: Container(
-              width: MediaQuery.of(context).size.width * 0.4,
+              width: MediaQuery.of(context).size.width * 0.38,
               height: 40,
               decoration: BoxDecoration(
                 color: AppColors.tertiaryColorInlima,
@@ -37,11 +38,11 @@ class Tabs extends StatelessWidget {
             children: [
               Expanded(
                 child: GestureDetector(
-                  onTap: onLoginTap, 
+                  onTap: onLoginTap,
                   child: Container(
-                    height: 40, 
+                    height: 40,
                     alignment: Alignment.center,
-                    color: Colors.transparent, 
+                    color: Colors.transparent,
                     child: Text(
                       'Iniciar sesión',
                       style: TextStyle(
@@ -54,11 +55,11 @@ class Tabs extends StatelessWidget {
               ),
               Expanded(
                 child: GestureDetector(
-                  onTap: onRegisterTap, 
+                  onTap: onRegisterTap,
                   child: Container(
-                    height: 40, 
-                    alignment: Alignment.center, 
-                    color: Colors.transparent, 
+                    height: 40,
+                    alignment: Alignment.center,
+                    color: Colors.transparent,
                     child: Text(
                       'Registrarse',
                       style: TextStyle(

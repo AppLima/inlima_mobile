@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 class Advise {
   final String content;
   final String? route;
-
+  final bool previousPage;
   Advise({
     required this.content,
     this.route,
+    this.previousPage = false
   });
 
   void show(BuildContext context) {
@@ -25,6 +26,9 @@ class Advise {
               Navigator.pop(context, 'Continuar');
               if (route != null) {
                 Navigator.pushNamed(context, route!);
+              }
+              if(previousPage){
+                Navigator.pop(context);
               }
             },
             child: const Text('Aceptar'),

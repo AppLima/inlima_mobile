@@ -66,6 +66,19 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: AppColors.blackInlima,    // Dark blue background for navbar
         onTap: _onItemTapped,                               // Tap handler to switch tabs
       ),
-    );
-  }
+      Center(
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ComplaintPage()),
+            );
+          },
+          child: const Text('Realizar una queja'),
+        ),
+      ),
+      ],
+    )
+  );
+}
 }
