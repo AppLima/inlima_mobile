@@ -1,17 +1,28 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:path_provider/path_provider.dart';
 import 'package:inlima_mobile/models/usuario.dart';
 
 class UsuarioService {
-  final String _fileName = 'usuarios3.json';
+  final String _fileName = 'usuarios_local.json'; // Archivo local donde se guardarán las modificaciones
+  bool _initialized = false;
+
+  // Método para inicializar el archivo local si no existe
+  Future<void> _initializeFile() async {
+    final file = await _getFile();
+    if (!await file.exists()) {
+      // Si el archivo no existe, copiar el contenido de assets/usuarios.json
+      final String content = await rootBundle.loadString('assets/json/usuarios.json');
+      await file.writeAsString(content);
+    }
+    _initialized = true;
+  }
 
   // Obtiene todos los usuarios desde el archivo
   Future<List<Usuario>> fetchAll() async {
+    if (!_initialized) await _initializeFile(); // Asegúrate de que el archivo local esté inicializado
     final file = await _getFile();
-    if (!await file.exists()) {
-      return [];
-    }
     final String content = await file.readAsString();
     final List<dynamic> data = jsonDecode(content);
     return data.map((usuario) => Usuario.fromMap(usuario)).toList();
