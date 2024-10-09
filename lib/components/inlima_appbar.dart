@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import '../configs/colors.dart';
 
 class InLimaAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const InLimaAppBar({super.key});
+  final bool isInPerfil; // Parámetro para controlar si está en la página de perfil
+
+  const InLimaAppBar({super.key, this.isInPerfil = false}); // Constructor con el parámetro
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      backgroundColor: AppColors.primaryColorInlima, // Color de fondo del AppBar
       leading: IconButton(
         icon: const Icon(Icons.menu),
         iconSize: 40,
@@ -23,11 +26,15 @@ class InLimaAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: [
         IconButton(
-          icon: const Icon(Icons.account_circle),
+          icon: isInPerfil ? const Icon(Icons.close) : const Icon(Icons.account_circle), // Cambia entre la X o el ícono de perfil
           iconSize: 40,
           color: AppColors.lightGreyInlima,
           onPressed: () {
-            // Acción del ícono de usuario
+            if (isInPerfil) {
+              Navigator.pop(context); // Si está en perfil, vuelve a la página anterior
+            } else {
+              Navigator.pushNamed(context, "/perfil"); // Si no, navega al perfil
+            }
           },
         ),
       ],

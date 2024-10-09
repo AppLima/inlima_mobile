@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:inlima_mobile/components/bottomnavigatorbar.dart';
 import 'dart:io'; // Necesario para manejar archivos locales
 import 'package:inlima_mobile/components/customtextfield.dart'; // Asegúrate de importar tu CustomTextField
+import 'package:inlima_mobile/components/inlima_appbar.dart'; // Aquí haces referencia al InLimaAppBar
 import 'package:inlima_mobile/components/large_button.dart'; // Importa tu LargeButton
 import 'package:inlima_mobile/configs/colors.dart';
+import 'package:inlima_mobile/pages/confi_biometrica/confi_biometrica_page.dart';
 import 'package:inlima_mobile/pages/perfil/perfil_controller.dart'; // Importa tu PerfilController
 import 'package:inlima_mobile/_global_controllers/sesion_controller.dart'; // Importa tu SesionController
 
 class PerfilPage extends StatelessWidget {
   final PerfilController perfilController = Get.put(PerfilController());
-  final SesionController sesionController =
-      Get.put(SesionController()); // Instanciar el controlador de sesión
+  final SesionController sesionController = Get.put(SesionController()); // Instanciar el controlador de sesión
 
   // Método que autorrellena los campos con los datos del usuario logueado
   void _autoRellenarCampos() {
@@ -41,7 +43,6 @@ class PerfilPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Título de la página
             Center(
               child: Text(
                 'AJUSTE DE PERFIL',
@@ -52,45 +53,6 @@ class PerfilPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 30), // Espacio entre el título y los campos
-
-            // Campos de texto
-            CustomTextField(
-              labelText: 'Correo',
-              inputType: TextInputType.emailAddress,
-              controller: perfilController.emailController,
-            ),
-            CustomTextField(
-              labelText: 'Contraseña',
-              inputType: TextInputType.text,
-              controller: perfilController.passwordController,
-              obscureText: true,
-            ),
-            CustomTextField(
-              labelText: 'DNI',
-              inputType: TextInputType.number,
-              controller: perfilController.dniController,
-            ),
-            CustomTextField(
-              labelText: 'Nombre',
-              inputType: TextInputType.text,
-              controller: perfilController.nombreController,
-            ),
-            CustomTextField(
-              labelText: 'Apellido Paterno',
-              inputType: TextInputType.text,
-              controller: perfilController.apellidoPaternoController,
-            ),
-            CustomTextField(
-              labelText: 'Apellido Materno',
-              inputType: TextInputType.text,
-              controller: perfilController.apellidoMaternoController,
-            ),
-            CustomTextField(
-              labelText: 'Distrito actual',
-              inputType: TextInputType.text,
-              controller: perfilController.distritoController,
-            ),
-            const SizedBox(height: 20),
 
             // Sección de la foto de perfil
             Center(
@@ -148,31 +110,75 @@ class PerfilPage extends StatelessWidget {
                 );
               }),
             ),
-
+            // Campos de texto
+            CustomTextField(
+              labelText: 'Correo',
+              inputType: TextInputType.emailAddress,
+              controller: perfilController.emailController,
+            ),
+            CustomTextField(
+              labelText: 'Contraseña',
+              inputType: TextInputType.text,
+              controller: perfilController.passwordController,
+              obscureText: true,
+            ),
+            CustomTextField(
+              labelText: 'DNI',
+              inputType: TextInputType.number,
+              controller: perfilController.dniController,
+            ),
+            CustomTextField(
+              labelText: 'Nombre',
+              inputType: TextInputType.text,
+              controller: perfilController.nombreController,
+            ),
+            CustomTextField(
+              labelText: 'Apellido Paterno',
+              inputType: TextInputType.text,
+              controller: perfilController.apellidoPaternoController,
+            ),
+            CustomTextField(
+              labelText: 'Apellido Materno',
+              inputType: TextInputType.text,
+              controller: perfilController.apellidoMaternoController,
+            ),
+            CustomTextField(
+              labelText: 'Distrito actual',
+              inputType: TextInputType.text,
+              controller: perfilController.distritoController,
+            ),
             // Botón Actualizar usando LargeButton
             Center(
-              child: LargeButton(
-                title: 'Actualizar',
-                onPressed: () {
-                  perfilController.actualizarPerfil();
-                },
-                backgroundColor: AppColors.secondaryColorInlima,
-                textColor: Colors.white,
-                borderRadius: BorderRadius.circular(30),
-                height: 50.0,
-                width: 200.0, // Ajusta el tamaño del botón si es necesario
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  LargeButton(
+                    title: 'Configuración Biométrica',
+                    onPressed: () {
+                      Navigator.pushNamed(context, "/confi_biometrica");
+                    },
+                    backgroundColor: AppColors.textColorLightGray,
+                    textColor: Colors.white,
+                    borderRadius: BorderRadius.circular(30),
+                    height: 50.0,
+                    width: 150.0, // Ajusta el tamaño del botón si es necesario
+                  ),
+                  SizedBox(height: 20), // Espacio entre los dos botones
+                  LargeButton(
+                    title: 'Actualizar',
+                    onPressed: () {
+                      perfilController.actualizarPerfil();
+                    },
+                    backgroundColor: AppColors.secondaryColorInlima,
+                    textColor: Colors.white,
+                    borderRadius: BorderRadius.circular(30),
+                    height: 50.0,
+                    width: 200.0, // Ajusta el tamaño del botón si es necesario
+                  ),
+                ],
               ),
             ),
-
             const SizedBox(height: 30),
-
-            // Logo Municipalidad
-            Center(
-              child: Image.asset(
-                'assets/lima_logo.png', // Cambia por la ruta de la imagen de la Municipalidad de Lima
-                height: 100,
-              ),
-            ),
           ],
         ),
       ),
@@ -181,12 +187,10 @@ class PerfilPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        resizeToAvoidBottomInset: false,
-        appBar: null, // No AppBar
-        body: _buildBody(context), // Todo el contenido está en _buildBody
-      ),
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: const InLimaAppBar(isInPerfil: true), // Aquí se pasa el parámetro isInPerfil
+      body: _buildBody(context), // Todo el contenido está en _buildBody
     );
   }
 }

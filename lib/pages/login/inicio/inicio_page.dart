@@ -134,6 +134,7 @@ class InicioPage extends StatelessWidget {
           child: LargeButton(
             title: control.getButtonText(),
             onPressed: () {
+              FocusScope.of(context).unfocus();
               control.handleAction(context);
             },
             backgroundColor: AppColors.primaryColorInlima,

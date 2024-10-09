@@ -24,8 +24,8 @@ class LargeButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: width ?? double.infinity,  // Se mantiene el valor por defecto de double.infinity si no se especifica el width
-      height: height ?? 30.0,  // Si no se especifica el height, se usa 30 píxeles por defecto
+      width: width ?? double.infinity,  // Ancho por defecto
+      height: height ?? 50.0,  // Altura por defecto
       child: ElevatedButton(
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(
@@ -35,9 +35,15 @@ class LargeButton extends StatelessWidget {
           )),
         ),
         onPressed: onPressed,
-        child: Text(
-          title,
-          style: TextStyle(color: textColor ?? AppColors.textColorWhite),
+        child: Center(  // Asegura que el contenido del botón esté centrado
+          child: Text(
+            title,
+            style: TextStyle(
+              color: textColor ?? AppColors.textColorWhite,
+              fontSize: 16,  // Tamaño del texto ajustado (puedes modificarlo)
+            ),
+            textAlign: TextAlign.center,  // Asegura que el texto esté centrado
+          ),
         ),
       ),
     );

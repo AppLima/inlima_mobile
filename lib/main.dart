@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inlima_mobile/models/sondeo.dart';
+import 'package:inlima_mobile/pages/confi_biometrica/confi_biometrica_page.dart';
 import 'package:inlima_mobile/pages/home/home_page.dart';
 import 'package:inlima_mobile/pages/login/inicio/inicio_page.dart';
 import 'package:inlima_mobile/pages/login/pagina_principal/pagina_principal.dart';
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
         '/login/pagina_principal': (context) => PaginaPrincipalPage(),
         '/login/inicio': (context) => InicioPage(isRegister: false), //login - register
         '/home':  (context) => HomePage(),
+        '/confi_biometrica':  (context) => ConfiBiometricaPage(),
         '/perfil':  (context) => PerfilPage(),
         '/complaint': (context) => ComplaintPage(), //Pantalla de quejas
         '/description': (context) => const DescriptionPage(), //Realizar queja
