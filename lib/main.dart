@@ -3,6 +3,7 @@ import 'package:inlima_mobile/models/sondeo.dart';
 import 'package:inlima_mobile/pages/home/home_page.dart';
 import 'package:inlima_mobile/pages/login/inicio/inicio_page.dart';
 import 'package:inlima_mobile/pages/login/pagina_principal/pagina_principal.dart';
+import 'package:inlima_mobile/pages/perfil/perfil_page.dart';
 import 'package:inlima_mobile/pages/survey/survey.dart';
 import 'package:inlima_mobile/pages/survey_creation/survey_creation.dart';
 import 'package:inlima_mobile/pages/survey_description/survey_description.dart';
@@ -31,11 +32,12 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(title: const Text('Inlima')),
       ),
-      initialRoute: '/login/pagina_principal',
+      initialRoute: '/perfil',
       routes: {
         '/login/pagina_principal': (context) => PaginaPrincipalPage(),
         '/login/inicio': (context) => InicioPage(isRegister: false), //login - register
         '/home':  (context) => HomePage(),
+        '/perfil':  (context) => PerfilPage(),
         '/complaint': (context) => ComplaintPage(), //Pantalla de quejas
         '/description': (context) => const DescriptionPage(), //Realizar queja
         '/survey': (context) => SurveyPage(), //Sondeos disponibles

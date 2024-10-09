@@ -37,6 +37,8 @@ void iniciarSesion(Usuario usuario) {
   // Getter para acceder al usuario
   Usuario get usuario => _usuario.value;
 
+  get usuarioActual => null;
+
   // Método para cerrar sesión
   void cerrarSesion() {
     // Reseteamos el usuario a valores por defecto
