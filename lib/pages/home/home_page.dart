@@ -6,9 +6,8 @@ import '../survey/survey.dart'; // Import for Survey Page
 import '../../configs/colors.dart';
 
 class HomePage extends StatefulWidget {
-  final Usuario usuario;
 
-  HomePage({required this.usuario});
+  const HomePage({super.key});
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -36,7 +35,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Bienvenido, ${widget.usuario.nombre}'),
+        title: Text('Bienvenido'),
       ),
       body: Stack(
         children: [
