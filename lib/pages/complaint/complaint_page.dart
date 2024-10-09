@@ -10,7 +10,7 @@ class ComplaintPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const InLimaAppBar(),
+      appBar: null,
       body: Obx(() {
         if (complaintController.complaints.isEmpty) {
           return const Center(child: CircularProgressIndicator());

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inlima_mobile/components/inlima_appbar.dart';
 import 'package:inlima_mobile/models/usuario.dart';
 import '../sos/sos_page.dart';
 import '../complaint/complaint_page.dart'; // Import for Complaint Page
@@ -16,7 +17,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
-  // List of pages connected to the bottom nav bar
   final List<Widget> _pages = [
     ComplaintPage(), // Complaint page
     SOSPage(), // SOS page
@@ -24,7 +24,6 @@ class _HomePageState extends State<HomePage> {
     Center(child: Text('Historial')), // Placeholder for Historial
   ];
 
-  // Update selected tab index when a tab is tapped
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -34,28 +33,10 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Bienvenido'),
-      ),
+      appBar: const InLimaAppBar(),
       body: Stack(
         children: [
-          _pages[_selectedIndex], // Display the selected page
-          // Coloca el botón en el centro de la pantalla
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => ComplaintPage()),
-                  );
-                },
-                child: const Text('Realizar una queja'),
-              ),
-            ),
-          ),
+          _pages[_selectedIndex]
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

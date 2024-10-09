@@ -11,7 +11,7 @@ class SurveyCreationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      appBar: AppBar(title: const Text('Crea un nuevo sondeo')),
+      appBar: null,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(

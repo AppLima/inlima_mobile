@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(title: const Text('Inlima')),
       ),
-      initialRoute: '/perfil',
+      initialRoute: '/login/pagina_principal',
       routes: {
         '/login/pagina_principal': (context) => PaginaPrincipalPage(),
         '/login/inicio': (context) => InicioPage(isRegister: false), //login - register

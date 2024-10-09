@@ -106,7 +106,7 @@ class _DescriptionPageState extends State<DescriptionPage> {
     print(asunto);
 
     return Scaffold(
-      appBar: const InLimaAppBar(),
+      appBar: null,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(

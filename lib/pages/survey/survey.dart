@@ -46,7 +46,7 @@ class SurveyPage extends StatelessWidget {
 @override
 Widget build(BuildContext context) {
   return Scaffold(
-    appBar: AppBar(title: const Text('Sondeos disponibles')),
+    appBar: null,
     body: _buildBody(context),
     floatingActionButton: Obx(() {
       if (sesion.usuario.rolId == 1) {

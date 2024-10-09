@@ -125,9 +125,7 @@ class SurveyDescription extends StatelessWidget {
   Widget build(BuildContext context) {
     final Sondeo sondeo = ModalRoute.of(context)!.settings.arguments as Sondeo;
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Descripción del Proyecto"),
-        ),
+        appBar: null,
         body: _buildBody(context, sondeo));
   }
 }
