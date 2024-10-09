@@ -10,6 +10,11 @@ class AppTheme {
         backgroundColor: AppColors.primaryColorInlima,
         foregroundColor: AppColors.textColorWhite,
       ),
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        backgroundColor: AppColors.tertiaryColorInlima, // Dark blue background
+        selectedItemColor: Colors.white, // White for selected icons
+        unselectedItemColor: Colors.white54, // Slightly transparent white for unselected icons
+      ),
       textTheme: TextTheme(
         displaySmall: TextStyle(
           color: AppColors.textColorBlack,
@@ -30,7 +35,7 @@ class AppTheme {
     );
   }
 
-  // Define el tema oscuro
+  // Define the dark theme
   static ThemeData darkTheme() {
     return ThemeData(
       brightness: Brightness.dark,
@@ -38,6 +43,11 @@ class AppTheme {
       appBarTheme: AppBarTheme(
         backgroundColor: AppColors.blackInlima,
         foregroundColor: AppColors.textColorWhite,
+      ),
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        backgroundColor: AppColors.blackInlima, // Dark background
+        selectedItemColor: AppColors.accentColorInlima, // Accent color for selected icons
+        unselectedItemColor: Colors.white54, // Slightly transparent white for unselected icons
       ),
       textTheme: TextTheme(
         displaySmall: TextStyle(
