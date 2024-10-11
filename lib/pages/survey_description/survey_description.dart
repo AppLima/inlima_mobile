@@ -4,6 +4,7 @@ import 'package:inlima_mobile/_global_controllers/sesion_controller.dart';
 import 'package:inlima_mobile/components/advise_card.dart';
 import 'package:inlima_mobile/models/sondeo.dart';
 import 'package:inlima_mobile/pages/survey_description/survey_description_controller.dart';
+import 'package:inlima_mobile/components/inlima_appbar.dart';
 
 class SurveyDescription extends StatelessWidget {
   final SurveyDescriptionController control =
@@ -130,6 +131,7 @@ class SurveyDescription extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Sondeo sondeo = ModalRoute.of(context)!.settings.arguments as Sondeo;
-    return Scaffold(appBar: null, body: _buildBody(context, sondeo));
+    return Scaffold(appBar: const InLimaAppBar(isInPerfil: true),
+      body: _buildBody(context, sondeo));
   }
 }
