@@ -17,7 +17,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           icon: Icon(Icons.feedback),
-          label: 'Quejas/Sugerencias',
+          label: 'Quejas',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.warning),
