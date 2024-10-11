@@ -7,28 +7,24 @@ import 'package:inlima_mobile/pages/result/result_controller.dart';
 import 'package:inlima_mobile/pages/detail/detail_controller.dart';
 import 'package:inlima_mobile/pages/search/search_controller.dart';
 import 'package:inlima_mobile/configs/colors.dart';
-// Importa el SesionController
 
 class InLimaAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final bool isInPerfil; // Parámetro para controlar si está en la página de perfil
-  final GlobalKey<ScaffoldState> scaffoldKey; 
-  
-  const InLimaAppBar({super.key, this.isInPerfil = false, required this.scaffoldKey}); // Constructor con el parámetro
+  final bool isInPerfil;
+  final GlobalKey<ScaffoldState> scaffoldKey;
+
+  const InLimaAppBar({super.key, this.isInPerfil = false, required this.scaffoldKey});
 
   @override
   Widget build(BuildContext context) {
     final String? currentRoute = ModalRoute.of(context)?.settings.name;
-    // Añade la verificación para la ruta "/description", "/result" y "/detail"
     final bool isInSpecialRoute = currentRoute == "/description" || currentRoute == "/result" || currentRoute == "/detail";
 
-    // Obtén el controlador de sesión
     final SesionController sesionController = Get.find<SesionController>();
 
-    // Verifica si el usuario es administrador
-    bool isAdmin = sesionController.usuario.rolId == 1; // Cambia el valor de rolId que corresponde a "admin" según tu lógica
+    bool isAdmin = sesionController.usuario.rolId == 1;
 
     return AppBar(
-      backgroundColor: AppColors.primaryColorInlima, // Color de fondo del AppBar
+      backgroundColor: AppColors.primaryColorInlima,
       leading: IconButton(
         icon: const Icon(Icons.menu),
         iconSize: 40,
@@ -44,14 +40,22 @@ class InLimaAppBar extends StatelessWidget implements PreferredSizeWidget {
         fit: BoxFit.contain,
       ),
       actions: [
-        // Si no es admin, mostrar el botón de perfil o el botón de cerrar en rutas especiales
-        if (!isAdmin) 
+        if (isInSpecialRoute)
           IconButton(
-            icon: (isInPerfil || isInSpecialRoute) ? const Icon(Icons.close) : const Icon(Icons.account_circle),
+            icon: const Icon(Icons.close),
             iconSize: 40,
             color: AppColors.lightGreyInlima,
             onPressed: () {
-              if (isInPerfil || isInSpecialRoute) {
+              _handleExitFromSpecialRoute(context, currentRoute);
+            },
+          )
+        else if (!isAdmin) 
+          IconButton(
+            icon: isInPerfil ? const Icon(Icons.close) : const Icon(Icons.account_circle),
+            iconSize: 40,
+            color: AppColors.lightGreyInlima,
+            onPressed: () {
+              if (isInPerfil) {
                 _showExitConfirmationDialog(context, currentRoute);
               } else {
                 Navigator.pushNamed(context, "/perfil");
@@ -60,6 +64,23 @@ class InLimaAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
       ],
     );
+  }
+
+  void _handleExitFromSpecialRoute(BuildContext context, String? currentRoute) {
+    if (currentRoute == "/description") {
+      final descriptionController = Get.find<DescriptionController>();
+      descriptionController.resetData();
+    } else if (currentRoute == "/result") {
+      final resultController = Get.find<ResultController>();
+      resultController.resetData();
+      final searchCController = Get.find<SearchCController>();
+      searchCController.resetData();
+    } else if (currentRoute == "/detail") {
+      final detailController = Get.find<DetailController>();
+      detailController.resetData();
+    }
+
+    Navigator.pop(context);
   }
 
   void _showExitConfirmationDialog(BuildContext context, String? currentRoute) {

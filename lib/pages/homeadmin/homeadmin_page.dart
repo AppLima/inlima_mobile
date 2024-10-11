@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:inlima_mobile/components/inlima_appbar.dart';
 import 'package:inlima_mobile/models/usuario.dart';
 import '../sos/sos_page.dart';
+import '../survey_creation/survey_creation.dart';
+import '../survey_description/survey_description.dart';
 import '../complaint/complaint_page.dart';
 import '../survey/survey.dart';
 import '../../configs/colors.dart';
@@ -22,7 +24,7 @@ class _HomePageState extends State<HomeAdminPage> {
 
   final List<Widget> _pages = [
     SearchPage(),
-    SOSPage(),
+    SurveyCreationPage(),
     SurveyPage(),
   ];
 
