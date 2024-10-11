@@ -1,0 +1,62 @@
+[
+    {
+        "id": 1,
+        "name": "Veredas rotas",
+        "url_svg": "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/iconos%2Fvereda_rota.svg?alt=media&token=cc01093e-dbf2-418a-8b0b-787270ad3733" 
+    },
+    {
+        "id": 2,
+        "name": "Calles contaminadas",
+        "url_svg": "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/iconos%2Fcalle_contaminada.svg?alt=media&token=70d3379f-988a-4b02-877d-f312bf7f6d61"
+    },
+    {
+        "id": 3,
+        "name": "Poste de Luces apagadas",
+        "url_svg": "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/iconos%2Fpostes_sin_luz.svg?alt=media&token=7bbb318d-539c-444e-a45d-555cd9bc82f8" 
+    },
+    {
+        "id": 4,
+        "name": "Construcción sin licencia",
+        "url_svg": "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/iconos%2Fconstruccion_sin_licencia.svg?alt=media&token=b114fe31-ad03-4fb9-b76d-9d98feaa2eb4"
+    },
+    {
+        "id": 5,
+        "name": "Comercio ilegal",
+        "url_svg": "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/iconos%2Fcomercio_ilegal.svg?alt=media&token=d6d47ca6-87f5-499a-a122-438781abf5ab"
+    },
+    {
+        "id": 6,
+        "name": "Invasión de lugares públicos",
+        "url_svg": "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/iconos%2Finvasion.svg?alt=media&token=c5ec1164-baaf-464b-8098-d1836151dcea"
+    },
+    {
+        "id": 7,
+        "name": "Árboles obstruyen la circulación",
+        "url_svg": "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/iconos%2Farboles_obstruyen.svg?alt=media&token=8c9a3dff-d2f3-4f41-9c13-accd749e328d"
+    },
+    {
+        "id": 8,
+        "name": "Vehiculo abandonado",
+        "url_svg": "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/iconos%2Fvehiculo_abandonado.svg?alt=media&token=c8654bae-cf9e-49a4-97d9-5530fcdc01c9"
+    },
+    {
+        "id": 9,
+        "name": "Mascota perdida",
+        "url_svg": "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/iconos%2Fmascota_perdida.svg?alt=media&token=c91b38ff-2d8e-4ac0-b1fe-794654f69bce"
+    },
+    {
+        "id": 10,
+        "name": "Inmueble abandonado",
+        "url_svg": "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/iconos%2Finmueble_abandonado.svg?alt=media&token=5604253a-5735-4437-b9e1-2a73a18897a3"
+    },
+    {
+        "id": 11,
+        "name": "Propiedad en mal estado",
+        "url_svg": "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/iconos%2Fpropiedad_mal_estado.svg?alt=media&token=ec9ab6e8-2e90-4bdd-8161-9ba73446cbc0"
+    },
+    {
+        "id": 12,
+        "name": "Otros",
+        "url_svg": "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/iconos%2Fotros.svg?alt=media&token=f22eeea3-978c-406c-8dea-d2822bc26f61"
+    }
+]

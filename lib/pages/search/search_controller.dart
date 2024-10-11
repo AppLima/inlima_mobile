@@ -1,11 +1,11 @@
 import 'package:get/get.dart';
-import '../../models/queja.dart';
-import '../../services/queja_service.dart';
+import '../../models/asunto.dart';
+import '../../services/asunto_service.dart';
 
 class SearchCController extends GetxController {
-  QuejaService quejaService = QuejaService();
-  var complaints = <Queja>[].obs;
-  var selectedComplaints = <Queja>[].obs;
+  AsuntoService quejaService = AsuntoService();
+  var complaints = <Asunto>[].obs;
+  var selectedComplaints = <Asunto>[].obs;
 
   @override
   void onInit() {
@@ -17,7 +17,7 @@ class SearchCController extends GetxController {
     complaints.value = await quejaService.fetchAll();
   }
 
-  void toggleComplaintSelection(Queja complaint) {
+  void toggleComplaintSelection(Asunto complaint) {
     if (selectedComplaints.contains(complaint)) {
       selectedComplaints.remove(complaint);
     } else {

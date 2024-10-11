@@ -5,24 +5,23 @@ import '../sos/sos_page.dart';
 import '../complaint/complaint_page.dart'; // Import for Complaint Page
 import '../survey/survey.dart'; // Import for Survey Page
 import '../../configs/colors.dart';
-import '../historic/historic_page.dart';
+import '../search/search_page.dart';
 
-class HomePage extends StatefulWidget {
+class HomeAdminPage extends StatefulWidget {
 
-  const HomePage({super.key});
+  const HomeAdminPage({super.key});
 
   @override
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomeAdminPage> {
   int _selectedIndex = 0;
 
   final List<Widget> _pages = [
-    ComplaintPage(), // Complaint page
+    SearchPage(), // Complaint page
     SOSPage(), // SOS page
-    SurveyPage(), // Survey page
-    HistoricPage(), // Placeholder for Historial
+    SurveyPage(), // Placeholder for Historial
   ];
 
   void _onItemTapped(int index) {
@@ -44,19 +43,15 @@ class _HomePageState extends State<HomePage> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.feedback),
-            label: 'Quejas',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.warning),
-            label: 'SOS',
+            label: 'Buscar quejas',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.poll),
-            label: 'Sondeos',
+            label: 'Crear sondeo',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.history),
-            label: 'Historial',
+            label: 'Ver sondeos',
           ),
         ],
         currentIndex: _selectedIndex,

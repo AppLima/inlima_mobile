@@ -1,62 +1,481 @@
 [
     {
         "id": 1,
-        "name": "Veredas rotas",
-        "url_svg": "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/iconos%2Fvereda_rota.svg?alt=media&token=cc01093e-dbf2-418a-8b0b-787270ad3733" 
+        "asunto": "Veredas rotas",
+        "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "ubicacion": "Av. Namekusei 234",
+        "fecha": "23/04/2024",
+        "estado": "En proceso",
+        "usuario_id": 2,
+        "foto": [
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage76.png?alt=media&token=7d4fcff3-866c-4644-81cf-7a2efb8fe4b0",
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage77.png?alt=media&token=32859f70-409e-4f18-acb2-21b6dc63516a"
+        ] 
     },
     {
         "id": 2,
-        "name": "Calles contaminadas",
-        "url_svg": "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/iconos%2Fcalle_contaminada.svg?alt=media&token=70d3379f-988a-4b02-877d-f312bf7f6d61"
+        "asunto": "Veredas rotas",
+        "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "ubicacion": "Av. Namekusei 234",
+        "fecha": "23/04/2024",
+        "estado": "Solucionado",
+        "usuario_id": 2,
+        "foto": [
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage76.png?alt=media&token=7d4fcff3-866c-4644-81cf-7a2efb8fe4b0",
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage77.png?alt=media&token=32859f70-409e-4f18-acb2-21b6dc63516a"
+        ]
     },
     {
         "id": 3,
-        "name": "Poste de Luces apagadas",
-        "url_svg": "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/iconos%2Fpostes_sin_luz.svg?alt=media&token=7bbb318d-539c-444e-a45d-555cd9bc82f8" 
+        "asunto": "Veredas rotas",
+        "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "ubicacion": "Av. Namekusei 234",
+        "fecha": "23/04/2024",
+        "estado": "Archivado",
+        "usuario_id": 2,
+        "foto": [
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage76.png?alt=media&token=7d4fcff3-866c-4644-81cf-7a2efb8fe4b0",
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage77.png?alt=media&token=32859f70-409e-4f18-acb2-21b6dc63516a"
+        ]
     },
+
     {
         "id": 4,
-        "name": "Construcción sin licencia",
-        "url_svg": "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/iconos%2Fconstruccion_sin_licencia.svg?alt=media&token=b114fe31-ad03-4fb9-b76d-9d98feaa2eb4"
+        "asunto": "Calles contaminadas",
+        "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "ubicacion": "Av. Namekusei 234",
+        "fecha": "23/04/2024",
+        "estado": "En proceso",
+        "usuario_id": 2,
+        "foto": [
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage76.png?alt=media&token=7d4fcff3-866c-4644-81cf-7a2efb8fe4b0",
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage77.png?alt=media&token=32859f70-409e-4f18-acb2-21b6dc63516a"
+        ]
     },
     {
         "id": 5,
-        "name": "Comercio ilegal",
-        "url_svg": "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/iconos%2Fcomercio_ilegal.svg?alt=media&token=d6d47ca6-87f5-499a-a122-438781abf5ab"
+        "asunto": "Calles contaminadas",
+        "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "ubicacion": "Av. Namekusei 234",
+        "fecha": "23/04/2024",
+        "estado": "Solucionado",
+        "usuario_id": 2,
+        "foto": [
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage76.png?alt=media&token=7d4fcff3-866c-4644-81cf-7a2efb8fe4b0",
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage77.png?alt=media&token=32859f70-409e-4f18-acb2-21b6dc63516a"
+        ]
     },
     {
         "id": 6,
-        "name": "Invasión de lugares públicos",
-        "url_svg": "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/iconos%2Finvasion.svg?alt=media&token=c5ec1164-baaf-464b-8098-d1836151dcea"
+        "asunto": "Calles contaminadas",
+        "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "ubicacion": "Av. Namekusei 234",
+        "fecha": "23/04/2024",
+        "estado": "Archivado",
+        "usuario_id": 2,
+        "foto": [
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage76.png?alt=media&token=7d4fcff3-866c-4644-81cf-7a2efb8fe4b0",
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage77.png?alt=media&token=32859f70-409e-4f18-acb2-21b6dc63516a"
+        ]
     },
+    
     {
         "id": 7,
-        "name": "Árboles obstruyen la circulación",
-        "url_svg": "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/iconos%2Farboles_obstruyen.svg?alt=media&token=8c9a3dff-d2f3-4f41-9c13-accd749e328d"
+        "asunto": "Poste de Luces apagadas",
+        "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "ubicacion": "Av. Namekusei 234",
+        "fecha": "23/04/2024",
+        "estado": "En proceso",
+        "usuario_id": 4,
+        "foto": [
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage76.png?alt=media&token=7d4fcff3-866c-4644-81cf-7a2efb8fe4b0",
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage77.png?alt=media&token=32859f70-409e-4f18-acb2-21b6dc63516a"
+        ] 
     },
     {
         "id": 8,
-        "name": "Vehiculo abandonado",
-        "url_svg": "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/iconos%2Fvehiculo_abandonado.svg?alt=media&token=c8654bae-cf9e-49a4-97d9-5530fcdc01c9"
+        "asunto": "Poste de Luces apagadas",
+        "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "ubicacion": "Av. Namekusei 234",
+        "fecha": "23/04/2024",
+        "estado": "Solucionado",
+        "usuario_id": 4,
+        "foto": [
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage76.png?alt=media&token=7d4fcff3-866c-4644-81cf-7a2efb8fe4b0",
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage77.png?alt=media&token=32859f70-409e-4f18-acb2-21b6dc63516a"
+        ]
     },
     {
         "id": 9,
-        "name": "Mascota perdida",
-        "url_svg": "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/iconos%2Fmascota_perdida.svg?alt=media&token=c91b38ff-2d8e-4ac0-b1fe-794654f69bce"
+        "asunto": "Poste de Luces apagadas",
+        "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "ubicacion": "Av. Namekusei 234",
+        "fecha": "23/04/2024",
+        "estado": "Archivado",
+        "usuario_id": 4,
+        "foto": [
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage76.png?alt=media&token=7d4fcff3-866c-4644-81cf-7a2efb8fe4b0",
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage77.png?alt=media&token=32859f70-409e-4f18-acb2-21b6dc63516a"
+        ]
     },
+
     {
         "id": 10,
-        "name": "Inmueble abandonado",
-        "url_svg": "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/iconos%2Finmueble_abandonado.svg?alt=media&token=5604253a-5735-4437-b9e1-2a73a18897a3"
+        "asunto": "Construcción sin licencia",
+        "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "ubicacion": "Av. Namekusei 234",
+        "fecha": "23/04/2024",
+        "estado": "En proceso",
+        "usuario_id": 4,
+        "foto": [
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage76.png?alt=media&token=7d4fcff3-866c-4644-81cf-7a2efb8fe4b0",
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage77.png?alt=media&token=32859f70-409e-4f18-acb2-21b6dc63516a"
+        ]
     },
     {
         "id": 11,
-        "name": "Propiedad en mal estado",
-        "url_svg": "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/iconos%2Fpropiedad_mal_estado.svg?alt=media&token=ec9ab6e8-2e90-4bdd-8161-9ba73446cbc0"
+        "asunto": "Construcción sin licencia",
+        "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "ubicacion": "Av. Namekusei 234",
+        "fecha": "23/04/2024",
+        "estado": "Solucionado",
+        "usuario_id": 4,
+        "foto": [
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage76.png?alt=media&token=7d4fcff3-866c-4644-81cf-7a2efb8fe4b0",
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage77.png?alt=media&token=32859f70-409e-4f18-acb2-21b6dc63516a"
+        ]
     },
     {
         "id": 12,
-        "name": "Otros",
-        "url_svg": "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/iconos%2Fotros.svg?alt=media&token=f22eeea3-978c-406c-8dea-d2822bc26f61"
+        "asunto": "Construcción sin licencia",
+        "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "ubicacion": "Av. Namekusei 234",
+        "fecha": "23/04/2024",
+        "estado": "Archivado",
+        "usuario_id": 4,
+        "foto": [
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage76.png?alt=media&token=7d4fcff3-866c-4644-81cf-7a2efb8fe4b0",
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage77.png?alt=media&token=32859f70-409e-4f18-acb2-21b6dc63516a"
+        ]
+    },
+
+
+    {
+        "id": 13,
+        "asunto": "Comercio ilegal",
+        "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "ubicacion": "Av. Namekusei 234",
+        "fecha": "23/04/2024",
+        "estado": "En proceso",
+        "usuario_id": 4,
+        "foto": [
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage76.png?alt=media&token=7d4fcff3-866c-4644-81cf-7a2efb8fe4b0",
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage77.png?alt=media&token=32859f70-409e-4f18-acb2-21b6dc63516a"
+        ]
+    },
+    {
+        "id": 14,
+        "asunto": "Comercio ilegal",
+        "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "ubicacion": "Av. Namekusei 234",
+        "fecha": "23/04/2024",
+        "estado": "Solucionado",
+        "usuario_id": 4,
+        "foto": [
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage76.png?alt=media&token=7d4fcff3-866c-4644-81cf-7a2efb8fe4b0",
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage77.png?alt=media&token=32859f70-409e-4f18-acb2-21b6dc63516a"
+        ]
+    },
+    {
+        "id": 15,
+        "asunto": "Comercio ilegal",
+        "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "ubicacion": "Av. Namekusei 234",
+        "fecha": "23/04/2024",
+        "estado": "Archivado",
+        "usuario_id": 4,
+        "foto": [
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage76.png?alt=media&token=7d4fcff3-866c-4644-81cf-7a2efb8fe4b0",
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage77.png?alt=media&token=32859f70-409e-4f18-acb2-21b6dc63516a"
+        ]
+    },
+
+
+    {
+        "id": 16,
+        "asunto": "Invasión de lugares públicos",
+        "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "ubicacion": "Av. Namekusei 234",
+        "fecha": "23/04/2024",
+        "estado": "En proceso",
+        "usuario_id": 4,
+        "foto": [
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage76.png?alt=media&token=7d4fcff3-866c-4644-81cf-7a2efb8fe4b0",
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage77.png?alt=media&token=32859f70-409e-4f18-acb2-21b6dc63516a"
+        ]
+    },
+    {
+        "id": 17,
+        "asunto": "Invasión de lugares públicos",
+        "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "ubicacion": "Av. Namekusei 234",
+        "fecha": "23/04/2024",
+        "estado": "Solucionado",
+        "usuario_id": 4,
+        "foto": [
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage76.png?alt=media&token=7d4fcff3-866c-4644-81cf-7a2efb8fe4b0",
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage77.png?alt=media&token=32859f70-409e-4f18-acb2-21b6dc63516a"
+        ]
+    },
+    {
+        "id": 18,
+        "asunto": "Invasión de lugares públicos",
+        "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "ubicacion": "Av. Namekusei 234",
+        "fecha": "23/04/2024",
+        "estado": "Archivado",
+        "usuario_id": 4,
+        "foto": [
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage76.png?alt=media&token=7d4fcff3-866c-4644-81cf-7a2efb8fe4b0",
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage77.png?alt=media&token=32859f70-409e-4f18-acb2-21b6dc63516a"
+        ]
+    },
+
+    {
+        "id": 19,
+        "asunto": "Árboles obstruyen la circulación",
+        "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "ubicacion": "Av. Namekusei 234",
+        "fecha": "23/04/2024",
+        "estado": "En proceso",
+        "usuario_id": 4,
+        "foto": [
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage76.png?alt=media&token=7d4fcff3-866c-4644-81cf-7a2efb8fe4b0",
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage77.png?alt=media&token=32859f70-409e-4f18-acb2-21b6dc63516a"
+        ]
+    },
+    {
+        "id": 20,
+        "asunto": "Árboles obstruyen la circulación",
+        "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "ubicacion": "Av. Namekusei 234",
+        "fecha": "23/04/2024",
+        "estado": "Solucionado",
+        "usuario_id": 4,
+        "foto": [
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage76.png?alt=media&token=7d4fcff3-866c-4644-81cf-7a2efb8fe4b0",
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage77.png?alt=media&token=32859f70-409e-4f18-acb2-21b6dc63516a"
+        ]
+    },
+    {
+        "id": 21,
+        "asunto": "Árboles obstruyen la circulación",
+        "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "ubicacion": "Av. Namekusei 234",
+        "fecha": "23/04/2024",
+        "estado": "Archivado",
+        "usuario_id": 4,
+        "foto": [
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage76.png?alt=media&token=7d4fcff3-866c-4644-81cf-7a2efb8fe4b0",
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage77.png?alt=media&token=32859f70-409e-4f18-acb2-21b6dc63516a"
+        ]
+    },
+
+
+
+    {
+        "id": 22,
+        "asunto": "Vehiculo abandonado",
+        "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "ubicacion": "Av. Namekusei 234",
+        "fecha": "23/04/2024",
+        "estado": "En proceso",
+        "usuario_id": 4,
+        "foto": [
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage76.png?alt=media&token=7d4fcff3-866c-4644-81cf-7a2efb8fe4b0",
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage77.png?alt=media&token=32859f70-409e-4f18-acb2-21b6dc63516a"
+        ] 
+    },
+    {
+        "id": 23,
+        "asunto": "Vehiculo abandonado",
+        "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "ubicacion": "Av. Namekusei 234",
+        "fecha": "23/04/2024",
+        "estado": "Solucionado",
+        "usuario_id": 4,
+        "foto": [
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage76.png?alt=media&token=7d4fcff3-866c-4644-81cf-7a2efb8fe4b0",
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage77.png?alt=media&token=32859f70-409e-4f18-acb2-21b6dc63516a"
+        ]
+    },
+    {
+        "id": 24,
+        "asunto": "Vehiculo abandonado",
+        "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "ubicacion": "Av. Namekusei 234",
+        "fecha": "23/04/2024",
+        "estado": "Archivado",
+        "usuario_id": 4,
+        "foto": [
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage76.png?alt=media&token=7d4fcff3-866c-4644-81cf-7a2efb8fe4b0",
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage77.png?alt=media&token=32859f70-409e-4f18-acb2-21b6dc63516a"
+        ] 
+    },
+    {
+        "id": 25,
+        "asunto": "Mascota perdida",
+        "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "ubicacion": "Av. Namekusei 234",
+        "fecha": "23/04/2024",
+        "estado": "En proceso",
+        "usuario_id": 4,
+        "foto": [
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage76.png?alt=media&token=7d4fcff3-866c-4644-81cf-7a2efb8fe4b0",
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage77.png?alt=media&token=32859f70-409e-4f18-acb2-21b6dc63516a"
+        ]
+    },
+    {
+        "id": 26,
+        "asunto": "Mascota perdida",
+        "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "ubicacion": "Av. Namekusei 234",
+        "fecha": "23/04/2024",
+        "estado": "Solucionado",
+        "usuario_id": 4,
+        "foto": [
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage76.png?alt=media&token=7d4fcff3-866c-4644-81cf-7a2efb8fe4b0",
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage77.png?alt=media&token=32859f70-409e-4f18-acb2-21b6dc63516a"
+        ] 
+    },
+    {
+        "id": 27,
+        "asunto": "Mascota perdida",
+        "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "ubicacion": "Av. Namekusei 234",
+        "fecha": "23/04/2024",
+        "estado": "Archivado",
+        "usuario_id": 4,
+        "foto": [
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage76.png?alt=media&token=7d4fcff3-866c-4644-81cf-7a2efb8fe4b0",
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage77.png?alt=media&token=32859f70-409e-4f18-acb2-21b6dc63516a"
+        ]
+    },
+    {
+        "id": 28,
+        "asunto": "Inmueble abandonado",
+        "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "ubicacion": "Av. Namekusei 234",
+        "fecha": "23/04/2024",
+        "estado": "En proceso",
+        "usuario_id": 4,
+        "foto": [
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage76.png?alt=media&token=7d4fcff3-866c-4644-81cf-7a2efb8fe4b0",
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage77.png?alt=media&token=32859f70-409e-4f18-acb2-21b6dc63516a"
+        ]
+    },
+    {
+        "id": 29,
+        "asunto": "Inmueble abandonado",
+        "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "ubicacion": "Av. Namekusei 234",
+        "fecha": "23/04/2024",
+        "estado": "Solucionado",
+        "usuario_id": 4,
+        "foto": [
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage76.png?alt=media&token=7d4fcff3-866c-4644-81cf-7a2efb8fe4b0",
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage77.png?alt=media&token=32859f70-409e-4f18-acb2-21b6dc63516a"
+        ]
+    },
+    {
+        "id": 30,
+        "asunto": "Inmueble abandonado",
+        "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "ubicacion": "Av. Namekusei 234",
+        "fecha": "23/04/2024",
+        "estado": "Archivado",
+        "usuario_id": 4,
+        "foto": [
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage76.png?alt=media&token=7d4fcff3-866c-4644-81cf-7a2efb8fe4b0",
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage77.png?alt=media&token=32859f70-409e-4f18-acb2-21b6dc63516a"
+        ]
+    },
+    {
+        "id": 31,
+        "asunto": "Propiedad en mal estado",
+        "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "ubicacion": "Av. Namekusei 234",
+        "fecha": "23/04/2024",
+        "estado": "En proceso",
+        "usuario_id": 4,
+        "foto": [
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage76.png?alt=media&token=7d4fcff3-866c-4644-81cf-7a2efb8fe4b0",
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage77.png?alt=media&token=32859f70-409e-4f18-acb2-21b6dc63516a"
+        ]
+    },
+    {
+        "id": 32,
+        "asunto": "Propiedad en mal estado",
+        "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "ubicacion": "Av. Namekusei 234",
+        "fecha": "23/04/2024",
+        "estado": "Solucionado",
+        "usuario_id": 4,
+        "foto": [
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage76.png?alt=media&token=7d4fcff3-866c-4644-81cf-7a2efb8fe4b0",
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage77.png?alt=media&token=32859f70-409e-4f18-acb2-21b6dc63516a"
+        ]
+    },
+    {
+        "id": 33,
+        "asunto": "Propiedad en mal estado",
+        "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "ubicacion": "Av. Namekusei 234",
+        "fecha": "23/04/2024",
+        "estado": "Archivado",
+        "usuario_id": 4,
+        "foto": [
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage76.png?alt=media&token=7d4fcff3-866c-4644-81cf-7a2efb8fe4b0",
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage77.png?alt=media&token=32859f70-409e-4f18-acb2-21b6dc63516a"
+        ]
+    },
+    {
+        "id": 34,
+        "asunto": "Otros",
+        "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "ubicacion": "Av. Namekusei 234",
+        "fecha": "23/04/2024",
+        "estado": "En proceso",
+        "usuario_id": 4,
+        "foto": [
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage76.png?alt=media&token=7d4fcff3-866c-4644-81cf-7a2efb8fe4b0",
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage77.png?alt=media&token=32859f70-409e-4f18-acb2-21b6dc63516a"
+        ] 
+    },
+    {
+        "id": 35,
+        "asunto": "Otros",
+        "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "ubicacion": "Av. Namekusei 234",
+        "fecha": "23/04/2024",
+        "estado": "Solucionado",
+        "usuario_id": 4,
+        "foto": [
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage76.png?alt=media&token=7d4fcff3-866c-4644-81cf-7a2efb8fe4b0",
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage77.png?alt=media&token=32859f70-409e-4f18-acb2-21b6dc63516a"
+        ]
+    },
+    {
+        "id": 36,
+        "asunto": "Otros",
+        "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "ubicacion": "Av. Namekusei 234",
+        "fecha": "23/04/2024",
+        "estado": "Archivado",
+        "usuario_id": 4,
+        "foto": [
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage76.png?alt=media&token=7d4fcff3-866c-4644-81cf-7a2efb8fe4b0",
+            "https://firebasestorage.googleapis.com/v0/b/inlima-snapcloud.appspot.com/o/quejas%2Fimage77.png?alt=media&token=32859f70-409e-4f18-acb2-21b6dc63516a"
+        ]
     }
 ]

@@ -2,14 +2,15 @@ import 'package:get/get.dart';
 import 'package:inlima_mobile/models/usuario.dart';
 
 class SesionController extends GetxController {
-  final _usuario = Usuario(
+  
+  var _usuario = Usuario(
     idUsuario: 0, 
     email: '', 
     password: '', 
     nombre: '',
     apellidoPaterno: '', 
     apellidoMaterno: '', 
-    rolId: 0, 
+    rolId: 0,
     sexoId: 0,
   ).obs;
 

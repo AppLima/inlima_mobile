@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
-import '../../components/inlima_appbar.dart';
 import '../../components/button_simple.dart';
 import './description_controller.dart';
+import '../../components/inlima_appbar.dart';
 
 class DescriptionPage extends StatefulWidget {
   const DescriptionPage({Key? key}) : super(key: key);
@@ -103,10 +103,9 @@ class _DescriptionPageState extends State<DescriptionPage> {
   @override
   Widget build(BuildContext context) {
     final String? asunto = ModalRoute.of(context)?.settings.arguments as String?;
-    print(asunto);
 
     return Scaffold(
-      appBar: null,
+      appBar: const InLimaAppBar(isInPerfil: false),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(

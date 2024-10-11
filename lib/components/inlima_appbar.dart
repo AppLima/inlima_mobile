@@ -2,23 +2,31 @@ import 'package:flutter/material.dart';
 import '../configs/colors.dart';
 
 class InLimaAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final bool isInPerfil; // Parámetro para controlar si está en la página de perfil
+  final bool isInPerfil;
 
-  const InLimaAppBar({super.key, this.isInPerfil = false}); // Constructor con el parámetro
+  const InLimaAppBar({super.key, this.isInPerfil = false});
 
   @override
   Widget build(BuildContext context) {
+    final String? currentRoute = ModalRoute.of(context)?.settings.name;
+    // Añade la verificación para la ruta "/result"
+    final bool isInSpecialRoute = currentRoute == "/description" || currentRoute == "/result" || currentRoute == "/detail";
+
+    print(currentRoute);
+
     return AppBar(
-      backgroundColor: AppColors.primaryColorInlima, // Color de fondo del AppBar
-      leading: IconButton(
-        icon: const Icon(Icons.menu),
-        iconSize: 40,
-        color: AppColors.lightGreyInlima,
-        onPressed: () {
-          // Acción para desplegar el menú
-        },
-      ),
-      centerTitle: true, // Centra el título en el AppBar
+      backgroundColor: AppColors.primaryColorInlima,
+      leading: isInSpecialRoute
+          ? null
+          : IconButton(
+              icon: const Icon(Icons.menu),
+              iconSize: 40,
+              color: AppColors.lightGreyInlima,
+              onPressed: () {
+                // Acción para abrir el menú
+              },
+            ),
+      centerTitle: true,
       title: Image.asset(
         'assets/img_app/inlima_logo_nobg.png',
         height: 40,
@@ -26,14 +34,16 @@ class InLimaAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: [
         IconButton(
-          icon: isInPerfil ? const Icon(Icons.close) : const Icon(Icons.account_circle), // Cambia entre la X o el ícono de perfil
+          icon: (isInPerfil || isInSpecialRoute)
+              ? const Icon(Icons.close)
+              : const Icon(Icons.account_circle),
           iconSize: 40,
           color: AppColors.lightGreyInlima,
           onPressed: () {
-            if (isInPerfil) {
-              Navigator.pop(context); // Si está en perfil, vuelve a la página anterior
+            if (isInPerfil || isInSpecialRoute) {
+              Navigator.pop(context);
             } else {
-              Navigator.pushNamed(context, "/perfil"); // Si no, navega al perfil
+              Navigator.pushNamed(context, "/perfil");
             }
           },
         ),

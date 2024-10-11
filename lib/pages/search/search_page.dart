@@ -73,7 +73,11 @@ class SearchPage extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () {
                     final selectedTopics = searchController.selectedComplaints.map((queja) => queja.name).toList();
-                    print('Topics seleccionados: ${selectedTopics.join(', ')}');
+                    Navigator.pushNamed(
+                        context,
+                        '/result',
+                        arguments: selectedTopics,
+                    );
                   },
                   child: const Text('Buscar'),
                 ),

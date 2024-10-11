@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
-import '../../models/queja.dart';
-import '../../services/queja_service.dart';
+import '../../models/asunto.dart';
+import '../../services/asunto_service.dart';
 
 class ComplaintController extends GetxController {
-  QuejaService quejaService = QuejaService();
-  var complaints = <Queja>[].obs;
+  AsuntoService asuntoService = AsuntoService();
+  var complaints = <Asunto>[].obs;
 
   @override
   void onInit() {
@@ -13,7 +13,7 @@ class ComplaintController extends GetxController {
   }
 
   void listComplaints() async {
-    complaints.value = await quejaService.fetchAll();
+    complaints.value = await asuntoService.fetchAll();
     //print(complaints.value);
   }
 }
