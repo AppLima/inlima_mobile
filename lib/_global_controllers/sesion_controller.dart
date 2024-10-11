@@ -1,18 +1,30 @@
 import 'package:get/get.dart';
 import 'package:inlima_mobile/models/usuario.dart';
+import 'package:inlima_mobile/models/ciudadano.dart';
+import 'package:inlima_mobile/services/ciudadano_service.dart';
 
 class SesionController extends GetxController {
-  
-  var _usuario = Usuario(
+  final _usuario = Usuario(
     idUsuario: 0, 
     email: '', 
     password: '', 
     nombre: '',
     apellidoPaterno: '', 
     apellidoMaterno: '', 
-    rolId: 0,
-    sexoId: 0,
+    rolId: 0, 
+    sexo: '', // Cambiamos sexoId por sexo, que será una cadena ("masculino", "femenino")
+    foto: '',
+    distritoId: 0, 
   ).obs;
+
+  final _ciudadano = Ciudadano(
+    id: 0,
+    dni: '',
+    numero: '',
+    usuarioId: 0,
+  ).obs;
+
+  final CiudadanoService ciudadanoService = CiudadanoService();
 
   @override
   void onInit() {
@@ -20,25 +32,39 @@ class SesionController extends GetxController {
   }
 
   // Método para iniciar sesión
-void iniciarSesion(Usuario usuario) {
-  // Actualizamos el usuario con los datos proporcionados
-  _usuario.value = Usuario(
-    idUsuario: usuario.idUsuario,
-    email: usuario.email,
-    password: "",
-    nombre: usuario.nombre,
-    apellidoPaterno: usuario.apellidoPaterno,
-    apellidoMaterno: usuario.apellidoMaterno,
-    foto: usuario.foto,
-    rolId: usuario.rolId,
-    sexoId: usuario.sexoId,
-  );
-}
+  Future<void> iniciarSesion(Usuario usuario) async {
+    // Actualizamos el usuario con los datos proporcionados, incluyendo el sexo y distritoId
+    _usuario.value = Usuario(
+      idUsuario: usuario.idUsuario,
+      email: usuario.email,
+      password: usuario.password, // Guardamos la contraseña
+      nombre: usuario.nombre,
+      apellidoPaterno: usuario.apellidoPaterno,
+      apellidoMaterno: usuario.apellidoMaterno,
+      foto: usuario.foto,
+      rolId: usuario.rolId,
+      sexo: usuario.sexo, // Asignamos el valor del sexo ("masculino", "femenino", etc.)
+      distritoId: usuario.distritoId, // Incluimos el distritoId
+    );
 
-  // Getter para acceder al usuario
+    // Obtenemos los datos del ciudadano asociado al usuario
+    try {
+      Ciudadano? ciudadano = await ciudadanoService.obtenerCiudadanoPorUsuarioId(usuario.idUsuario);
+      if (ciudadano != null) {
+        _ciudadano.value = ciudadano; // Guardamos el ciudadano
+      } else {
+        print('No se encontró el ciudadano para este usuario.');
+      }
+    } catch (e) {
+      print('Error al obtener los datos del ciudadano: $e');
+    }
+  }
+
+  // Getter para acceder al usuario actual
   Usuario get usuario => _usuario.value;
 
-  get usuarioActual => null;
+  // Getter para acceder al ciudadano actual
+  Ciudadano get ciudadano => _ciudadano.value;
 
   // Método para cerrar sesión
   void cerrarSesion() {
@@ -51,7 +77,17 @@ void iniciarSesion(Usuario usuario) {
       apellidoPaterno: '',
       apellidoMaterno: '',
       rolId: 0,
-      sexoId: 0,
+      sexo: '', // Reseteamos el campo sexo
+      foto: '',
+      distritoId: 0, // Reseteamos el distritoId
+    );
+
+    // Reseteamos los datos del ciudadano a valores por defecto
+    _ciudadano.value = Ciudadano(
+      id: 0,
+      dni: '',
+      numero: '',
+      usuarioId: 0,
     );
   }
 }

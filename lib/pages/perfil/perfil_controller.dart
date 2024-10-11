@@ -2,54 +2,130 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:inlima_mobile/models/distrito.dart';
+import 'package:inlima_mobile/services/distrito_service.dart';
+import 'package:inlima_mobile/_global_controllers/sesion_controller.dart';
+import 'package:inlima_mobile/components/advise_card.dart';
 
 class PerfilController extends GetxController {
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-  final dniController = TextEditingController();
-  final nombreController = TextEditingController();
-  final apellidoPaternoController = TextEditingController();
-  final apellidoMaternoController = TextEditingController();
-  final distritoController = TextEditingController();
-  
-  Rx<File?> imageFile = Rx<File?>(null); // Variable reactiva para almacenar la imagen seleccionada
+  var imageFile = Rxn<File>(); // Usa Rxn para permitir valores nulos
+  var emailController = TextEditingController();
+  var passwordController = TextEditingController();
+  var nombreController = TextEditingController();
+  var apellidoPaternoController = TextEditingController();
+  var apellidoMaternoController = TextEditingController();
+  var dniController = TextEditingController();
+  var distritoController = TextEditingController();
 
-  // Método para seleccionar imagen desde la cámara
-  Future<void> seleccionarImagenDesdeCamara() async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(
-      source: ImageSource.camera,
-      preferredCameraDevice: CameraDevice.front, // Usa la cámara frontal
-    );
+  final DistritoService distritoService = DistritoService();
+  var selectedDistrito = Rxn<Distrito>(); // Distrito seleccionado
+  var selectedSexo = ''.obs; // Sexo seleccionado
 
-    if (pickedFile != null) {
-      imageFile.value = File(pickedFile.path); // Actualiza el archivo con la imagen seleccionada
+  List<Distrito> distritos = [];
+  final SesionController sesionController = Get.put(SesionController());
+
+  @override
+  void onInit() {
+    super.onInit();
+    resetPerfilData();
+    fetchDistritos(); // Cargar los distritos al iniciar
+  }
+
+  @override
+  void dispose() {
+    resetPerfilData();
+    super.dispose();
+  }
+
+  // Método para autocompletar campos desde el usuario actual
+  void autoRellenarCampos() async {
+    final usuario = sesionController.usuario;
+    final ciudadano = sesionController.ciudadano;
+
+    if (usuario != null) {
+      emailController.text = usuario.email;
+      passwordController.text = usuario.password;
+      nombreController.text = usuario.nombre;
+      apellidoPaternoController.text = usuario.apellidoPaterno;
+      apellidoMaternoController.text = usuario.apellidoMaterno;
+
+      if (ciudadano != null) {
+        dniController.text = ciudadano.dni;
+      }
+
+      if (distritos.isEmpty) {
+        await fetchDistritos();
+      }
+
+      if (distritos.isNotEmpty) {
+        selectedDistrito.value = distritos.firstWhere(
+          (distrito) => distrito.id == usuario.distritoId,
+          orElse: () => distritos.first,
+        );
+      }
+
+      selectedSexo.value = usuario.sexo ?? "masculino";
     }
   }
 
-  void resetData() {
-      imageFile.value = null; // Resetea la imagen
-      emailController.clear();
-      passwordController.clear();
-      nombreController.clear();
-      apellidoPaternoController.clear();
-      apellidoMaternoController.clear();
-      dniController.clear();
-      distritoController.clear();
-  }
-  // Método para seleccionar imagen desde la galería
-  Future<void> seleccionarImagenDesdeGaleria() async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(
-      source: ImageSource.gallery, // Acceder a la galería
-    );
-
-    if (pickedFile != null) {
-      imageFile.value = File(pickedFile.path); // Actualiza el archivo con la imagen seleccionada
+  // Método para cargar distritos desde el servicio
+  Future<void> fetchDistritos() async {
+    try {
+      distritos = await distritoService.fetchAll();
+    } catch (e) {
+      print("Error al cargar distritos: $e");
     }
   }
 
-  void actualizarPerfil() {
-    // Lógica para actualizar el perfil
+  void onDistritoChanged(Distrito? distrito) {
+    selectedDistrito.value = distrito;
+  }
+
+  void onSexoChanged(String? sexo) {
+    selectedSexo.value = sexo ?? '';
+  }
+
+  // Método para seleccionar imagen desde la cámara o galería
+  Future<void> seleccionarImagen(bool isCamera) async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(
+      source: isCamera ? ImageSource.camera : ImageSource.gallery,
+    );
+
+    if (pickedFile != null) {
+      await _procesarImagen(File(pickedFile.path));
+    }
+  }
+
+  Future<void> _procesarImagen(File image) async {
+    imageFile.value = image;
+  }
+
+  // Método para actualizar el perfil
+  void updateProfile() {
+    // Lógica de actualización del perfil
+    Advise(
+      content: 'Perfil actualizado correctamente',
+      route: '/home',
+      previousPage: false,
+    ).show(Get.context!);
+  }
+
+  void resetPerfilData() {
+    imageFile.value = null;
+    emailController.clear();
+    passwordController.clear();
+    nombreController.clear();
+    apellidoPaternoController.clear();
+    apellidoMaternoController.clear();
+    dniController.clear();
+    distritoController.clear();
+    selectedDistrito.value = null;
+    selectedSexo.value = '';
+  }
+
+  // Método para abrir la cámara
+  void openCamera() {
+    seleccionarImagen(true);
   }
 }

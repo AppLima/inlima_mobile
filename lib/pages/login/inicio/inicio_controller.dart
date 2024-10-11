@@ -3,12 +3,15 @@ import 'package:get/get.dart';
 import 'package:inlima_mobile/_global_controllers/sesion_controller.dart';
 import 'package:inlima_mobile/models/ciudadano.dart';
 import 'package:inlima_mobile/models/usuario.dart';
+import 'package:inlima_mobile/models/distrito.dart'; // Importa el modelo Distrito
 import 'package:inlima_mobile/services/usuario_service.dart';
 import 'package:inlima_mobile/services/ciudadano_service.dart';
-import 'dart:convert'; // Necesario para convertir a JSON
+import 'package:inlima_mobile/services/distrito_service.dart'; // Importa el servicio Distrito
 
 class InicioController {
   ValueNotifier<bool> isLogin = ValueNotifier(true);
+  ValueNotifier<String> selectedSexo =
+      ValueNotifier(''); // Para manejar el sexo seleccionado
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -18,9 +21,17 @@ class InicioController {
   final apellidoMaternoController = TextEditingController();
   final telefonoController = TextEditingController();
   final distritoController = TextEditingController();
+
   final UsuarioService usuarioService = UsuarioService();
   final CiudadanoService ciudadanoService = CiudadanoService();
-  final SesionController sesion = Get.put(SesionController());  
+  final DistritoService distritoService =
+      DistritoService(); // Servicio para cargar distritos
+
+  final SesionController sesion = Get.put(SesionController());
+
+  List<Distrito> distritos = []; // Lista de distritos
+  Distrito? selectedDistrito; // Distrito seleccionado por nombre
+
   String getWelcomeText() {
     return isLogin.value ? 'Bienvenido a inLima' : 'Regístrate en inLima';
   }
@@ -29,11 +40,31 @@ class InicioController {
     return isLogin.value ? 'Entrar' : 'Registrarse';
   }
 
-  Future<void> handleAction(BuildContext context) async {
-    if (isLogin.value) {
-      await login(context);
+  // Método para cargar distritos desde el servicio
+  Future<void> fetchDistritos(BuildContext context) async {
+    try {
+      distritos = await distritoService.fetchAll();
+      if (distritos.isEmpty) {
+        print("No se encontraron distritos");
+      }
+      selectedDistrito = null; // Inicializamos selectedDistrito como null
+    } catch (e) {
+      print("Error al cargar distritos: $e");
+      _showError(
+          context, "No se pudieron cargar los distritos. Inténtalo más tarde.");
+    }
+  }
+
+  // Método para manejar el cambio del distrito seleccionado por nombre
+  void onDistritoChanged(BuildContext context, Distrito? distrito) {
+    if (distrito != null) {
+      selectedDistrito = distrito;
+      print(
+          "Distrito seleccionado: ${selectedDistrito!.id} - ${selectedDistrito!.nombre}");
     } else {
-      await register(context);
+      print("Distrito no seleccionado");
+      _showError(
+          context, "Distrito no encontrado. Selecciona un distrito válido.");
     }
   }
 
@@ -56,11 +87,11 @@ class InicioController {
         sesion.iniciarSesion(usuarioEncontrado);
         _showSuccess(context, "Inicio de sesión exitoso");
         final SesionController sesionController = Get.find<SesionController>();
-        
+
         int rol = sesionController.usuario.rolId;
-        if (rol == 1){
+        if (rol == 1) {
           Navigator.of(context).pushReplacementNamed('/homeadmin');
-        }else{
+        } else {
           Navigator.of(context).pushReplacementNamed('/home');
         }
       } else {
@@ -71,9 +102,29 @@ class InicioController {
     }
   }
 
+  Future<void> handleAction(BuildContext context) async {
+    if (isLogin.value) {
+      await login(context);
+    } else {
+      await register(context);
+    }
+  }
+
   Future<void> register(BuildContext context) async {
     try {
       if (!_validateFields(context)) return;
+
+      // Verificar que el distrito haya sido seleccionado
+      if (selectedDistrito == null) {
+        _showError(context, "Por favor selecciona un distrito válido");
+        return;
+      }
+
+      // Verificar que el sexo haya sido seleccionado
+      if (selectedSexo.value.isEmpty) {
+        _showError(context, "Por favor selecciona un sexo");
+        return;
+      }
 
       // Validar email y DNI usando servicios
       if (await usuarioService.isEmailAlreadyRegistered(emailController.text)) {
@@ -86,7 +137,10 @@ class InicioController {
         return;
       }
 
-      // Crear usuario y ciudadano
+      print(
+          "Distrito seleccionado para registro: ${selectedDistrito?.id} - ${selectedDistrito?.nombre}");
+
+      // Crear usuario y ciudadano, incluyendo el distrito_id y sexo seleccionado
       final usuario = Usuario(
         idUsuario: await usuarioService.getNewId(),
         email: emailController.text,
@@ -95,7 +149,9 @@ class InicioController {
         apellidoPaterno: apellidoPaternoController.text,
         apellidoMaterno: apellidoMaternoController.text,
         rolId: 2,
-        sexoId: 2,
+        sexo: selectedSexo.value, // Guardamos el sexo seleccionado
+        distritoId: selectedDistrito!
+            .id, // Aseguramos que el distrito_id se asigna correctamente
       );
 
       final ciudadano = Ciudadano(
@@ -109,7 +165,6 @@ class InicioController {
       await usuarioService.addUsuario(usuario);
       await ciudadanoService.addCiudadano(ciudadano);
 
-      // Mostrar éxito
       _showSuccess(context, "Registro exitoso");
 
       // Limpiar los campos después del registro
@@ -131,8 +186,6 @@ class InicioController {
         print(
             citizen.toJson()); // Aquí también puedes personalizar la impresión
       }
-
-      // Navegar a la página de inicio después del registro
       Navigator.of(context).pushReplacementNamed('/login/inicio');
     } catch (e) {
       _showError(context, "Error al registrar usuario: $e");
@@ -201,6 +254,8 @@ class InicioController {
     ]) {
       controller.clear();
     }
+    selectedDistrito = null; // Limpiar el distrito seleccionado también
+    selectedSexo.value = ''; // Limpiar el sexo seleccionado
   }
 
   void _showError(BuildContext context, String message) {

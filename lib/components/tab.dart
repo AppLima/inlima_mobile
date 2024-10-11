@@ -23,7 +23,7 @@ class Tabs extends StatelessWidget {
       child: Stack(
         children: [
           AnimatedAlign(
-            duration: const Duration(milliseconds: 180),
+            duration: Duration(milliseconds: 300),
             alignment: isLogin ? Alignment.centerLeft : Alignment.centerRight,
             child: Container(
               width: MediaQuery.of(context).size.width * 0.38,

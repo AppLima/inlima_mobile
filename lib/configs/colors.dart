@@ -11,8 +11,9 @@ class AppColors {
   static const Color textColorBlack = Color(0xFF000000);
   static const Color textColorLightGray = Color(0xFFA9A9A9);
   static const Color accentColorInlima = Color(0xFFBB86FC);
-  static const Color beigeColor = Color(0xFFD6D5C9);
-  
+
+  static var primaryColor;
+
   static Color getColorText(BuildContext context) {
     return Theme.of(context).brightness == Brightness.dark
         ? textColorBlack

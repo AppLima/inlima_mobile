@@ -1,25 +1,26 @@
 [
-    {
-      "id_usuario": 1,
-      "email": "admin@inlima.com",
-      "password": "admin",
-      "nombre": "Fernando",
-      "apellido_paterno": "Juarez",
-      "apellido_materno": "Rojas",
-      "foto": "fernando_juarez.jpg",
-      "rol_id": 1,
-      "sexo_id": 1
-    },
-    {
-      "id_usuario": 2,
-      "email": "usuario@inlima.com",
-      "password": "usuario",
-      "nombre": "Paula",
-      "apellido_paterno": "Martinez",
-      "apellido_materno": "Fernandez",
-      "foto": "paula_martinez.jpg",
-      "rol_id": 2,
-      "sexo_id": 2
-    }
-  ]
-  
+  {
+    "id_usuario": 1,
+    "email": "admin@inlima.com",
+    "password": "admin",
+    "nombre": "Fernando",
+    "apellido_paterno": "Juarez",
+    "apellido_materno": "Rojas",
+    "foto": "fernando_juarez.jpg",
+    "rol_id": 1,
+    "sexo": "masculino",
+    "distrito_id": 3
+  },
+  {
+    "id_usuario": 2,
+    "email": "usuario@inlima.com",
+    "password": "usuario",
+    "nombre": "Paula",
+    "apellido_paterno": "Martinez",
+    "apellido_materno": "Fernandez",
+    "foto": "paula_martinez.jpg",
+    "rol_id": 2,
+    "sexo": "femenino",
+    "distrito_id": 6
+  }
+]

@@ -5,7 +5,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:inlima_mobile/models/usuario.dart';
 
 class UsuarioService {
-  final String _fileName = 'usuarios_local.json'; // Archivo local donde se guardarán las modificaciones
+  final String _fileName = 'usuarios10.json'; // Archivo local donde se guardarán las modificaciones
   bool _initialized = false;
 
   // Método para inicializar el archivo local si no existe
