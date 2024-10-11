@@ -5,12 +5,15 @@ import 'package:inlima_mobile/components/advise_card.dart';
 import 'package:inlima_mobile/models/sondeo.dart';
 import 'package:inlima_mobile/pages/survey_description/survey_description_controller.dart';
 import 'package:inlima_mobile/components/inlima_appbar.dart';
+import '../../components/lateral_bar.dart';
 
 class SurveyDescription extends StatelessWidget {
   final SurveyDescriptionController control =
       Get.put(SurveyDescriptionController());
   final SesionController sesion = Get.find<SesionController>();
   SurveyDescription({super.key});
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   Widget _buildBody(BuildContext context, Sondeo sondeo) {
     final size =
@@ -131,7 +134,13 @@ class SurveyDescription extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Sondeo sondeo = ModalRoute.of(context)!.settings.arguments as Sondeo;
-    return Scaffold(appBar: const InLimaAppBar(isInPerfil: true),
+    return Scaffold(
+      key: _scaffoldKey,
+      appBar: InLimaAppBar(
+        isInPerfil: true,
+        scaffoldKey: _scaffoldKey, 
+      ),
+      drawer: LateralBar(),
       body: _buildBody(context, sondeo));
   }
 }

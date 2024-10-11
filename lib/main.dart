@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(title: const Text('Inlima')),
       ),
-      initialRoute: '/login/inicio',
+      initialRoute: '/login/pagina_principal',
       routes: {
         '/login/pagina_principal': (context) => PaginaPrincipalPage(),
         '/login/inicio': (context) => InicioPage(isRegister: false), //login - register
@@ -53,7 +53,6 @@ class MyApp extends StatelessWidget {
         '/survey_creation' : (context) => SurveyCreationPage(),//Crear sondeo (Admin)
         '/search' : (context) => SearchPage(),
         '/historic' : (context) => HistoricPage(),
-
         '/result' : (context) => ResultPage(),
         '/detail' : (context) => DetailPage(),
       },

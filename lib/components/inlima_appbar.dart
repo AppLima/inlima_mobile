@@ -6,7 +6,6 @@ import 'package:inlima_mobile/pages/result/result_controller.dart';
 import 'package:inlima_mobile/pages/detail/detail_controller.dart';
 import 'package:inlima_mobile/pages/search/search_controller.dart';
 import '../configs/colors.dart';
-import '../components/lateral_bar.dart';
 
 class InLimaAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool isInPerfil; // Parámetro para controlar si está en la página de perfil

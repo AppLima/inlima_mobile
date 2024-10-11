@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
+import '../_global_controllers/sesion_controller.dart';
+import 'package:get/get.dart';
 
 class LateralBar extends StatelessWidget {
-  //final Function(int) onItemTapped;
-  //final int selectedIndex;
-
   const LateralBar({
-    Key? key, // Texto del Drawer Header      // Tercer texto
-    //required this.onItemTapped,  // Callback para gestionar el tap de opciones
-    //required this.selectedIndex, // Índice seleccionado
+    Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final SesionController sesionController = Get.find<SesionController>();
+
     return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           DrawerHeader(
             decoration: BoxDecoration(
@@ -25,38 +24,58 @@ class LateralBar extends StatelessWidget {
               children: [
                 Icon(Icons.account_circle, size: 50, color: Colors.black),
                 SizedBox(height: 10),
-                Text("Nombre", style: TextStyle(fontSize: 20)), // Texto del Header
+                Text(sesionController.usuario.nombre.isNotEmpty
+                    ? sesionController.usuario.nombre
+                    : "Usuario", style: TextStyle(fontSize: 20)), 
               ],
             ),
           ),
-          ListTile(
-            leading: Icon(Icons.settings),
-            title: Text("Ajustes"), // Primer ítem
-            //selected: selectedIndex == 0,
-            onTap: () {
-              //onItemTapped(0); // Llamada a la función con índice 0
-              print("Ajustes");
-              Navigator.pop(context); // Cerrar Drawer
-            },
+          Expanded(
+            child: ListView(
+              padding: EdgeInsets.zero,
+              children: [
+                ListTile(
+                  leading: Icon(Icons.settings),
+                  title: Text("Ajustes"),
+                  onTap: () {
+                    print("Ajustes");
+                    Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.article),
+                  title: Text("Términos y Condiciones"),
+                  onTap: () {
+                    print("Términos y Condiciones");
+                    Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.notifications),
+                  title: Text("Notificaciones"),
+                  onTap: () {
+                    print("Notificaciones");
+                    Navigator.pop(context); 
+                  },
+                ),
+              ],
+            ),
           ),
-          ListTile(
-            leading: Icon(Icons.article),
-            title: Text("Ajustes"), // Segundo ítem
-            //selected: selectedIndex == 1,
-            onTap: () {
-              print("Terminos y condiciones"); // Llamada a la función con índice 1
-              Navigator.pop(context); // Cerrar Drawer
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.notifications),
-            title: Text("Notificaciones"), // Tercer ítem
-            //selected: selectedIndex == 2,
-            onTap: () {
-              //onItemTapped(2); // Llamada a la función con índice 2
-              print("Notificaciones");
-              Navigator.pop(context); // Cerrar Drawer
-            },
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.redAccent,
+              ),
+              onPressed: () {
+                sesionController.cerrarSesion();
+                print("Sesión cerrada");
+
+
+                Navigator.pushReplacementNamed(context, '/login/pagina_principal');
+              },
+              child: Text("Cerrar Sesión", style: TextStyle(color: Colors.white)),
+            ),
           ),
         ],
       ),

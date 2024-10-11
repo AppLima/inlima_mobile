@@ -69,7 +69,6 @@ class InicioPage extends StatelessWidget {
                   ),
                   child: LayoutBuilder(
                     builder: (context, constraints) {
-                      // Se usa scroll solo si es registro
                       return ValueListenableBuilder<bool>(
                         valueListenable: control.isLogin,
                         builder: (context, isLogin, child) {

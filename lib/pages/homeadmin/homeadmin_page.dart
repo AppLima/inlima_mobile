@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:inlima_mobile/components/inlima_appbar.dart';
 import 'package:inlima_mobile/models/usuario.dart';
 import '../sos/sos_page.dart';
-import '../complaint/complaint_page.dart'; // Import for Complaint Page
-import '../survey/survey.dart'; // Import for Survey Page
+import '../complaint/complaint_page.dart';
+import '../survey/survey.dart';
 import '../../configs/colors.dart';
 import '../search/search_page.dart';
 import '../../components/lateral_bar.dart';
@@ -21,9 +21,9 @@ class _HomePageState extends State<HomeAdminPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   final List<Widget> _pages = [
-    SearchPage(), // Complaint page
-    SOSPage(), // SOS page
-    SurveyPage(), // Placeholder for Historial
+    SearchPage(),
+    SOSPage(),
+    SurveyPage(),
   ];
 
   void _onItemTapped(int index) {
@@ -35,9 +35,9 @@ class _HomePageState extends State<HomeAdminPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey, // Pass the key to Scaffold
+      key: _scaffoldKey,
       appBar: InLimaAppBar(
-        scaffoldKey: _scaffoldKey, // Pass the scaffoldKey to the InLimaAppBar
+        scaffoldKey: _scaffoldKey,
       ),
       drawer: LateralBar(),
       body: Stack(
@@ -61,10 +61,10 @@ class _HomePageState extends State<HomeAdminPage> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: AppColors.primaryColorInlima, // Highlighted color for the selected tab
-        unselectedItemColor: AppColors.tertiaryColorInlima, // White icons for unselected tabs
-        backgroundColor: AppColors.beigeColor, // Dark blue background for navbar
-        onTap: _onItemTapped, // Tap handler to switch tabs
+        selectedItemColor: AppColors.primaryColorInlima,
+        unselectedItemColor: AppColors.tertiaryColorInlima,
+        backgroundColor: AppColors.beigeColor,
+        onTap: _onItemTapped,
       ),
     );
   }
