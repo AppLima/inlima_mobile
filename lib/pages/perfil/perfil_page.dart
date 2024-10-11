@@ -23,7 +23,8 @@ class _PerfilPageState extends State<PerfilPage> {
   @override
   void initState() {
     super.initState();
-    perfilController.autoRellenarCampos(); // Llama a la lógica de autocompletado en el controlador
+    perfilController
+        .autoRellenarCampos(); // Llama a la lógica de autocompletado en el controlador
   }
 
   @override
@@ -159,7 +160,10 @@ class _PerfilPageState extends State<PerfilPage> {
             Center(
               child: LargeButton(
                 title: 'Actualizar',
-                onPressed: perfilController.updateProfile,
+                onPressed: () {
+                  perfilController
+                      .updateProfile(context); // Pasamos el BuildContext actual
+                },
                 backgroundColor: AppColors.secondaryColorInlima,
                 textColor: Colors.white,
                 borderRadius: BorderRadius.circular(30),
@@ -172,4 +176,3 @@ class _PerfilPageState extends State<PerfilPage> {
     );
   }
 }
-

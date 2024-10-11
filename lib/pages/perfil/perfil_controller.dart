@@ -64,7 +64,14 @@ class PerfilController extends GetxController {
         );
       }
 
-      selectedSexo.value = usuario.sexo ?? "masculino";
+      // Asegúrate de que el sexo tenga un valor válido
+      if (usuario.sexo != null &&
+          (usuario.sexo == "masculino" || usuario.sexo == "femenino")) {
+        selectedSexo.value = usuario.sexo!;
+      } else {
+        // Asigna un valor predeterminado si no está definido o es incorrecto
+        selectedSexo.value = "masculino";
+      }
     }
   }
 
@@ -101,14 +108,13 @@ class PerfilController extends GetxController {
     imageFile.value = image;
   }
 
-  // Método para actualizar el perfil
-  void updateProfile() {
-    // Lógica de actualización del perfil
+  void updateProfile(BuildContext context) {
+    // Mostrar el mensaje de éxito
     Advise(
       content: 'Perfil actualizado correctamente',
-      route: '/home',
+      route: null, // No redirigimos automáticamente desde aquí
       previousPage: false,
-    ).show(Get.context!);
+    ).show(context);
   }
 
   void resetPerfilData() {
