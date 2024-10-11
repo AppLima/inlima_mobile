@@ -46,6 +46,7 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.feedback),
@@ -66,8 +67,8 @@ class _HomePageState extends State<HomePage> {
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: AppColors.primaryColorInlima, // Highlighted color for the selected tab
-        unselectedItemColor: AppColors.lightGreyInlima, // White icons for unselected tabs
-        backgroundColor: AppColors.blackInlima, // Dark blue background for navbar
+        unselectedItemColor: AppColors.tertiaryColorInlima, // White icons for unselected tabs
+        backgroundColor: AppColors.beigeColor, // Dark blue background for navbar
         onTap: _onItemTapped, // Tap handler to switch tabs
       ),
     );
