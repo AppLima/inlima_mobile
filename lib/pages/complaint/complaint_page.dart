@@ -16,7 +16,7 @@ class ComplaintPage extends StatelessWidget {
         }
 
         return Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

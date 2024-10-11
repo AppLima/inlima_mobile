@@ -34,6 +34,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // Detectar si el tema es claro u oscuro
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
       key: _scaffoldKey,
       appBar: InLimaAppBar(
@@ -66,9 +69,15 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: AppColors.primaryColorInlima,
-        unselectedItemColor: AppColors.tertiaryColorInlima,
-        backgroundColor: AppColors.accentColorInlima,
+        selectedItemColor: isDarkMode
+            ? Colors.white // Color para ítem seleccionado en modo oscuro
+            : const Color.fromARGB(255, 16, 33, 56), // Color para ítem seleccionado en modo claro
+        unselectedItemColor: isDarkMode
+            ? Colors.grey.shade400 // Color para ítem no seleccionado en modo oscuro
+            : AppColors.secondaryColorInlima, // Color para ítem no seleccionado en modo claro
+        backgroundColor: isDarkMode
+            ? const Color.fromARGB(255, 24, 24, 24) // Fondo para modo oscuro
+            : const Color.fromARGB(120, 159, 214, 250), // Fondo para modo claro
         onTap: _onItemTapped,
       ),
     );
