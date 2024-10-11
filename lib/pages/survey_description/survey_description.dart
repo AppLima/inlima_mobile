@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:inlima_mobile/_global_controllers/sesion_controller.dart';
 import 'package:inlima_mobile/components/advise_card.dart';
 import 'package:inlima_mobile/models/sondeo.dart';
 import 'package:inlima_mobile/pages/survey_description/survey_description_controller.dart';
@@ -7,6 +8,7 @@ import 'package:inlima_mobile/pages/survey_description/survey_description_contro
 class SurveyDescription extends StatelessWidget {
   final SurveyDescriptionController control =
       Get.put(SurveyDescriptionController());
+  final SesionController sesion = Get.find<SesionController>();
   SurveyDescription({super.key});
 
   Widget _buildBody(BuildContext context, Sondeo sondeo) {
@@ -60,59 +62,63 @@ class SurveyDescription extends StatelessWidget {
                 ),
                 const SizedBox(height: 24),
                 // Pregunta y botones de acuerdo/desacuerdo
-                const Text(
-                  '¿Está de acuerdo con que se realice el proyecto?',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+                if (sesion.usuario.rolId == 2) ...[
+                  const Text(
+                    '¿Está de acuerdo con que se realice el proyecto?',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 16),
-                // Botones de acción
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        // Acción para desacuerdo
-                        Advise(
-                                content:
-                                    "Se envió el sondeo correctamente. Gracias por tu contribución!",
-                                previousPage: true)
-                            .show(context);
-                        print('Desacuerdo');
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.grey,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 32, vertical: 16),
+                  const SizedBox(height: 16),
+                  // Botones de acción
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          // Acción para desacuerdo
+                          Advise(
+                                  content:
+                                      "Se envió el sondeo correctamente. Gracias por tu contribución!",
+                                  previousPage: true)
+                              .show(context);
+                          print('Desacuerdo');
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.grey,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 32, vertical: 16),
+                        ),
+                        child: const Text(
+                          'Desacuerdo',
+                          style: TextStyle(fontSize: 16),
+                        ),
                       ),
-                      child: const Text(
-                        'Desacuerdo',
-                        style: TextStyle(fontSize: 16),
+                      ElevatedButton(
+                        onPressed: () {
+                          Advise(
+                                  content:
+                                      "Se envió el sondeo correctamente. Gracias por tu contribución!",
+                                  previousPage: true)
+                              .show(context);
+                          print('De acuerdo');
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blue,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 32, vertical: 16),
+                        ),
+                        child: const Text(
+                          'De acuerdo',
+                          style: TextStyle(fontSize: 16),
+                        ),
                       ),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        Advise(
-                                content:
-                                    "Se envió el sondeo correctamente. Gracias por tu contribución!",
-                                previousPage: true)
-                            .show(context);
-                        print('De acuerdo');
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 32, vertical: 16),
-                      ),
-                      child: const Text(
-                        'De acuerdo',
-                        style: TextStyle(fontSize: 16),
-                      ),
-                    ),
-                  ],
-                ),
+                    ],
+                  ),
+                ] else ...[
+                  //TODO: ESTADISTICA ADMIN
+                ]
               ],
             ),
           ),
@@ -124,8 +130,6 @@ class SurveyDescription extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Sondeo sondeo = ModalRoute.of(context)!.settings.arguments as Sondeo;
-    return Scaffold(
-        appBar: null,
-        body: _buildBody(context, sondeo));
+    return Scaffold(appBar: null, body: _buildBody(context, sondeo));
   }
 }
