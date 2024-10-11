@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'detail_controller.dart';
 import '../../components/inlima_appbar.dart';
+import '../../components/lateral_bar.dart';
 
 class DetailPage extends StatelessWidget {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -12,10 +14,16 @@ class DetailPage extends StatelessWidget {
     final int complaintId = arguments['id'] ?? 0;
 
     final DetailController control = Get.put(DetailController(complaintId));
-
+    control.updateComplaint(complaintId);
+    
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: const InLimaAppBar(isInPerfil: false),
+      key: _scaffoldKey, // Pass the key to Scaffold
+      appBar: InLimaAppBar(
+        isInPerfil: false,
+        scaffoldKey: _scaffoldKey, // Pass the scaffoldKey to the InLimaAppBar
+      ),
+      drawer: LateralBar(),
       body: _buildBody(context, control),
     );
   }
@@ -25,7 +33,7 @@ class DetailPage extends StatelessWidget {
       child: Obx(() {
         final queja = control.complaint.value;
 
-        if (queja.id == 0) {
+        if (queja == null || queja.id == 0) {
           return const Center(child: Text('No se encontró la queja.'));
         }
 

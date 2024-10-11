@@ -9,10 +9,12 @@ import 'package:inlima_mobile/configs/colors.dart';
 import 'package:inlima_mobile/pages/confi_biometrica/confi_biometrica_page.dart';
 import 'package:inlima_mobile/pages/perfil/perfil_controller.dart'; // Importa tu PerfilController
 import 'package:inlima_mobile/_global_controllers/sesion_controller.dart'; // Importa tu SesionController
+import '../../components/lateral_bar.dart';
 
 class PerfilPage extends StatelessWidget {
   final PerfilController perfilController = Get.put(PerfilController());
   final SesionController sesionController = Get.put(SesionController()); // Instanciar el controlador de sesión
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   // Método que autorrellena los campos con los datos del usuario logueado
   void _autoRellenarCampos() {
@@ -189,7 +191,9 @@ class PerfilPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: const InLimaAppBar(isInPerfil: true), // Aquí se pasa el parámetro isInPerfil
+      key: _scaffoldKey,
+      appBar: InLimaAppBar(isInPerfil: true, scaffoldKey: _scaffoldKey),
+      drawer: LateralBar(), // Aquí se pasa el parámetro isInPerfil
       body: _buildBody(context), // Todo el contenido está en _buildBody
     );
   }

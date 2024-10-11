@@ -14,11 +14,24 @@ class ResultController extends GetxController {
     listComplaints();
   }
 
-  void listComplaints() async {
-    auxlist.value = await quejaService.fetchAll();
-
-    complaints.value = auxlist.where((queja) {
-      return topics.any((topic) => queja.asunto == topic);
-    }).toList();
+  void resetData() {
+      auxlist.clear();
+      topics.clear();
+      listComplaints();
   }
+
+  void listComplaints() async {
+    print('Topics: $topics'); // Para depuración: Verifica qué temas se están recibiendo
+
+    auxlist.value = await quejaService.fetchAll();
+    print('Auxlist quejas: $auxlist'); // Para depuración: Verifica qué quejas se han obtenido
+
+    // Verifica si los asuntos coinciden con los temas de manera robusta
+    complaints.value = auxlist.where((queja) {
+      return topics.any((topic) => queja.asunto.toLowerCase().trim() == topic.toLowerCase().trim());
+    }).toList();
+
+    print('Filtered complaints: $complaints'); // Para depuración: Verifica qué quejas pasan el filtro
+  }
+
 }

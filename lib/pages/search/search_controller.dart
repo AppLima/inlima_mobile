@@ -25,6 +25,10 @@ class SearchCController extends GetxController {
     }
   }
 
+  void resetData() {
+    selectedComplaints.clear();
+  }
+
   void selectAllComplaints() {
     selectedComplaints.clear();
     selectedComplaints.addAll(complaints);

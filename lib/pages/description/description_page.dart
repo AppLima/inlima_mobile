@@ -4,6 +4,8 @@ import 'dart:io';
 import '../../components/button_simple.dart';
 import './description_controller.dart';
 import '../../components/inlima_appbar.dart';
+import '../../components/lateral_bar.dart';
+import 'package:get/get.dart';
 
 class DescriptionPage extends StatefulWidget {
   const DescriptionPage({Key? key}) : super(key: key);
@@ -15,7 +17,9 @@ class DescriptionPage extends StatefulWidget {
 class _DescriptionPageState extends State<DescriptionPage> {
   final ImagePicker _picker = ImagePicker();
   List<File> _selectedImages = [];
-  final DescriptionController _controller = DescriptionController();
+  final DescriptionController _controller = Get.put(DescriptionController());
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   final _descriptionController = TextEditingController();
   final _locationController = TextEditingController();
@@ -105,7 +109,12 @@ class _DescriptionPageState extends State<DescriptionPage> {
     final String? asunto = ModalRoute.of(context)?.settings.arguments as String?;
 
     return Scaffold(
-      appBar: const InLimaAppBar(isInPerfil: false),
+      key: _scaffoldKey, // Pass the key to Scaffold
+      appBar: InLimaAppBar(
+        isInPerfil: false,
+        scaffoldKey: _scaffoldKey, // Pass the scaffoldKey to the InLimaAppBar
+      ),
+      drawer: LateralBar(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(

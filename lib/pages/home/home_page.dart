@@ -6,9 +6,9 @@ import '../complaint/complaint_page.dart'; // Import for Complaint Page
 import '../survey/survey.dart'; // Import for Survey Page
 import '../../configs/colors.dart';
 import '../historic/historic_page.dart';
+import '../../components/lateral_bar.dart';
 
 class HomePage extends StatefulWidget {
-
   const HomePage({super.key});
 
   @override
@@ -17,12 +17,13 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>(); // GlobalKey for controlling the Scaffold
 
   final List<Widget> _pages = [
     ComplaintPage(), // Complaint page
     SOSPage(), // SOS page
     SurveyPage(), // Survey page
-    HistoricPage(), // Placeholder for Historial
+    HistoricPage(), // Historic page
   ];
 
   void _onItemTapped(int index) {
@@ -34,10 +35,14 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const InLimaAppBar(),
+      key: _scaffoldKey, // Pass the key to Scaffold
+      appBar: InLimaAppBar(
+        scaffoldKey: _scaffoldKey, // Pass the scaffoldKey to the InLimaAppBar
+      ),
+      drawer: LateralBar(),
       body: Stack(
         children: [
-          _pages[_selectedIndex]
+          _pages[_selectedIndex], // Display the currently selected page
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

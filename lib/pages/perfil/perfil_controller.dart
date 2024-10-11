@@ -27,6 +27,16 @@ class PerfilController extends GetxController {
     }
   }
 
+  void resetData() {
+      imageFile.value = null; // Resetea la imagen
+      emailController.clear();
+      passwordController.clear();
+      nombreController.clear();
+      apellidoPaternoController.clear();
+      apellidoMaternoController.clear();
+      dniController.clear();
+      distritoController.clear();
+  }
   // Método para seleccionar imagen desde la galería
   Future<void> seleccionarImagenDesdeGaleria() async {
     final picker = ImagePicker();

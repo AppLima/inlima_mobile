@@ -6,16 +6,7 @@ import '../../_global_controllers/sesion_controller.dart';
 class DetailController extends GetxController {
   QuejaService quejaService = QuejaService();
   var auxlist = <Queja>[].obs;
-  var complaint = Queja(
-    id: 0,
-    asunto: '',
-    descripcion: '',
-    ubicacion: '',
-    fecha: '',
-    estado: '',
-    usuarioId: 0,
-    fotos: []
-  ).obs;
+  var complaint = Rxn<Queja>();
   var id = Rxn<int>();  // Observable que puede ser nulo
 
   // Elimina el llamado a listComplaints del constructor
@@ -25,6 +16,18 @@ class DetailController extends GetxController {
 
   final SesionController sesionController = Get.find<SesionController>();
 
+  void updateComplaint(int newId) {
+    resetData();  // Limpia los datos anteriores
+    id.value = newId;  // Asigna el nuevo ID
+    listComplaint();  // Vuelve a listar la queja
+  }
+
+  void resetData() {
+      auxlist.clear();
+      id.value = null;
+      listComplaint();
+  }
+
   @override
   void onInit() {
     super.onInit();
@@ -32,8 +35,9 @@ class DetailController extends GetxController {
   }
 
   void listComplaint() async {
+    print("detailcontrollador");
+    print(id);
     auxlist.value = await quejaService.fetchAll();
-
     for (var aux in auxlist) {
       if (aux.id == id.value) {
         complaint.value = aux;
@@ -41,7 +45,7 @@ class DetailController extends GetxController {
       }
     }
 
-    if (complaint.value.id == 0) {
+    if (complaint.value == null) {
       print("No complaint found.");
     }
   }

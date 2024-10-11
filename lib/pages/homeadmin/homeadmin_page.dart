@@ -6,6 +6,7 @@ import '../complaint/complaint_page.dart'; // Import for Complaint Page
 import '../survey/survey.dart'; // Import for Survey Page
 import '../../configs/colors.dart';
 import '../search/search_page.dart';
+import '../../components/lateral_bar.dart';
 
 class HomeAdminPage extends StatefulWidget {
 
@@ -17,6 +18,7 @@ class HomeAdminPage extends StatefulWidget {
 
 class _HomePageState extends State<HomeAdminPage> {
   int _selectedIndex = 0;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   final List<Widget> _pages = [
     SearchPage(), // Complaint page
@@ -33,7 +35,11 @@ class _HomePageState extends State<HomeAdminPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const InLimaAppBar(),
+      key: _scaffoldKey, // Pass the key to Scaffold
+      appBar: InLimaAppBar(
+        scaffoldKey: _scaffoldKey, // Pass the scaffoldKey to the InLimaAppBar
+      ),
+      drawer: LateralBar(),
       body: Stack(
         children: [
           _pages[_selectedIndex]

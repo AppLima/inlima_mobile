@@ -24,6 +24,10 @@ class DescriptionController {
   }
 }
 
+  void resetData() {
+    
+  }
+
   // Función para subir múltiples imágenes
   Future<List<String>> uploadImages(List<File> images) async {
     List<String> downloadUrls = [];

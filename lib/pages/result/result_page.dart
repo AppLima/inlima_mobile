@@ -3,8 +3,10 @@ import 'package:get/get.dart';
 import 'result_controller.dart';
 import '../../components/Result_card.dart';
 import '../../components/inlima_appbar.dart';
+import '../../components/lateral_bar.dart';
 
 class ResultPage extends StatelessWidget {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   Widget _buildBody(BuildContext context) {
     final ResultController control = Get.put(
@@ -12,6 +14,10 @@ class ResultPage extends StatelessWidget {
         ModalRoute.of(context)?.settings.arguments as List<String> ?? []
       )
     );
+
+    control.resetData();
+    control.topics.assignAll(ModalRoute.of(context)?.settings.arguments as List<String> ?? []);
+    control.listComplaints();
 
     return SafeArea(
       child: Obx(() {
@@ -40,7 +46,12 @@ class ResultPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const InLimaAppBar(isInPerfil: false),
+      key: _scaffoldKey, // Pass the key to Scaffold
+      appBar: InLimaAppBar(
+        isInPerfil: false,
+        scaffoldKey: _scaffoldKey, // Pass the scaffoldKey to the InLimaAppBar
+      ),
+      drawer: LateralBar(),
       resizeToAvoidBottomInset: false,
       body: _buildBody(context),
     );
