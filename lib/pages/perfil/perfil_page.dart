@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:inlima_mobile/components/advise_card.dart';
 import 'package:inlima_mobile/components/customprofilepicture.dart';
 import 'package:inlima_mobile/components/customtextfield.dart';
 import 'package:inlima_mobile/components/customdropdownfield.dart';

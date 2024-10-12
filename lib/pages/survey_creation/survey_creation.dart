@@ -2,24 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:inlima_mobile/components/advise_card.dart';
 import 'package:inlima_mobile/pages/survey_creation/survey_creation_controller.dart';
-import 'package:inlima_mobile/components/inlima_appbar.dart';
-import '../../components/lateral_bar.dart';
+//import 'package:inlima_mobile/components/inlima_appbar.dart';
+//import '../../components/lateral_bar.dart';
 
 class SurveyCreationPage extends StatelessWidget {
   SurveyCreationPage({super.key});
   final SurveyCreationController control = Get.put(SurveyCreationController());
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>(); 
+  //final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>(); 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      key: _scaffoldKey,
+      /*key: _scaffoldKey,
       appBar: InLimaAppBar(
         isInPerfil: true,
         scaffoldKey: _scaffoldKey,
       ),
-      drawer: LateralBar(),
+      drawer: LateralBar(),*/
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(

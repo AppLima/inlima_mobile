@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:inlima_mobile/models/sondeo.dart';
 import 'package:inlima_mobile/pages/confi_biometrica/confi_biometrica_page.dart';
 import 'package:inlima_mobile/pages/home/home_page.dart';
 import 'package:inlima_mobile/pages/login/inicio/inicio_page.dart';
@@ -14,9 +13,7 @@ import 'pages/detail/detail_page.dart';
 import 'pages/complaint/complaint_page.dart';
 import 'pages/description/description_page.dart';
 import 'pages/historic/historic_page.dart';
-import 'pages/homeadmin/homeadmin_page.dart';
 import 'configs/app_theme.dart';
-import 'package:inlima_mobile/models/usuario.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
@@ -41,16 +38,15 @@ class MyApp extends StatelessWidget {
       initialRoute: '/login/pagina_principal',
       routes: {
         '/login/pagina_principal': (context) => PaginaPrincipalPage(),
-        '/login/inicio': (context) => InicioPage(isRegister: false), //login - register
+        '/login/inicio': (context) => InicioPage(isRegister: false),
         '/home':  (context) => HomePage(),
-        '/homeadmin':  (context) => HomeAdminPage(),
         '/confi_biometrica':  (context) => ConfiBiometricaPage(),
         '/perfil':  (context) => PerfilPage(),
-        '/complaint': (context) => ComplaintPage(), //Pantalla de quejas
-        '/description': (context) => const DescriptionPage(), //Realizar queja
-        '/survey': (context) => SurveyPage(), //Sondeos disponibles
-        '/survey_description' : (context) => SurveyDescription(),//Detalles de sondeo
-        '/survey_creation' : (context) => SurveyCreationPage(),//Crear sondeo (Admin)
+        '/complaint': (context) => ComplaintPage(),
+        '/description': (context) => const DescriptionPage(),
+        '/survey': (context) => SurveyPage(),
+        '/survey_description' : (context) => SurveyDescription(),
+        '/survey_creation' : (context) => SurveyCreationPage(),
         '/search' : (context) => SearchPage(),
         '/historic' : (context) => HistoricPage(),
         '/result' : (context) => ResultPage(),

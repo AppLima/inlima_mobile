@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart'; // Asegúrate de importar GetX
 import 'package:inlima_mobile/components/inlima_appbar.dart';
-import 'package:inlima_mobile/models/usuario.dart';
 import '../sos/sos_page.dart';
+import '../survey_creation/survey_creation.dart';
 import '../complaint/complaint_page.dart';
 import '../survey/survey.dart';
-import '../../configs/colors.dart';
 import '../historic/historic_page.dart';
+import '../search/search_page.dart';
+import '../../configs/colors.dart';
 import '../../components/lateral_bar.dart';
+import '../../_global_controllers/sesion_controller.dart'; // Importa tu SesionController
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -19,12 +22,25 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final List<Widget> _pages = [
-    ComplaintPage(),
-    SOSPage(),
-    SurveyPage(),
-    HistoricPage(),
-  ];
+  // Define las páginas para usuarios normales y administradores
+  late final List<Widget> _userPages;
+  late final List<Widget> _adminPages;
+
+  @override
+  void initState() {
+    super.initState();
+    _userPages = [
+      ComplaintPage(),
+      SOSPage(),
+      SurveyPage(),
+      HistoricPage(),
+    ];
+    _adminPages = [
+      SearchPage(),
+      SurveyCreationPage(),
+      SurveyPage(),
+    ];
+  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -34,8 +50,13 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // Detectar si el tema es claro u oscuro
+    final SesionController sesionController = Get.find<SesionController>();
+    int rol = sesionController.usuario.rolId;
+    
+    final isAdmin = rol == 1;
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
+    final List<Widget> pages = isAdmin ? _adminPages : _userPages;
 
     return Scaffold(
       key: _scaffoldKey,
@@ -45,39 +66,54 @@ class _HomePageState extends State<HomePage> {
       drawer: LateralBar(),
       body: Stack(
         children: [
-          _pages[_selectedIndex],
+          pages[_selectedIndex],
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.feedback),
-            label: 'Quejas',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.warning),
-            label: 'SOS',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.poll),
-            label: 'Sondeos',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.history),
-            label: 'Historial',
-          ),
-        ],
+        items: isAdmin
+            ? const <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.search),
+                  label: 'Buscar quejas',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.poll),
+                  label: 'Crear sondeo',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.history),
+                  label: 'Ver sondeos',
+                ),
+              ]
+            : const <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.feedback),
+                  label: 'Quejas',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.warning),
+                  label: 'SOS',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.poll),
+                  label: 'Sondeos',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.history),
+                  label: 'Historial',
+                ),
+              ],
         currentIndex: _selectedIndex,
         selectedItemColor: isDarkMode
-            ? Colors.white // Color para ítem seleccionado en modo oscuro
-            : const Color.fromARGB(255, 16, 33, 56), // Color para ítem seleccionado en modo claro
+            ? Colors.white
+            : const Color.fromARGB(255, 16, 33, 56),
         unselectedItemColor: isDarkMode
-            ? Colors.grey.shade400 // Color para ítem no seleccionado en modo oscuro
-            : AppColors.secondaryColorInlima, // Color para ítem no seleccionado en modo claro
+            ? Colors.grey.shade400
+            : AppColors.secondaryColorInlima,
         backgroundColor: isDarkMode
-            ? const Color.fromARGB(255, 24, 24, 24) // Fondo para modo oscuro
-            : const Color.fromARGB(120, 159, 214, 250), // Fondo para modo claro
+            ? const Color.fromARGB(255, 24, 24, 24)
+            : const Color.fromARGB(120, 159, 214, 250),
         onTap: _onItemTapped,
       ),
     );
