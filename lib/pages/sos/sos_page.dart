@@ -1,83 +1,59 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'sos_controller.dart'; // Ensure you import the controller
+import 'sos_controller.dart'; // Asegúrate de importar el controlador
+import '../../components/sos_info.dart';
 
 class SOSPage extends StatelessWidget {
-  final SOSController sosController = Get.put(SOSController()); // Instantiate the controller
+  final SOSController sosController = Get.put(SOSController()); // Instancia del controlador
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: null,
-      body: SingleChildScrollView( // Add scrollable functionality
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // SAMU Section
-            _buildSOSSection(
-              imagePath: 'assets/img_app/samu.png', // Replace with the correct path
-              label: '🚑 Atención Médica Móvil (SAMU)',
-              phoneNumber: '105',
+            // SAMU Section usando SurveyInfo
+            GestureDetector(
+              onTap: () => sosController.makePhoneCall('105'),
+              child: const SosInfo(
+                imageUrl: 'assets/img_app/samu.png', // Reemplaza con la ruta correcta
+                title: '🚑 Atención Médica Móvil (SAMU)',
+              ),
             ),
             SizedBox(height: 20),
-            // PNP Section
-            _buildSOSSection(
-              imagePath: 'assets/img_app/PNP.png', // Replace with the correct path
-              label: '🚓 Policía Nacional del Perú (PNP)',
-              phoneNumber: '113',
+            // PNP Section usando SurveyInfo
+            GestureDetector(
+              onTap: () => sosController.makePhoneCall('113'),
+              child: const SosInfo(
+                imageUrl: 'assets/img_app/PNP.png', // Reemplaza con la ruta correcta
+                title: '🚓 Policía Nacional del Perú (PNP)',
+              ),
             ),
             SizedBox(height: 20),
-            // Bomberos Section
-            _buildSOSSection(
-              imagePath: 'assets/img_app/bomberos.png', // Replace with the correct path
-              label: '👨‍🚒 Bomberos Voluntarios del Perú',
-              phoneNumber: '116',
+            // Bomberos Section usando SurveyInfo
+            GestureDetector(
+              onTap: () => sosController.makePhoneCall('116'),
+              child: const SosInfo(
+                imageUrl: 'assets/img_app/bomberos.png', // Reemplaza con la ruta correcta
+                title: '👨‍🚒 Bomberos Voluntarios del Perú',
+              ),
             ),
             SizedBox(height: 20),
-            // Serenazgo Section
-            _buildSOSSection(
-              imagePath: 'assets/img_app/serenazgo.png', // Replace with the correct path
-              label: '👮 Central de Serenazgo',
-              phoneNumber: '104',
+            // Serenazgo Section usando SurveyInfo
+            GestureDetector(
+              onTap: () => sosController.makePhoneCall('104'),
+              child: const SosInfo(
+                imageUrl: 'assets/img_app/serenazgo.png', // Reemplaza con la ruta correcta
+                title: '👮 Central de Serenazgo',
+              ),
             ),
           ],
         ),
       ),
-    );
-  }
-
-  // Helper method to build an SOS section with image above the button
-  Widget _buildSOSSection({
-    required String imagePath,
-    required String label,
-    required String phoneNumber,
-  }) {
-    return Column(
-      children: [
-        // Image container
-        Image.asset(
-          imagePath,
-          height: 100, // Set a fixed height for the image
-          fit: BoxFit.contain, // Maintain aspect ratio
-        ),
-        SizedBox(height: 10),
-        // Button container
-        ElevatedButton(
-          onPressed: () => sosController.makePhoneCall(phoneNumber),
-          style: ElevatedButton.styleFrom(
-            padding: EdgeInsets.symmetric(vertical: 20),
-          ),
-          child: Text(
-            label,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 16, // You can adjust the font size
-            ),
-          ),
-        ),
-      ],
     );
   }
 }
