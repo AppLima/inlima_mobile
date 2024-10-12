@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart'; // Asegúrate de importar GetX
+import 'package:get/get.dart';
 import 'package:inlima_mobile/components/inlima_appbar.dart';
 import '../sos/sos_page.dart';
 import '../survey_creation/survey_creation.dart';
@@ -9,7 +9,7 @@ import '../historic/historic_page.dart';
 import '../search/search_page.dart';
 import '../../configs/colors.dart';
 import '../../components/lateral_bar.dart';
-import '../../_global_controllers/sesion_controller.dart'; // Importa tu SesionController
+import '../../_global_controllers/sesion_controller.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -22,7 +22,6 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  // Define las páginas para usuarios normales y administradores
   late final List<Widget> _userPages;
   late final List<Widget> _adminPages;
 

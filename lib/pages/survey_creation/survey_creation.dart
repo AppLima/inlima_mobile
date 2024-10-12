@@ -14,6 +14,7 @@ class SurveyCreationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
+      appBar: null,
       /*key: _scaffoldKey,
       appBar: InLimaAppBar(
         isInPerfil: true,

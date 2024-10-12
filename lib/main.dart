@@ -39,11 +39,11 @@ class MyApp extends StatelessWidget {
       routes: {
         '/login/pagina_principal': (context) => PaginaPrincipalPage(),
         '/login/inicio': (context) => InicioPage(isRegister: false),
-        '/home':  (context) => HomePage(),
+        '/home':  (context) => const HomePage(),
         '/confi_biometrica':  (context) => ConfiBiometricaPage(),
         '/perfil':  (context) => PerfilPage(),
         '/complaint': (context) => ComplaintPage(),
-        '/description': (context) => const DescriptionPage(),
+        '/description': (context) => DescriptionPage(),
         '/survey': (context) => SurveyPage(),
         '/survey_description' : (context) => SurveyDescription(),
         '/survey_creation' : (context) => SurveyCreationPage(),

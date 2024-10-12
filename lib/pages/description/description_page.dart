@@ -7,101 +7,25 @@ import '../../components/inlima_appbar.dart';
 import '../../components/lateral_bar.dart';
 import 'package:get/get.dart';
 
-class DescriptionPage extends StatefulWidget {
-  const DescriptionPage({Key? key}) : super(key: key);
+class DescriptionPage extends StatelessWidget {
+  DescriptionPage({super.key});
 
-  @override
-  _DescriptionPageState createState() => _DescriptionPageState();
-}
-
-class _DescriptionPageState extends State<DescriptionPage> {
-  final ImagePicker _picker = ImagePicker();
-  List<File> _selectedImages = [];
   final DescriptionController _controller = Get.put(DescriptionController());
-
+  final ImagePicker _picker = ImagePicker();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
-  final _descriptionController = TextEditingController();
-  final _locationController = TextEditingController();
-  final _districtController = TextEditingController();
-
-  String? _descriptionError;
-  String? _locationError;
-  String? _districtError;
-  String? _adviseContent;
-
-  Future<void> _enviar() async {
-
-    bool isValid = false;
-
-    setState(() {
-      isValid = _validateFields();
-    });
-
-    if (isValid) {
-      List<String> downloadUrls = [];
-
-      if (_selectedImages.isNotEmpty) {
-        downloadUrls = await _controller.uploadImages(_selectedImages);
-      }
-
-      final description = _descriptionController.text.trim();
-      final location = _locationController.text.trim();
-      final district = _districtController.text.trim();
-      _controller.printDetails(description, location, district, downloadUrls);
-
-      setState(() {
-        _adviseContent = "Queja enviada con éxito";
-      });
-    }
-  }
-
-  String? _getAdviseContent() {
-    return _adviseContent;
-  }
-
-  String? _getAdviseRoute() {
-    return _adviseContent != null ? "/complaint" : null;
-  }
-
-  bool _validateFields() {
-    final description = _descriptionController.text.trim();
-    final location = _locationController.text.trim();
-    final district = _districtController.text.trim();
-
-    setState(() {
-      _descriptionError = description.isEmpty ? 'Por favor ingrese una descripción.' : null;
-      _locationError = location.isEmpty ? 'Por favor ingrese una ubicación.' : null;
-      _districtError = district.isEmpty ? 'Por favor ingrese el distrito.' : null;
-    });
-
-    return _descriptionError == null && _locationError == null && _districtError == null;
-  }
 
   Future<void> _takePhoto() async {
     final pickedImage = await _picker.pickImage(source: ImageSource.camera);
-
     if (pickedImage != null) {
-      setState(() {
-        _selectedImages.add(File(pickedImage.path));
-      });
+      _controller.selectedImages.add(File(pickedImage.path));
     }
   }
 
   Future<void> _selectPhoto() async {
     final pickedImage = await _picker.pickImage(source: ImageSource.gallery);
-
     if (pickedImage != null) {
-      setState(() {
-        _selectedImages.add(File(pickedImage.path));
-      });
+      _controller.selectedImages.add(File(pickedImage.path));
     }
-  }
-
-  void _removePhoto(int index) {
-    setState(() {
-      _selectedImages.removeAt(index);
-    });
   }
 
   @override
@@ -109,12 +33,12 @@ class _DescriptionPageState extends State<DescriptionPage> {
     final String? asunto = ModalRoute.of(context)?.settings.arguments as String?;
 
     return Scaffold(
-      key: _scaffoldKey, // Pass the key to Scaffold
+      key: _scaffoldKey, 
       appBar: InLimaAppBar(
         isInPerfil: false,
-        scaffoldKey: _scaffoldKey, // Pass the scaffoldKey to the InLimaAppBar
+        scaffoldKey: _scaffoldKey,
       ),
-      drawer: LateralBar(),
+      drawer: const LateralBar(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
@@ -131,43 +55,43 @@ class _DescriptionPageState extends State<DescriptionPage> {
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
-              TextField(
-                controller: _descriptionController,
+              Obx(() => TextFormField(
+                controller: _controller.descriptionController,
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(),
-                  hintText: 'Escribe la descripción aquí...',
-                  errorText: _descriptionError,
+                  labelText: 'Escribe la descripción aquí...',
+                  errorText: _controller.descriptionError.value,
                 ),
                 maxLines: 3,
-              ),
+              )),
               const SizedBox(height: 16),
               const Text(
                 'Ubicación:',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
-              TextField(
-                controller: _locationController,
+              Obx(() => TextFormField(
+                controller: _controller.locationController,
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(),
-                  hintText: 'Escribe la ubicación aquí...',
-                  errorText: _locationError,
+                  labelText: 'Escribe la ubicación aquí...',
+                  errorText: _controller.locationError.value,
                 ),
-              ),
+              )),
               const SizedBox(height: 16),
               const Text(
                 'Distrito del incidente:',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
-              TextField(
-                controller: _districtController,
+              Obx(() => TextField(
+                controller: _controller.districtController,
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(),
-                  hintText: 'Escriba el distrito del incidente aquí...',
-                  errorText: _districtError,
+                  labelText: 'Escriba el distrito del incidente aquí...',
+                  errorText: _controller.districtError.value,
                 ),
-              ),
+              )),
               const SizedBox(height: 16),
               const Text(
                 'Adjuntar foto:',
@@ -188,35 +112,34 @@ class _DescriptionPageState extends State<DescriptionPage> {
                 ],
               ),
               const SizedBox(height: 16),
-              _selectedImages.isEmpty
+              Obx(() => _controller.selectedImages.isEmpty
                   ? const Text('No se han adjuntado fotos.')
                   : ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: _selectedImages.length,
+                      itemCount: _controller.selectedImages.length,
                       itemBuilder: (context, index) {
-                        final imageFile = _selectedImages[index];
+                        //final imageFile = _controller.selectedImages[index];
                         return ListTile(
                           leading: const Icon(Icons.image),
                           title: Text('Foto ${index + 1}'),
                           trailing: IconButton(
                             icon: const Icon(Icons.delete, color: Colors.red),
-                            onPressed: () => _removePhoto(index),
+                            onPressed: () => _controller.selectedImages.removeAt(index),
                           ),
                         );
                       },
-                    ),
+                    )),
               const SizedBox(height: 16),
-
-              ButtonSimple(
+              Obx(() => ButtonSimple(
                 text: 'Enviar',
                 enabled: true,
-                adviseContent: _getAdviseContent(),
+                adviseContent: _controller.adviseContent.value,
                 onPressed: () async {
-                  await _enviar();
+                  await _controller.enviar();
                 },
-                adviseRoute: _getAdviseRoute(),
-              ),
+                adviseRoute: _controller.adviseContent.value != null ? "/home" : null,
+              )),
             ],
           ),
         ),
