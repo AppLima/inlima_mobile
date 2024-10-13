@@ -32,9 +32,9 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.lightTheme(), // Tema claro
       darkTheme: AppTheme.darkTheme(), // Tema oscuro
       themeMode: ThemeMode.system,
-      home: Scaffold(
+      /*home: Scaffold(
         appBar: AppBar(title: const Text('Inlima')),
-      ),
+      ),*/
       initialRoute: '/login/pagina_principal',
       routes: {
         '/login/pagina_principal': (context) => PaginaPrincipalPage(),
