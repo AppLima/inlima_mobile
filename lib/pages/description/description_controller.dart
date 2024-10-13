@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../components/advise_card.dart';
 
 class DescriptionController extends GetxController {
   final FirebaseStorage _storage = FirebaseStorage.instance;
@@ -14,7 +15,8 @@ class DescriptionController extends GetxController {
   Rx<String?> locationError = Rx<String?>(null);
   Rx<String?> districtError = Rx<String?>(null);
   Rx<String?> adviseContent = Rx<String?>(null);
-  
+  RxBool isLoading = false.obs; // Indicador de carga
+
   bool validateFields() {
     final description = descriptionController.text.trim();
     final location = locationController.text.trim();
@@ -29,23 +31,31 @@ class DescriptionController extends GetxController {
            districtError.value == null;
   }
 
-  Future<String?> uploadImage(File imageFile) async {
-    try {
-      final String fileName = imageFile.path.split("/").last;
-      Reference ref = _storage.ref().child('quejas/$fileName');
-      
-      SettableMetadata metadata = SettableMetadata(
-        contentType: 'image/jpeg',
-      );
-      
-      UploadTask uploadTask = ref.putFile(imageFile, metadata);
+  Future<void> enviar(BuildContext context) async {
+    if (validateFields()) {
+      isLoading.value = true; // Inicia la carga
+      List<String> downloadUrls = [];
 
-      TaskSnapshot snapshot = await uploadTask;
-      String downloadUrl = await snapshot.ref.getDownloadURL();
-      return downloadUrl;
-    } catch (e) {
-      print("Error al subir imagen: $e");
-      return null;
+      if (selectedImages.isNotEmpty) {
+        downloadUrls = await uploadImages(selectedImages);
+      }
+
+      final description = descriptionController.text.trim();
+      final location = locationController.text.trim();
+      final district = districtController.text.trim();
+      
+      printDetails(description, location, district, downloadUrls);
+      
+      adviseContent.value = "Queja enviada con éxito";
+
+      // Mostrar el pop-up de aviso
+      Advise(
+        content: 'Queja enviada',
+        route: '/home',
+      ).show(context);
+
+      resetData();
+      isLoading.value = false; // Finaliza la carga
     }
   }
 
@@ -60,26 +70,36 @@ class DescriptionController extends GetxController {
     return downloadUrls;
   }
 
-  Future<void> enviar() async {
-    if (validateFields()) {
-      List<String> downloadUrls = [];
-
-      if (selectedImages.isNotEmpty) {
-        downloadUrls = await uploadImages(selectedImages);
-      }
-
-      final description = descriptionController.text.trim();
-      final location = locationController.text.trim();
-      final district = districtController.text.trim();
+  Future<String?> uploadImage(File imageFile) async {
+    try {
+      final String fileName = imageFile.path.split("/").last;
+      Reference ref = _storage.ref().child('quejas/$fileName');
       
-      printDetails(description, location, district, downloadUrls);
+      SettableMetadata metadata = SettableMetadata(
+        contentType: 'image/jpeg',
+      );
       
-      adviseContent.value = "Queja enviada con éxito";
+      UploadTask uploadTask = ref.putFile(imageFile, metadata);
+      TaskSnapshot snapshot = await uploadTask;
+      String downloadUrl = await snapshot.ref.getDownloadURL();
+      return downloadUrl;
+    } catch (e) {
+      print("Error al subir imagen: $e");
+      return null;
     }
   }
 
   void resetData() {
+    descriptionController.clear();
+    locationController.clear();
+    districtController.clear();
     
+    descriptionError.value = null;
+    locationError.value = null;
+    districtError.value = null;
+
+    selectedImages.clear();
+    adviseContent.value = null;
   }
 
   void printDetails(String description, String location, String district, List<String> imageUrls) {
@@ -97,3 +117,4 @@ class DescriptionController extends GetxController {
     }
   }
 }
+
