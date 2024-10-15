@@ -66,13 +66,13 @@ class _HomePageState extends State<HomeAdminPage> {
         currentIndex: _selectedIndex,
         selectedItemColor: isDarkMode
             ? Colors.white // Color para ítem seleccionado en modo oscuro
-            : const Color.fromARGB(255, 16, 33, 56), // Color para ítem seleccionado en modo claro
+            : AppColors.primaryColorInlima , // Color para ítem seleccionado en modo claro
         unselectedItemColor: isDarkMode
             ? Colors.grey.shade400 // Color para ítem no seleccionado en modo oscuro
-            : AppColors.secondaryColorInlima, // Color para ítem no seleccionado en modo claro
+            : AppColors.blackInlima, // Color para ítem no seleccionado en modo claro
         backgroundColor: isDarkMode
             ? const Color.fromARGB(255, 24, 24, 24) // Fondo para modo oscuro
-            : const Color.fromARGB(120, 159, 214, 250), // Fondo para modo claro
+            : AppColors.beigeColor, // Fondo para modo claro
         onTap: _onItemTapped,
       ),
     );
