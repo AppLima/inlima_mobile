@@ -86,14 +86,9 @@ class InicioController {
         // Actualiza el controlador de sesión con el usuario logueado
         sesion.iniciarSesion(usuarioEncontrado);
         _showSuccess(context, "Inicio de sesión exitoso");
-        final SesionController sesionController = Get.find<SesionController>();
-
-        int rol = sesionController.usuario.rolId;
-        if (rol == 1) {
-          Navigator.of(context).pushReplacementNamed('/homeadmin');
-        } else {
-          Navigator.of(context).pushReplacementNamed('/home');
-        }
+        
+        Navigator.of(context).pushReplacementNamed('/home');
+        
       } else {
         _showError(context, "Correo o contraseña incorrectos");
       }

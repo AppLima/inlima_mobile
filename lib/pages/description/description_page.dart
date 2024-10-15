@@ -1,107 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
-import '../../components/button_simple.dart';
 import './description_controller.dart';
 import '../../components/inlima_appbar.dart';
 import '../../components/lateral_bar.dart';
 import 'package:get/get.dart';
+import '../../configs/colors.dart';
 
-class DescriptionPage extends StatefulWidget {
-  const DescriptionPage({Key? key}) : super(key: key);
+class DescriptionPage extends StatelessWidget {
+  DescriptionPage({super.key});
 
-  @override
-  _DescriptionPageState createState() => _DescriptionPageState();
-}
-
-class _DescriptionPageState extends State<DescriptionPage> {
-  final ImagePicker _picker = ImagePicker();
-  List<File> _selectedImages = [];
   final DescriptionController _controller = Get.put(DescriptionController());
-
+  final ImagePicker _picker = ImagePicker();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final _descriptionController = TextEditingController();
-  final _locationController = TextEditingController();
-  final _districtController = TextEditingController();
-
-  String? _descriptionError;
-  String? _locationError;
-  String? _districtError;
-  String? _adviseContent;
-
-  Future<void> _enviar() async {
-
-    bool isValid = false;
-
-    setState(() {
-      isValid = _validateFields();
-    });
-
-    if (isValid) {
-      List<String> downloadUrls = [];
-
-      if (_selectedImages.isNotEmpty) {
-        downloadUrls = await _controller.uploadImages(_selectedImages);
-      }
-
-      final description = _descriptionController.text.trim();
-      final location = _locationController.text.trim();
-      final district = _districtController.text.trim();
-      _controller.printDetails(description, location, district, downloadUrls);
-
-      setState(() {
-        _adviseContent = "Queja enviada con éxito";
-      });
-    }
-  }
-
-  String? _getAdviseContent() {
-    return _adviseContent;
-  }
-
-  String? _getAdviseRoute() {
-    return _adviseContent != null ? "/complaint" : null;
-  }
-
-  bool _validateFields() {
-    final description = _descriptionController.text.trim();
-    final location = _locationController.text.trim();
-    final district = _districtController.text.trim();
-
-    setState(() {
-      _descriptionError = description.isEmpty ? 'Por favor ingrese una descripción.' : null;
-      _locationError = location.isEmpty ? 'Por favor ingrese una ubicación.' : null;
-      _districtError = district.isEmpty ? 'Por favor ingrese el distrito.' : null;
-    });
-
-    return _descriptionError == null && _locationError == null && _districtError == null;
-  }
-
-  Future<void> _takePhoto() async {
-    final pickedImage = await _picker.pickImage(source: ImageSource.camera);
-
-    if (pickedImage != null) {
-      setState(() {
-        _selectedImages.add(File(pickedImage.path));
-      });
-    }
-  }
-
-  Future<void> _selectPhoto() async {
-    final pickedImage = await _picker.pickImage(source: ImageSource.gallery);
-
-    if (pickedImage != null) {
-      setState(() {
-        _selectedImages.add(File(pickedImage.path));
-      });
-    }
-  }
-
-  void _removePhoto(int index) {
-    setState(() {
-      _selectedImages.removeAt(index);
-    });
+  Future<void> _selectPhotoOrTakePhoto(BuildContext context) async {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              ListTile(
+                leading: const Icon(Icons.camera_alt),
+                title: const Text('Tomar foto'),
+                onTap: () async {
+                  final pickedImage = await _picker.pickImage(source: ImageSource.camera);
+                  if (pickedImage != null) {
+                    _controller.selectedImages.add(File(pickedImage.path));
+                  }
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.photo_library),
+                title: const Text('Seleccionar desde galería'),
+                onTap: () async {
+                  final pickedImage = await _picker.pickImage(source: ImageSource.gallery);
+                  if (pickedImage != null) {
+                    _controller.selectedImages.add(File(pickedImage.path));
+                  }
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -109,117 +56,143 @@ class _DescriptionPageState extends State<DescriptionPage> {
     final String? asunto = ModalRoute.of(context)?.settings.arguments as String?;
 
     return Scaffold(
-      key: _scaffoldKey, // Pass the key to Scaffold
+      key: _scaffoldKey,
       appBar: InLimaAppBar(
         isInPerfil: false,
-        scaffoldKey: _scaffoldKey, // Pass the scaffoldKey to the InLimaAppBar
+        scaffoldKey: _scaffoldKey,
       ),
-      drawer: LateralBar(),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                asunto ?? 'Descripción',
-                style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 16),
-              const Text(
-                'Descripción:',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 8),
-              TextField(
-                controller: _descriptionController,
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(),
-                  hintText: 'Escribe la descripción aquí...',
-                  errorText: _descriptionError,
-                ),
-                maxLines: 3,
-              ),
-              const SizedBox(height: 16),
-              const Text(
-                'Ubicación:',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 8),
-              TextField(
-                controller: _locationController,
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(),
-                  hintText: 'Escribe la ubicación aquí...',
-                  errorText: _locationError,
-                ),
-              ),
-              const SizedBox(height: 16),
-              const Text(
-                'Distrito del incidente:',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 8),
-              TextField(
-                controller: _districtController,
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(),
-                  hintText: 'Escriba el distrito del incidente aquí...',
-                  errorText: _districtError,
-                ),
-              ),
-              const SizedBox(height: 16),
-              const Text(
-                'Adjuntar foto:',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 8),
-              Row(
+      drawer: const LateralBar(),
+      body: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ElevatedButton(
-                    onPressed: _takePhoto,
-                    child: const Text('Tomar foto'),
+                  Center(
+                    child: Text(
+                      asunto ?? 'Descripción',
+                      style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                    ),
                   ),
-                  const SizedBox(width: 16),
-                  ElevatedButton(
-                    onPressed: _selectPhoto,
-                    child: const Text('Seleccionar foto'),
+                  const SizedBox(height: 16),
+                  const Text(
+                    'Descripción:',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 8),
+                  Obx(() => TextFormField(
+                    controller: _controller.descriptionController,
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
+                      labelText: 'Escribe la descripción aquí...',
+                      errorText: _controller.descriptionError.value,
+                    ),
+                    maxLines: 3,
+                  )),
+                  const SizedBox(height: 16),
+                  const Text(
+                    'Ubicación:',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 8),
+                  Obx(() => TextFormField(
+                    controller: _controller.locationController,
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
+                      labelText: 'Escribe la ubicación aquí...',
+                      errorText: _controller.locationError.value,
+                    ),
+                  )),
+                  const SizedBox(height: 16),
+                  const Text(
+                    'Distrito del incidente:',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 8),
+                  Obx(() => TextField(
+                    controller: _controller.districtController,
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
+                      labelText: 'Escriba el distrito del incidente aquí...',
+                      errorText: _controller.districtError.value,
+                    ),
+                  )),
+                  const SizedBox(height: 16),
+                  const Text(
+                    'Adjuntar foto:',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 8),
+                  ElevatedButton.icon(
+                    onPressed: () => _selectPhotoOrTakePhoto(context),
+                    icon: const Icon(Icons.photo_camera, color: Colors.white),
+                    label: const Text('Adjuntar foto'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.grey,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Obx(() => _controller.selectedImages.isEmpty
+                      ? const Text('No se han adjuntado fotos.')
+                      : ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: _controller.selectedImages.length,
+                          itemBuilder: (context, index) {
+                            return ListTile(
+                              leading: const Icon(Icons.image),
+                              title: Text('Foto ${index + 1}'),
+                              trailing: IconButton(
+                                icon: const Icon(Icons.delete, color: Colors.red),
+                                onPressed: () => _controller.selectedImages.removeAt(index),
+                              ),
+                            );
+                          },
+                        )),
+                  const SizedBox(height: 16),
+                  ElevatedButton.icon(
+                    onPressed: () async {
+                      await _controller.enviar(context); // Pasa el context al enviar
+                    },
+                    icon: const Icon(Icons.send, color: Colors.black),
+                    label: const Text(
+                      'Enviar',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.secondaryColorInlima,
+                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
                   ),
                 ],
               ),
-              const SizedBox(height: 16),
-              _selectedImages.isEmpty
-                  ? const Text('No se han adjuntado fotos.')
-                  : ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: _selectedImages.length,
-                      itemBuilder: (context, index) {
-                        final imageFile = _selectedImages[index];
-                        return ListTile(
-                          leading: const Icon(Icons.image),
-                          title: Text('Foto ${index + 1}'),
-                          trailing: IconButton(
-                            icon: const Icon(Icons.delete, color: Colors.red),
-                            onPressed: () => _removePhoto(index),
-                          ),
-                        );
-                      },
-                    ),
-              const SizedBox(height: 16),
-
-              ButtonSimple(
-                text: 'Enviar',
-                enabled: true,
-                adviseContent: _getAdviseContent(),
-                onPressed: () async {
-                  await _enviar();
-                },
-                adviseRoute: _getAdviseRoute(),
-              ),
-            ],
+            ),
           ),
-        ),
+          Obx(() {
+            if (_controller.isLoading.value) {
+              return Container(
+                color: Colors.black.withOpacity(0.5),
+                child: const Center(
+                  child: CircularProgressIndicator(
+                    color: Colors.white,
+                  ),
+                ),
+              );
+            } else {
+              return const SizedBox.shrink();
+            }
+          }),
+        ],
       ),
     );
   }

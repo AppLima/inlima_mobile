@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'historic_controller.dart';
 import '../../components/historic_card.dart';
+import '../../configs/colors.dart';
 
 class HistoricPage extends StatelessWidget {
+  HistoricPage({super.key});
   final HistoricController control = Get.put(HistoricController());
 
   Widget _buildBody(BuildContext context) {
@@ -34,17 +36,27 @@ class HistoricPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
+        backgroundColor: AppColors.backgroundInlima,
         resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          title: const Text(
-            'Historial de Quejas',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold
-            ),),
+        body: Column(
+          children: [
+            const Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Text(
+                'Historial de Quejas',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            Expanded(
+              child: _buildBody(context),
+            )
+          ],
         ),
-        body: _buildBody(context),
       ),
     );
   }

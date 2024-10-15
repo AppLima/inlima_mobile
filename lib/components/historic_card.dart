@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../configs/colors.dart';
 
 class HistoricCard extends StatelessWidget {
   final int id;
@@ -19,6 +20,7 @@ class HistoricCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: AppColors.backgroundInlima,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
       ),

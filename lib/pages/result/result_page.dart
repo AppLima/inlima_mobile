@@ -6,17 +6,19 @@ import '../../components/inlima_appbar.dart';
 import '../../components/lateral_bar.dart';
 
 class ResultPage extends StatelessWidget {
+  ResultPage({super.key});
+
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   Widget _buildBody(BuildContext context) {
     final ResultController control = Get.put(
       ResultController(
-        ModalRoute.of(context)?.settings.arguments as List<String> ?? []
+        ModalRoute.of(context)?.settings.arguments as List<String>
       )
     );
 
     control.resetData();
-    control.topics.assignAll(ModalRoute.of(context)?.settings.arguments as List<String> ?? []);
+    control.topics.assignAll(ModalRoute.of(context)?.settings.arguments as List<String>);
     control.listComplaints();
 
     return SafeArea(
@@ -51,7 +53,7 @@ class ResultPage extends StatelessWidget {
         isInPerfil: false,
         scaffoldKey: _scaffoldKey, // Pass the scaffoldKey to the InLimaAppBar
       ),
-      drawer: LateralBar(),
+      drawer: const LateralBar(),
       resizeToAvoidBottomInset: false,
       body: _buildBody(context),
     );

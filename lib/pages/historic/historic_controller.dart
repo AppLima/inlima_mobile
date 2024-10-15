@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:inlima_mobile/models/usuario.dart';
 import '../../models/queja.dart';
 import '../../services/queja_service.dart';
 import '../../_global_controllers/sesion_controller.dart';
@@ -21,12 +20,12 @@ class HistoricController extends GetxController {
     auxlist.value = await quejaService.fetchAll();
 
     int userId = sesionController.usuario.idUsuario;
-    print(userId);
+    //print(userId);
 
     complaints.value = auxlist.where((queja) => queja.usuarioId == userId).toList();
 
     if (complaints.isEmpty) {
-      print("No complaints found for user $userId");
+      //print("No complaints found for user $userId");
     }
   }
 }

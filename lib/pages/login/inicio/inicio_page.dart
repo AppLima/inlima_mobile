@@ -5,7 +5,6 @@ import 'package:inlima_mobile/components/large_button.dart';
 import 'package:inlima_mobile/components/tab.dart';
 import 'package:inlima_mobile/configs/colors.dart';
 import 'inicio_controller.dart';
-import 'package:inlima_mobile/models/distrito.dart';
 
 class InicioPage extends StatefulWidget {
   final bool isRegister;
