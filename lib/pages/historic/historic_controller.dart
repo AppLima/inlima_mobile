@@ -7,6 +7,7 @@ class HistoricController extends GetxController {
   QuejaService quejaService = QuejaService();
   var auxlist = <Queja>[].obs;
   var complaints = <Queja>[].obs;
+  var isLoading = true.obs;
 
   final SesionController sesionController = Get.find<SesionController>();
 
@@ -25,6 +26,7 @@ class HistoricController extends GetxController {
     complaints.value = auxlist.where((queja) => queja.usuarioId == userId).toList();
 
     if (complaints.isEmpty) {
+      isLoading(false);
       //print("No complaints found for user $userId");
     }
   }

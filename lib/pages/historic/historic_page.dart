@@ -9,29 +9,40 @@ class HistoricPage extends StatelessWidget {
   final HistoricController control = Get.put(HistoricController());
 
   Widget _buildBody(BuildContext context) {
-    return SafeArea(
-      child: Obx(() {
-        if (control.complaints.isEmpty) {
-          return const Center(child: CircularProgressIndicator());
-        } else {
-          return ListView.builder(
-            itemCount: control.complaints.length,
-            itemBuilder: (context, index) {
-              final queja = control.complaints[index];
+  return SafeArea(
+    child: Obx(() {
+      if (control.isLoading.value) {
+        return const Center(child: CircularProgressIndicator());
+      } else if (control.complaints.isEmpty) {
+        return const Center(
+          child: Text(
+            'No hay quejas disponibles.',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        );
+      } else {
+        return ListView.builder(
+          itemCount: control.complaints.length,
+          itemBuilder: (context, index) {
+            final queja = control.complaints[index];
 
-              return HistoricCard(
-                id: queja.id,
-                asunto: queja.asunto,
-                fecha: queja.fecha,
-                ubicacion: queja.ubicacion,
-                estado: queja.estado,
-              );
-            },
-          );
-        }
-      }),
-    );
-  }
+            return HistoricCard(
+              id: queja.id,
+              asunto: queja.asunto,
+              fecha: queja.fecha,
+              ubicacion: queja.ubicacion,
+              estado: queja.estado,
+            );
+          },
+        );
+      }
+    }),
+  );
+}
+
 
   @override
   Widget build(BuildContext context) {
