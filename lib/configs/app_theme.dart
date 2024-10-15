@@ -6,16 +6,16 @@ class AppTheme {
     return ThemeData(
       brightness: Brightness.light,
       primaryColor: AppColors.primaryColorInlima,
-      appBarTheme: AppBarTheme(
+      appBarTheme: const AppBarTheme(
         backgroundColor: AppColors.primaryColorInlima,
         foregroundColor: AppColors.textColorWhite,
       ),
-      bottomNavigationBarTheme: BottomNavigationBarThemeData(
-        backgroundColor: AppColors.tertiaryColorInlima, // Dark blue background
-        selectedItemColor: Colors.white, // White for selected icons
-        unselectedItemColor: Colors.white54, // Slightly transparent white for unselected icons
+      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+        backgroundColor: AppColors.beigeColor, // Dark blue background
+        selectedItemColor: AppColors.primaryColorInlima , // White for selected icons
+        unselectedItemColor: AppColors.blackInlima, // Slightly transparent white for unselected icons
       ),
-      textTheme: TextTheme(
+      textTheme: const TextTheme(
         displaySmall: TextStyle(
           color: AppColors.textColorBlack,
           fontSize: 32.0,
@@ -28,7 +28,7 @@ class AppTheme {
         ),
       ),
       scaffoldBackgroundColor: AppColors.textColorWhite,
-      colorScheme: ColorScheme.light(
+      colorScheme: const ColorScheme.light(
         primary: AppColors.primaryColorInlima,
         secondary: AppColors.secondaryColorInlima,
       ),
@@ -40,16 +40,16 @@ class AppTheme {
     return ThemeData(
       brightness: Brightness.dark,
       primaryColor: AppColors.primaryColorInlima,
-      appBarTheme: AppBarTheme(
+      appBarTheme: const AppBarTheme(
         backgroundColor: AppColors.blackInlima,
         foregroundColor: AppColors.textColorWhite,
       ),
-      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         backgroundColor: AppColors.blackInlima, // Dark background
         selectedItemColor: AppColors.accentColorInlima, // Accent color for selected icons
         unselectedItemColor: Colors.white54, // Slightly transparent white for unselected icons
       ),
-      textTheme: TextTheme(
+      textTheme: const TextTheme(
         displaySmall: TextStyle(
           color: AppColors.textColorWhite,
           fontSize: 32.0,
@@ -66,7 +66,7 @@ class AppTheme {
         ),
       ),
       scaffoldBackgroundColor: AppColors.darkBackgroundInlima,
-      colorScheme: ColorScheme.dark(
+      colorScheme: const ColorScheme.dark(
         primary: AppColors.primaryColorInlima,
         secondary: AppColors.accentColorInlima,
       ),

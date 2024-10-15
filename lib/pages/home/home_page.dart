@@ -105,14 +105,14 @@ class _HomePageState extends State<HomePage> {
               ],
         currentIndex: _selectedIndex,
         selectedItemColor: isDarkMode
-            ? Colors.white
-            : const Color.fromARGB(255, 16, 33, 56),
+            ? Colors.white // Color para ítem seleccionado en modo oscuro
+            : AppColors.primaryColorInlima , // Color para ítem seleccionado en modo claro
         unselectedItemColor: isDarkMode
-            ? Colors.grey.shade400
-            : AppColors.secondaryColorInlima,
+            ? Colors.grey.shade400 // Color para ítem no seleccionado en modo oscuro
+            : AppColors.blackInlima, // Color para ítem no seleccionado en modo claro
         backgroundColor: isDarkMode
-            ? const Color.fromARGB(255, 24, 24, 24)
-            : const Color.fromARGB(120, 159, 214, 250),
+            ? const Color.fromARGB(255, 24, 24, 24) // Fondo para modo oscuro
+            : AppColors.beigeColor, // Fondo para modo claro
         onTap: _onItemTapped,
       ),
     );

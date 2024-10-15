@@ -4,17 +4,20 @@ import 'package:inlima_mobile/configs/colors.dart';
 class CustomBottomNavigationBar extends StatelessWidget {
   final int selectedIndex;
   final Function(int) onItemTapped;
+  final bool admin;
 
   const CustomBottomNavigationBar({
     Key? key,
     required this.selectedIndex,
     required this.onItemTapped,
+    required this.admin,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       items: const <BottomNavigationBarItem>[
+        
         BottomNavigationBarItem(
           icon: Icon(Icons.feedback),
           label: 'Quejas',
@@ -34,8 +37,8 @@ class CustomBottomNavigationBar extends StatelessWidget {
       ],
       currentIndex: selectedIndex,
       selectedItemColor: AppColors.primaryColorInlima, // Color del ítem seleccionado
-      unselectedItemColor: AppColors.lightGreyInlima, // Color de los ítems no seleccionados
-      backgroundColor: AppColors.blackInlima, // Color de fondo
+      unselectedItemColor: AppColors.blackInlima, // Color de los ítems no seleccionados
+      backgroundColor: AppColors.beigeColor, // Color de fondo
       onTap: onItemTapped, // Cambiar de pestaña al hacer clic
     );
   }
