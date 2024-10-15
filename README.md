@@ -130,7 +130,7 @@ Para asegurarte de que todo está configurado correctamente:
 
 
 ## Diagrama relacional
-![Diagrama relacional](./assets/readme_images/image.png)
+![Diagrama relacional](./assets/readme_images/diagrama%20relacional.png)
 
 ## Diagrama de casos de uso 🛠️
 ![Diagrama de casos de uso](./assets/readme_images/diagrama_casos_uso.png)
