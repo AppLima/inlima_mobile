@@ -166,7 +166,7 @@ class _PerfilPageState extends State<PerfilPage> {
                 backgroundColor: AppColors.secondaryColorInlima,
                 textColor: Colors.white,
                 borderRadius: BorderRadius.circular(30),
-                height: 50.0,
+                height: 50.0, //test
               ),
             ),
           ],
