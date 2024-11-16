@@ -21,7 +21,7 @@ class _InicioPageState extends State<InicioPage> {
   @override
   void initState() {
     super.initState();
-    control.fetchDistritos(context); // Cargar los distritos al iniciar
+    // control.fetchDistritos(context); // Cargar los distritos al iniciar
   }
 
   Widget _buildBody(BuildContext context) {

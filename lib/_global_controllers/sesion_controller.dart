@@ -5,12 +5,11 @@ import 'package:inlima_mobile/services/ciudadano_service.dart';
 
 class SesionController extends GetxController {
   final _usuario = Usuario(
-    idUsuario: 0, 
+    id: 0, 
     email: '', 
     password: '', 
     nombre: '',
-    apellidoPaterno: '', 
-    apellidoMaterno: '', 
+    apellido: '', 
     rolId: 0, 
     sexo: '', // Cambiamos sexoId por sexo, que será una cadena ("masculino", "femenino")
     foto: '',
@@ -35,12 +34,11 @@ class SesionController extends GetxController {
   Future<void> iniciarSesion(Usuario usuario) async {
     // Actualizamos el usuario con los datos proporcionados, incluyendo el sexo y distritoId
     _usuario.value = Usuario(
-      idUsuario: usuario.idUsuario,
+      id: usuario.id,
       email: usuario.email,
       password: usuario.password, // Guardamos la contraseña
       nombre: usuario.nombre,
-      apellidoPaterno: usuario.apellidoPaterno,
-      apellidoMaterno: usuario.apellidoMaterno,
+      apellido: usuario.apellido,
       foto: usuario.foto,
       rolId: usuario.rolId,
       sexo: usuario.sexo, // Asignamos el valor del sexo ("masculino", "femenino", etc.)
@@ -49,7 +47,7 @@ class SesionController extends GetxController {
 
     // Obtenemos los datos del ciudadano asociado al usuario
     try {
-      Ciudadano? ciudadano = await ciudadanoService.obtenerCiudadanoPorUsuarioId(usuario.idUsuario);
+      Ciudadano? ciudadano = await ciudadanoService.obtenerCiudadanoPorUsuarioId(usuario.id);
       if (ciudadano != null) {
         _ciudadano.value = ciudadano; // Guardamos el ciudadano
       } else {
@@ -70,12 +68,11 @@ class SesionController extends GetxController {
   void cerrarSesion() {
     // Reseteamos el usuario a valores por defecto
     _usuario.value = Usuario(
-      idUsuario: 0,
+      id: 0,
       email: '',
       password: '',
       nombre: '',
-      apellidoPaterno: '',
-      apellidoMaterno: '',
+      apellido: '',
       rolId: 0,
       sexo: '', // Reseteamos el campo sexo
       foto: '',

@@ -40,20 +40,20 @@ class InicioController {
     return isLogin.value ? 'Entrar' : 'Registrarse';
   }
 
-  // Método para cargar distritos desde el servicio
-  Future<void> fetchDistritos(BuildContext context) async {
-    try {
-      distritos = await distritoService.fetchAll();
-      if (distritos.isEmpty) {
-        print("No se encontraron distritos");
-      }
-      selectedDistrito = null; // Inicializamos selectedDistrito como null
-    } catch (e) {
-      print("Error al cargar distritos: $e");
-      _showError(
-          context, "No se pudieron cargar los distritos. Inténtalo más tarde.");
-    }
-  }
+  // // Método para cargar distritos desde el servicio
+  // Future<void> fetchDistritos(BuildContext context) async {
+  //   try {
+  //     distritos = await distritoService.fetchAll();
+  //     if (distritos.isEmpty) {
+  //       print("No se encontraron distritos");
+  //     }
+  //     selectedDistrito = null; // Inicializamos selectedDistrito como null
+  //   } catch (e) {
+  //     print("Error al cargar distritos: $e");
+  //     _showError(
+  //         context, "No se pudieron cargar los distritos. Inténtalo más tarde.");
+  //   }
+  // }
 
   // Método para manejar el cambio del distrito seleccionado por nombre
   void onDistritoChanged(BuildContext context, Distrito? distrito) {
@@ -70,27 +70,27 @@ class InicioController {
 
   Future<void> login(BuildContext context) async {
     try {
-      // Verifica si los campos están vacíos
       if (_areFieldsEmpty([emailController, passwordController])) {
         _showError(context, "Correo y contraseña son obligatorios");
         return;
       }
 
-      // Busca el usuario por correo
-      Usuario usuarioEncontrado =
-          await usuarioService.findByEmail(emailController.text);
+      final response = await usuarioService.iniciarSesion(
+        emailController.text,
+        passwordController.text,
+      );
 
-      // Si el usuario se encuentra, procede a verificar la contraseña (ejemplo básico)
-      if (usuarioEncontrado != null &&
-          usuarioEncontrado.password == passwordController.text) {
-        // Actualiza el controlador de sesión con el usuario logueado
-        sesion.iniciarSesion(usuarioEncontrado);
+      if (response?.status == 200) {
+        print(
+            "Respuesta completa del servidor: ${response!.body['data']}"); // Log para inspeccionar
+        final usuario =
+            Usuario.fromMap(response.body['data']); // Aquí podría estar el problema
+        sesion.iniciarSesion(usuario);
         _showSuccess(context, "Inicio de sesión exitoso");
-        
         Navigator.of(context).pushReplacementNamed('/home');
-        
       } else {
-        _showError(context, "Correo o contraseña incorrectos");
+        _showError(
+            context, response?.body ?? "Correo o contraseña incorrectos");
       }
     } catch (e) {
       _showError(context, "Error al iniciar sesión: $e");
@@ -101,91 +101,91 @@ class InicioController {
     if (isLogin.value) {
       await login(context);
     } else {
-      await register(context);
+      await login(context);
     }
   }
 
-  Future<void> register(BuildContext context) async {
-    try {
-      if (!_validateFields(context)) return;
+  // Future<void> register(BuildContext context) async {
+  //   try {
+  //     if (!_validateFields(context)) return;
 
-      // Verificar que el distrito haya sido seleccionado
-      if (selectedDistrito == null) {
-        _showError(context, "Por favor selecciona un distrito válido");
-        return;
-      }
+  //     // Verificar que el distrito haya sido seleccionado
+  //     if (selectedDistrito == null) {
+  //       _showError(context, "Por favor selecciona un distrito válido");
+  //       return;
+  //     }
 
-      // Verificar que el sexo haya sido seleccionado
-      if (selectedSexo.value.isEmpty) {
-        _showError(context, "Por favor selecciona un sexo");
-        return;
-      }
+  //     // Verificar que el sexo haya sido seleccionado
+  //     if (selectedSexo.value.isEmpty) {
+  //       _showError(context, "Por favor selecciona un sexo");
+  //       return;
+  //     }
 
-      // Validar email y DNI usando servicios
-      if (await usuarioService.isEmailAlreadyRegistered(emailController.text)) {
-        _showError(context, "El correo ya está registrado");
-        return;
-      }
+  //     // Validar email y DNI usando servicios
+  //     if (await usuarioService.isEmailAlreadyRegistered(emailController.text)) {
+  //       _showError(context, "El correo ya está registrado");
+  //       return;
+  //     }
 
-      if (await ciudadanoService.isDniAlreadyRegistered(dniController.text)) {
-        _showError(context, "El DNI ya está registrado");
-        return;
-      }
+  //     if (await ciudadanoService.isDniAlreadyRegistered(dniController.text)) {
+  //       _showError(context, "El DNI ya está registrado");
+  //       return;
+  //     }
 
-      print(
-          "Distrito seleccionado para registro: ${selectedDistrito?.id} - ${selectedDistrito?.nombre}");
+  //     print(
+  //         "Distrito seleccionado para registro: ${selectedDistrito?.id} - ${selectedDistrito?.nombre}");
 
-      // Crear usuario y ciudadano, incluyendo el distrito_id y sexo seleccionado
-      final usuario = Usuario(
-        idUsuario: await usuarioService.getNewId(),
-        email: emailController.text,
-        password: passwordController.text,
-        nombre: nombresController.text,
-        apellidoPaterno: apellidoPaternoController.text,
-        apellidoMaterno: apellidoMaternoController.text,
-        rolId: 2,
-        sexo: selectedSexo.value, // Guardamos el sexo seleccionado
-        distritoId: selectedDistrito!
-            .id, // Aseguramos que el distrito_id se asigna correctamente
-      );
+  //     // Crear usuario y ciudadano, incluyendo el distrito_id y sexo seleccionado
+  //     final usuario = Usuario(
+  //       idUsuario: await usuarioService.getNewId(),
+  //       email: emailController.text,
+  //       password: passwordController.text,
+  //       nombre: nombresController.text,
+  //       apellidoPaterno: apellidoPaternoController.text,
+  //       apellidoMaterno: apellidoMaternoController.text,
+  //       rolId: 2,
+  //       sexo: selectedSexo.value, // Guardamos el sexo seleccionado
+  //       distritoId: selectedDistrito!
+  //           .id, // Aseguramos que el distrito_id se asigna correctamente
+  //     );
 
-      final ciudadano = Ciudadano(
-        id: await ciudadanoService.getNewId(),
-        dni: dniController.text,
-        numero: telefonoController.text,
-        usuarioId: usuario.idUsuario,
-      );
+  //     final ciudadano = Ciudadano(
+  //       id: await ciudadanoService.getNewId(),
+  //       dni: dniController.text,
+  //       numero: telefonoController.text,
+  //       usuarioId: usuario.idUsuario,
+  //     );
 
-      // Guardar el usuario y ciudadano en sus respectivos servicios
-      await usuarioService.addUsuario(usuario);
-      await ciudadanoService.addCiudadano(ciudadano);
+  //     // Guardar el usuario y ciudadano en sus respectivos servicios
+  //     await usuarioService.addUsuario(usuario);
+  //     await ciudadanoService.addCiudadano(ciudadano);
 
-      _showSuccess(context, "Registro exitoso");
+  //     _showSuccess(context, "Registro exitoso");
 
-      // Limpiar los campos después del registro
-      limpiarCampos();
-      isLogin.value = true;
+  //     // Limpiar los campos después del registro
+  //     limpiarCampos();
+  //     isLogin.value = true;
 
-      // Obtener y mostrar todos los usuarios
-      List<Usuario> usuarios = await usuarioService.fetchAll();
-      List<Ciudadano> ciudadanos = await ciudadanoService.fetchAll();
+  //     // Obtener y mostrar todos los usuarios
+  //     List<Usuario> usuarios = await usuarioService.fetchAll();
+  //     List<Ciudadano> ciudadanos = await ciudadanoService.fetchAll();
 
-      print("Usuarios registrados:");
-      for (var user in usuarios) {
-        print(user
-            .toJson()); // Aquí asumo que tienes un método toJson() o puedes personalizar cómo mostrar los datos
-      }
+  //     print("Usuarios registrados:");
+  //     for (var user in usuarios) {
+  //       print(user
+  //           .toJson()); // Aquí asumo que tienes un método toJson() o puedes personalizar cómo mostrar los datos
+  //     }
 
-      print("Ciudadanos registrados:");
-      for (var citizen in ciudadanos) {
-        print(
-            citizen.toJson()); // Aquí también puedes personalizar la impresión
-      }
-      Navigator.of(context).pushReplacementNamed('/login/inicio');
-    } catch (e) {
-      _showError(context, "Error al registrar usuario: $e");
-    }
-  }
+  //     print("Ciudadanos registrados:");
+  //     for (var citizen in ciudadanos) {
+  //       print(
+  //           citizen.toJson()); // Aquí también puedes personalizar la impresión
+  //     }
+  //     Navigator.of(context).pushReplacementNamed('/login/inicio');
+  //   } catch (e) {
+  //     _showError(context, "Error al registrar usuario: $e");
+  //   }
+  // }
 
   bool _validateFields(BuildContext context) {
     final emailPattern =

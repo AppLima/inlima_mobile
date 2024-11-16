@@ -1,63 +1,59 @@
 class Usuario {
-  final int idUsuario;
+  final int id; // Cambiado de idUsuario para coincidir con el JSON del backend
   final String email;
   final String password;
   final String nombre;
-  final String apellidoPaterno;
-  final String apellidoMaterno;
-  final String? foto;
+  final String apellido; // Combina apellidoPaterno y apellidoMaterno
+  final String? foto; // Foto es opcional
   final int rolId;
-  final String sexo; // Cambiamos sexoId a sexo, que será una cadena ("masculino", "femenino")
-  final int distritoId; // Campo para almacenar el distrito
+  final String sexo; // Sexo es una cadena ("masculino", "femenino")
+  final int? distritoId; // Distrito es opcional
 
   Usuario({
-    required this.idUsuario,
+    required this.id,
     required this.email,
     required this.password,
     required this.nombre,
-    required this.apellidoPaterno,
-    required this.apellidoMaterno,
+    required this.apellido,
     this.foto,
     required this.rolId,
-    required this.sexo, // Actualizamos para que acepte el sexo como cadena
-    required this.distritoId, // Se añade al constructor
+    required this.sexo,
+    this.distritoId,
   });
 
   // Método para convertir un Usuario a un Map (toJson)
   Map<String, dynamic> toJson() {
     return {
-      'id_usuario': idUsuario,
+      'id': id,
       'email': email,
       'password': password,
-      'nombre': nombre,
-      'apellido_paterno': apellidoPaterno,
-      'apellido_materno': apellidoMaterno,
-      'foto': foto,
-      'rol_id': rolId,
-      'sexo': sexo, // Actualizamos el campo para reflejar el sexo como cadena
-      'distrito_id': distritoId, // Se añade al JSON
+      'first_name': nombre,
+      'last_name': apellido,
+      'photo': foto,
+      'role_id': rolId,
+      'sexo': sexo,
+      'distrito_id': distritoId,
     };
   }
 
   // Método para crear un Usuario desde un Map (fromMap)
   factory Usuario.fromMap(Map<String, dynamic> map) {
     return Usuario(
-      idUsuario: map['id_usuario'],
-      email: map['email'],
-      password: map['password'],
-      nombre: map['nombre'],
-      apellidoPaterno: map['apellido_paterno'],
-      apellidoMaterno: map['apellido_materno'],
-      foto: map['foto'],
-      rolId: map['rol_id'],
-      sexo: map['sexo'], // Actualizamos para recibir el sexo como cadena
-      distritoId: map['distrito_id'], // Se añade al fromMap
+      id: map['id'] ?? 0, // Si falta, asigna 0
+      email: map['email'] ?? '',
+      password: map['password'] ?? '',
+      nombre: map['first_name'] ?? '',
+      apellido: map['last_name'] ?? '',
+      foto: map['photo'] != '' ? map['photo'] : null, // Convierte cadena vacía a null
+      rolId: map['role_id'] ?? 0, // Si falta, asigna 0
+      sexo: map['sexo'] ?? 'indefinido', // Valor predeterminado si falta
+      distritoId: map['distrito_id'], // Se permite null
     );
   }
 
   // Método toString para representar la clase como String
   @override
   String toString() {
-    return 'Usuario{idUsuario: $idUsuario, email: $email, nombre: $nombre, apellidoPaterno: $apellidoPaterno, apellidoMaterno: $apellidoMaterno, rolId: $rolId, sexo: $sexo, distritoId: $distritoId}';
+    return 'Usuario{id: $id, email: $email, nombre: $nombre, apellido: $apellido, rolId: $rolId, sexo: $sexo, distritoId: $distritoId}';
   }
 }

@@ -46,8 +46,8 @@ class PerfilController extends GetxController {
       emailController.text = usuario.email;
       passwordController.text = usuario.password;
       nombreController.text = usuario.nombre;
-      apellidoPaternoController.text = usuario.apellidoPaterno;
-      apellidoMaternoController.text = usuario.apellidoMaterno;
+      apellidoPaternoController.text = usuario.apellido;
+      apellidoMaternoController.text = usuario.apellido;
 
       if (ciudadano != null) {
         dniController.text = ciudadano.dni;

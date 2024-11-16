@@ -21,6 +21,7 @@ dependencies:
   local_auth: ^2.1.0
   permission_handler: ^10.2.0
   palette_generator: ^0.3.0 
+  http: ^1.2.2
 
 dev_dependencies:
   flutter_test:
