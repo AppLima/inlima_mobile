@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../models/usuario.dart';
@@ -9,7 +8,8 @@ class UsuarioService {
   final String baseUrl = '${BASE_URL}';
 
   // Iniciar sesión
-  Future<ServiceHttpResponse?> iniciarSesion(String email, String password) async {
+  Future<ServiceHttpResponse?> iniciarSesion(
+      String email, String password) async {
     final url = Uri.parse('${baseUrl}iniciar_sesion');
     try {
       final response = await http.post(
@@ -19,9 +19,41 @@ class UsuarioService {
       );
       return ServiceHttpResponse(
           status: response.statusCode,
-          body: response.statusCode == 200 ? jsonDecode(response.body) : response.body);
+          body: response.statusCode == 200
+              ? jsonDecode(response.body)
+              : response.body);
     } catch (e) {
-      return ServiceHttpResponse(status: 503, body: 'Error al comunicarse con el servidor: $e');
+      return ServiceHttpResponse(
+          status: 503, body: 'Error al comunicarse con el servidor: $e');
+    }
+  }
+
+  Future<ServiceHttpResponse?> registerUser(Map<String, dynamic> data) async {
+    final url = Uri.parse('${baseUrl}register');
+    try {
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(data),
+      );
+
+      if (response.statusCode == 200) {
+        return ServiceHttpResponse(
+          status: response.statusCode,
+          body: jsonDecode(response.body), // Decodificar el cuerpo completo
+        );
+      } else {
+        final errorBody = jsonDecode(response.body); // Decodificar error
+        return ServiceHttpResponse(
+          status: response.statusCode,
+          body: errorBody, // Retornar el error completo para capturar `message`
+        );
+      }
+    } catch (e) {
+      return ServiceHttpResponse(
+        status: 503,
+        body: 'Error al comunicarse con el servidor: $e',
+      );
     }
   }
 
@@ -36,9 +68,12 @@ class UsuarioService {
       );
       return ServiceHttpResponse(
           status: response.statusCode,
-          body: response.statusCode == 200 ? jsonDecode(response.body) : response.body);
+          body: response.statusCode == 200
+              ? jsonDecode(response.body)
+              : response.body);
     } catch (e) {
-      return ServiceHttpResponse(status: 503, body: 'Error al comunicarse con el servidor: $e');
+      return ServiceHttpResponse(
+          status: 503, body: 'Error al comunicarse con el servidor: $e');
     }
   }
 
@@ -49,9 +84,12 @@ class UsuarioService {
       final response = await http.delete(url);
       return ServiceHttpResponse(
           status: response.statusCode,
-          body: response.statusCode == 200 ? 'Sesión cerrada correctamente' : response.body);
+          body: response.statusCode == 200
+              ? 'Sesión cerrada correctamente'
+              : response.body);
     } catch (e) {
-      return ServiceHttpResponse(status: 503, body: 'Error al comunicarse con el servidor: $e');
+      return ServiceHttpResponse(
+          status: 503, body: 'Error al comunicarse con el servidor: $e');
     }
   }
 
@@ -62,16 +100,14 @@ class UsuarioService {
     try {
       final response = await http.put(
         url,
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': token
-        },
+        headers: {'Content-Type': 'application/json', 'Authorization': token},
         body: jsonEncode(datosActualizados),
       );
       return ServiceHttpResponse(
           status: response.statusCode, body: jsonDecode(response.body));
     } catch (e) {
-      return ServiceHttpResponse(status: 503, body: 'Error al comunicarse con el servidor: $e');
+      return ServiceHttpResponse(
+          status: 503, body: 'Error al comunicarse con el servidor: $e');
     }
   }
 
@@ -86,7 +122,8 @@ class UsuarioService {
       return ServiceHttpResponse(
           status: response.statusCode, body: jsonDecode(response.body));
     } catch (e) {
-      return ServiceHttpResponse(status: 503, body: 'Error al comunicarse con el servidor: $e');
+      return ServiceHttpResponse(
+          status: 503, body: 'Error al comunicarse con el servidor: $e');
     }
   }
 
@@ -102,7 +139,8 @@ class UsuarioService {
       return ServiceHttpResponse(
           status: response.statusCode, body: jsonDecode(response.body));
     } catch (e) {
-      return ServiceHttpResponse(status: 503, body: 'Error al comunicarse con el servidor: $e');
+      return ServiceHttpResponse(
+          status: 503, body: 'Error al comunicarse con el servidor: $e');
     }
   }
 
@@ -118,12 +156,14 @@ class UsuarioService {
       return ServiceHttpResponse(
           status: response.statusCode, body: jsonDecode(response.body));
     } catch (e) {
-      return ServiceHttpResponse(status: 503, body: 'Error al comunicarse con el servidor: $e');
+      return ServiceHttpResponse(
+          status: 503, body: 'Error al comunicarse con el servidor: $e');
     }
   }
 
   // Resetear contraseña
-  Future<ServiceHttpResponse?> resetPassword(String email, String password) async {
+  Future<ServiceHttpResponse?> resetPassword(
+      String email, String password) async {
     final url = Uri.parse('${baseUrl}reset_password');
     try {
       final response = await http.post(
@@ -134,26 +174,26 @@ class UsuarioService {
       return ServiceHttpResponse(
           status: response.statusCode, body: jsonDecode(response.body));
     } catch (e) {
-      return ServiceHttpResponse(status: 503, body: 'Error al comunicarse con el servidor: $e');
+      return ServiceHttpResponse(
+          status: 503, body: 'Error al comunicarse con el servidor: $e');
     }
   }
 
   // Aceptar términos y condiciones
-  Future<ServiceHttpResponse?> setTermsConditions(String token, Map<String, dynamic> data) async {
+  Future<ServiceHttpResponse?> setTermsConditions(
+      String token, Map<String, dynamic> data) async {
     final url = Uri.parse('${baseUrl}set_terms_conditions');
     try {
       final response = await http.put(
         url,
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': token
-        },
+        headers: {'Content-Type': 'application/json', 'Authorization': token},
         body: jsonEncode(data),
       );
       return ServiceHttpResponse(
           status: response.statusCode, body: jsonDecode(response.body));
     } catch (e) {
-      return ServiceHttpResponse(status: 503, body: 'Error al comunicarse con el servidor: $e');
+      return ServiceHttpResponse(
+          status: 503, body: 'Error al comunicarse con el servidor: $e');
     }
   }
 }

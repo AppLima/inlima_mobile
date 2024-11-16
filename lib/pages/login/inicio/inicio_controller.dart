@@ -40,20 +40,20 @@ class InicioController {
     return isLogin.value ? 'Entrar' : 'Registrarse';
   }
 
-  // // Método para cargar distritos desde el servicio
-  // Future<void> fetchDistritos(BuildContext context) async {
-  //   try {
-  //     distritos = await distritoService.fetchAll();
-  //     if (distritos.isEmpty) {
-  //       print("No se encontraron distritos");
-  //     }
-  //     selectedDistrito = null; // Inicializamos selectedDistrito como null
-  //   } catch (e) {
-  //     print("Error al cargar distritos: $e");
-  //     _showError(
-  //         context, "No se pudieron cargar los distritos. Inténtalo más tarde.");
-  //   }
-  // }
+  // Método para cargar distritos desde el servicio
+  Future<void> fetchDistritos(BuildContext context) async {
+    try {
+      distritos = await distritoService.fetchAll();
+      if (distritos.isEmpty) {
+        print("No se encontraron distritos");
+      }
+      selectedDistrito = null; // Inicializamos selectedDistrito como null
+    } catch (e) {
+      print("Error al cargar distritos: $e");
+      _showError(
+          context, "No se pudieron cargar los distritos. Inténtalo más tarde.");
+    }
+  }
 
   // Método para manejar el cambio del distrito seleccionado por nombre
   void onDistritoChanged(BuildContext context, Distrito? distrito) {
@@ -74,23 +74,24 @@ class InicioController {
         _showError(context, "Correo y contraseña son obligatorios");
         return;
       }
-
       final response = await usuarioService.iniciarSesion(
         emailController.text,
         passwordController.text,
       );
-
       if (response?.status == 200) {
-        print(
-            "Respuesta completa del servidor: ${response!.body['data']}"); // Log para inspeccionar
-        final usuario =
-            Usuario.fromMap(response.body['data']); // Aquí podría estar el problema
-        sesion.iniciarSesion(usuario);
-        _showSuccess(context, "Inicio de sesión exitoso");
-        Navigator.of(context).pushReplacementNamed('/home');
+        final body = response!.body;
+        if (body['success'] == true) {
+          print("Respuesta completa del servidor: ${body['data']}");
+          final usuario = Usuario.fromMap(body['data']);
+          sesion.iniciarSesion(usuario);
+          _showError(context, body['message'] ?? "Inicio de sesión exitoso");
+          Navigator.of(context).pushReplacementNamed('/home');
+        } else {
+          _showError(
+              context, body['message'] ?? "Correo o contraseña incorrectos");
+        }
       } else {
-        _showError(
-            context, response?.body ?? "Correo o contraseña incorrectos");
+        _showError(context, response?.body ?? "Error al iniciar sesión");
       }
     } catch (e) {
       _showError(context, "Error al iniciar sesión: $e");
@@ -101,7 +102,60 @@ class InicioController {
     if (isLogin.value) {
       await login(context);
     } else {
-      await login(context);
+      await register(context);
+    }
+  }
+
+  Future<void> register(BuildContext context) async {
+    try {
+      // Verificar que el distrito haya sido seleccionado
+      // if (selectedDistrito == null) {
+      //   _showError(context, "Por favor selecciona un distrito válido");
+      //   return;
+      // }
+
+      // Verificar que el sexo haya sido seleccionado
+      if (selectedSexo.value.isEmpty) {
+        _showError(context, "Por favor selecciona un sexo");
+        return;
+      }
+
+      // Crear el payload para el backend
+      final data = {
+        "email": emailController.text,
+        "password": passwordController.text,
+        "first_name": nombresController.text,
+        "last_name":
+            "${apellidoPaternoController.text} ${apellidoMaternoController.text}",
+        "dni": dniController.text,
+        "phone_number": telefonoController.text,
+        "district": 1,
+        "gender_id": 1, // Convertir sexo a ID
+      };
+
+      // Enviar los datos al backend
+      final response = await usuarioService.registerUser(data);
+
+      // Manejar la respuesta del backend
+      if (response?.status == 200) {
+        // Verificar si el backend indicó éxito
+        if (response?.body['success'] == true) {
+          _showSuccess(
+              context, response?.body['message']); // Mostrar mensaje de éxito
+          limpiarCampos(); // Limpiar campos después del registro
+          Navigator.of(context)
+              .pushReplacementNamed('/login/inicio'); // Navegar al login
+        } else {
+          // Mostrar el mensaje de error del backend
+          _showError(context, response?.body['message'] ?? "Error desconocido");
+        }
+      } else {
+        // Mostrar mensaje de error en caso de fallo
+        _showError(context, response?.body ?? "Error al registrar usuario");
+      }
+    } catch (e) {
+      // Manejar errores de conexión u otros problemas
+      _showError(context, "Error al registrar usuario: $e");
     }
   }
 
@@ -141,8 +195,7 @@ class InicioController {
   //       email: emailController.text,
   //       password: passwordController.text,
   //       nombre: nombresController.text,
-  //       apellidoPaterno: apellidoPaternoController.text,
-  //       apellidoMaterno: apellidoMaternoController.text,
+  //       apellidos: apellidoPaternoController.text ++ apellidoMaternoController.text,
   //       rolId: 2,
   //       sexo: selectedSexo.value, // Guardamos el sexo seleccionado
   //       distritoId: selectedDistrito!
