@@ -4,6 +4,7 @@ import 'package:inlima_mobile/components/customtextfield.dart';
 import 'package:inlima_mobile/components/large_button.dart';
 import 'package:inlima_mobile/components/tab.dart';
 import 'package:inlima_mobile/configs/colors.dart';
+import 'package:inlima_mobile/models/distrito.dart';
 import 'inicio_controller.dart';
 
 class InicioPage extends StatefulWidget {
@@ -21,7 +22,7 @@ class _InicioPageState extends State<InicioPage> {
   @override
   void initState() {
     super.initState();
-    // control.fetchDistritos(context); // Cargar los distritos al iniciar
+    control.fetchDistritos(context); // Cargar los distritos al iniciar
   }
 
   Widget _buildBody(BuildContext context) {
@@ -68,7 +69,8 @@ class _InicioPageState extends State<InicioPage> {
                   margin: const EdgeInsets.symmetric(horizontal: 30),
                   decoration: BoxDecoration(
                     color: Theme.of(context).brightness == Brightness.dark
-                        ? const Color.fromARGB(255, 24, 24, 24) // Color de fondo más oscuro para modo oscuro
+                        ? const Color.fromARGB(255, 24, 24,
+                            24) // Color de fondo más oscuro para modo oscuro
                         : Colors.white,
                     borderRadius: BorderRadius.circular(30),
                     boxShadow: const [
@@ -196,9 +198,9 @@ class _InicioPageState extends State<InicioPage> {
                                     labelText: 'Distrito',
                                     selectedValue: control
                                         .selectedDistrito, // selectedDistrito debe ser de tipo Distrito
-                                    items: control
-                                        .distritos, // Esto espera una lista de tipo Distrito, pero lo manejamos con .map más abajo
-                                    onChanged: (distrito) {
+                                    items:
+                                        control.distritos, // Lista de distritos
+                                    onChanged: (Distrito? distrito) {
                                       setState(() {
                                         control.onDistritoChanged(context,
                                             distrito); // Actualiza el distrito seleccionado
@@ -206,41 +208,43 @@ class _InicioPageState extends State<InicioPage> {
                                     },
                                     icon: Icons.location_on_outlined,
                                   ),
+
                                   // Nuevo RadioButtons para seleccionar sexo
-                                  ValueListenableBuilder<String>(
-                                    valueListenable: control.selectedSexo,
-                                    builder: (context, selectedSexo, child) {
+                                  ValueListenableBuilder<int>(
+                                    valueListenable: control
+                                        .selectedSexoId, // Cambia el tipo a int
+                                    builder: (context, selectedSexoId, child) {
                                       return Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
                                           const Text("Sexo:"),
-                                          RadioListTile<String>(
+                                          RadioListTile<int>(
                                             title: const Text("Masculino"),
-                                            value: "masculino",
-                                            groupValue: selectedSexo,
+                                            value: 1, // Cambia el valor a 1
+                                            groupValue: selectedSexoId,
                                             onChanged: (value) {
-                                              setState(() {
-                                                control.selectedSexo.value =
-                                                    value!;
-                                              });
+                                              if (value != null) {
+                                                control.selectedSexoId.value =
+                                                    value; // Asigna el ID
+                                              }
                                             },
                                           ),
-                                          RadioListTile<String>(
+                                          RadioListTile<int>(
                                             title: const Text("Femenino"),
-                                            value: "femenino",
-                                            groupValue: selectedSexo,
+                                            value: 2, // Cambia el valor a 2
+                                            groupValue: selectedSexoId,
                                             onChanged: (value) {
-                                              setState(() {
-                                                control.selectedSexo.value =
-                                                    value!;
-                                              });
+                                              if (value != null) {
+                                                control.selectedSexoId.value =
+                                                    value; // Asigna el ID
+                                              }
                                             },
                                           ),
                                         ],
                                       );
                                     },
-                                  )
+                                  ),
                                 ],
                               );
                             } else {

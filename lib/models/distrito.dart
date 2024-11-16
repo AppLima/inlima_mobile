@@ -1,17 +1,17 @@
 class Distrito {
   int id;
-  String nombre;
+  String name;
 
   Distrito({
     required this.id,
-    required this.nombre,
+    required this.name,
   });
 
   // Método para crear una instancia de Distrito a partir de un Map
   factory Distrito.fromMap(Map<String, dynamic> map) {
     return Distrito(
       id: map['id'] ?? 0,
-      nombre: map['nombre'] ?? '',
+      name: map['name'] ?? '',
     );
   }
 
@@ -19,13 +19,13 @@ class Distrito {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'nombre': nombre,
+      'name': name,
     };
   }
 
   // Método toString para imprimir la información de la instancia
   @override
   String toString() {
-    return 'Distrito{id: $id, nombre: $nombre}';
+    return 'Distrito{id: $id, name: $name}';
   }
 }

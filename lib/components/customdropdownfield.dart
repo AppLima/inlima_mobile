@@ -69,7 +69,7 @@ class CustomDropdownField extends StatelessWidget {
                       value:
                           distrito, // Asegúrate de que el valor sea el objeto Distrito completo
                       child: Text(
-                          distrito.nombre), // Mostrar el nombre del distrito
+                          distrito.name), // Mostrar el nombre del distrito
                     ))
                 .toList(), // Convierte a una lista de DropdownMenuItem<Distrito>
             onChanged: onChanged, // Aquí llamas a la función de cambio
