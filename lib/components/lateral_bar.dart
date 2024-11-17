@@ -27,8 +27,8 @@ class LateralBar extends StatelessWidget {
                 const Icon(Icons.account_circle, size: 50, color: Colors.black),
                 const SizedBox(height: 10),
                 Text(
-                    sesionController.usuario.nombre.isNotEmpty
-                        ? sesionController.usuario.nombre
+                    sesionController.usuario?.nombre.isNotEmpty == true
+                        ? sesionController.usuario!.nombre
                         : "Usuario",
                     style: const TextStyle(fontSize: 20)),
               ],
@@ -83,7 +83,7 @@ class LateralBar extends StatelessWidget {
                 backgroundColor: Colors.redAccent,
               ),
               onPressed: () {
-                sesionController.cerrarSesion();
+                sesionController.borrarToken();
                 print("Sesión cerrada");
 
                 Navigator.pushReplacementNamed(
@@ -107,7 +107,7 @@ class LateralBar extends StatelessWidget {
           title: const Text('Términos y Condiciones'),
           content: const SingleChildScrollView(
             child: Text(
-'''MIT License
+              '''MIT License
 
 Copyright (c) 2024 AppLima
 

@@ -6,8 +6,7 @@ class Usuario {
   final String apellido; // Combina apellidoPaterno y apellidoMaterno
   final String? foto; // Foto es opcional
   final int rolId;
-  final String sexo; // Sexo es una cadena ("masculino", "femenino")
-  final int? distritoId; // Distrito es opcional
+  final int genderId; // gender_id es una cadena ("masculino", "femenino")// Distrito es opcional
 
   Usuario({
     required this.id,
@@ -17,8 +16,7 @@ class Usuario {
     required this.apellido,
     this.foto,
     required this.rolId,
-    required this.sexo,
-    this.distritoId,
+    required this.genderId
   });
 
   // Método para convertir un Usuario a un Map (toJson)
@@ -31,8 +29,7 @@ class Usuario {
       'last_name': apellido,
       'photo': foto,
       'role_id': rolId,
-      'sexo': sexo,
-      'distrito_id': distritoId,
+      'gender_id': genderId
     };
   }
 
@@ -46,14 +43,13 @@ class Usuario {
       apellido: map['last_name'] ?? '',
       foto: map['photo'] != '' ? map['photo'] : null, // Convierte cadena vacía a null
       rolId: map['role_id'] ?? 0, // Si falta, asigna 0
-      sexo: map['sexo'] ?? 'indefinido', // Valor predeterminado si falta
-      distritoId: map['distrito_id'], // Se permite null
+      genderId: map['gender_id'] ?? 0, // Valor predeterminado si falta
     );
   }
 
   // Método toString para representar la clase como String
   @override
   String toString() {
-    return 'Usuario{id: $id, email: $email, nombre: $nombre, apellido: $apellido, rolId: $rolId, sexo: $sexo, distritoId: $distritoId}';
+    return 'Usuario{id: $id, email: $email, nombre: $nombre, apellido: $apellido, rolId: $rolId, gender_id: $genderId}';
   }
 }

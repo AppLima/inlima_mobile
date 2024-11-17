@@ -17,11 +17,12 @@ class InicioPage extends StatefulWidget {
 }
 
 class _InicioPageState extends State<InicioPage> {
-  final InicioController control = InicioController();
+  late final InicioController control;
 
   @override
   void initState() {
     super.initState();
+    control = InicioController(isRegister: widget.isRegister);
     control.fetchDistritos(context); // Cargar los distritos al iniciar
   }
 

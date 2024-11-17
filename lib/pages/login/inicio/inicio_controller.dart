@@ -32,6 +32,10 @@ class InicioController {
   List<Distrito> distritos = []; // Lista de distritos
   Distrito? selectedDistrito; // Distrito seleccionado por nombre
 
+
+  InicioController({required bool isRegister})
+      : isLogin = ValueNotifier(!isRegister);
+      
   String getWelcomeText() {
     return isLogin.value ? 'Bienvenido a inLima' : 'Regístrate en inLima';
   }
@@ -76,18 +80,24 @@ class InicioController {
         _showError(context, "Correo y contraseña son obligatorios");
         return;
       }
+
       final response = await usuarioService.iniciarSesion(
         emailController.text,
         passwordController.text,
       );
+
       if (response?.status == 200) {
         final body = response!.body;
         if (body['success'] == true) {
           print("Respuesta completa del servidor: ${body['data']}");
-          final usuario = Usuario.fromMap(body['data']);
-          sesion.iniciarSesion(usuario);
-          _showError(context, body['message'] ?? "Inicio de sesión exitoso");
-          Navigator.of(context).pushReplacementNamed('/home');
+
+          // Guardar el token en el SesionController
+          final token = body['token'];
+          await sesion.guardarToken(token); // Guardar el token de autenticación
+
+          _showSuccess(context, body['message'] ?? "Inicio de sesión exitoso");
+          Navigator.of(context)
+              .pushReplacementNamed('/home'); // Navegar al Home
         } else {
           _showError(
               context, body['message'] ?? "Correo o contraseña incorrectos");

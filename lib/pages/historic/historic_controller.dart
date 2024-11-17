@@ -19,7 +19,8 @@ class HistoricController extends GetxController {
   void listComplaints() async {
     auxlist.value = await quejaService.fetchAll();
 
-    int userId = sesionController.usuario.id;
+    int? userId = sesionController.usuario?.id;
+    //int userId = sesionController.usuario.id;
     //print(userId);
 
     complaints.value = auxlist.where((queja) => queja.usuarioId == userId).toList();

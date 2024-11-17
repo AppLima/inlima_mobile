@@ -62,16 +62,14 @@ class CustomDropdownField extends StatelessWidget {
         ),
         child: DropdownButtonHideUnderline(
           child: DropdownButton<Distrito>(
-            value: selectedValue, // Esto debe ser de tipo Distrito
+            value: items.contains(selectedValue) ? selectedValue : null, // Validación
             hint: Text("Selecciona tu distrito"),
             items: items
                 .map((distrito) => DropdownMenuItem<Distrito>(
-                      value:
-                          distrito, // Asegúrate de que el valor sea el objeto Distrito completo
-                      child: Text(
-                          distrito.name), // Mostrar el nombre del distrito
+                      value: distrito, // Asegúrate de que el valor sea el objeto Distrito completo
+                      child: Text(distrito.name), // Mostrar el nombre del distrito
                     ))
-                .toList(), // Convierte a una lista de DropdownMenuItem<Distrito>
+                .toList(),
             onChanged: onChanged, // Aquí llamas a la función de cambio
             icon: Icon(
               Icons.arrow_drop_down,

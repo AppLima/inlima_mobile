@@ -66,7 +66,7 @@ class SurveyDescription extends StatelessWidget {
                 ),
                 const SizedBox(height: 24),
                 // Pregunta y botones de acuerdo/desacuerdo
-                if (sesion.usuario.rolId == 2) ...[
+                if (sesion.usuario?.rolId == 2) ...[
                   const Text(
                     '¿Está de acuerdo con que se realice el proyecto?',
                     style: TextStyle(

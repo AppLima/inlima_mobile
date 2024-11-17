@@ -49,7 +49,7 @@ Widget build(BuildContext context) {
     appBar: null,
     body: _buildBody(context),
     floatingActionButton: Obx(() {
-      if (sesion.usuario.rolId == 1) {
+      if (sesion.usuario?.rolId == 1) {
         return FloatingActionButton(
           onPressed: () {
             Navigator.pushNamed(context, '/survey_creation');
