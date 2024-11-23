@@ -50,7 +50,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final SesionController sesionController = Get.find<SesionController>();
-    int rol = sesionController.usuario.rolId;
+    int? rol = sesionController.usuario?.rolId;
     
     final isAdmin = rol == 1;
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;

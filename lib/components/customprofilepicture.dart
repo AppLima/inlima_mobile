@@ -18,7 +18,8 @@ class CustomProfilePicture extends StatefulWidget {
   _CustomProfilePictureState createState() => _CustomProfilePictureState();
 }
 
-class _CustomProfilePictureState extends State<CustomProfilePicture> with SingleTickerProviderStateMixin {
+class _CustomProfilePictureState extends State<CustomProfilePicture>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
 
@@ -95,6 +96,7 @@ class _CustomProfilePictureState extends State<CustomProfilePicture> with Single
                 onPressed: widget.onCameraPressed,
                 mini: true,
                 backgroundColor: Colors.white,
+                heroTag: 'cameraButton', // Asignar un heroTag único
                 child: Icon(Icons.camera_alt, color: Colors.black),
               ),
               const SizedBox(width: 20),
@@ -103,6 +105,7 @@ class _CustomProfilePictureState extends State<CustomProfilePicture> with Single
                 onPressed: widget.onGalleryPressed,
                 mini: true,
                 backgroundColor: Colors.white,
+                heroTag: 'galleryButton', // Asignar un heroTag único
                 child: Icon(Icons.upload, color: Colors.black),
               ),
             ],

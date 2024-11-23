@@ -3,6 +3,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:inlima_mobile/models/distrito.dart';
+import 'package:inlima_mobile/services/ciudadano_service.dart';
 import 'package:inlima_mobile/services/distrito_service.dart';
 import 'package:inlima_mobile/_global_controllers/sesion_controller.dart';
 import 'package:inlima_mobile/components/advise_card.dart';
@@ -19,7 +20,7 @@ class PerfilController extends GetxController {
 
   final DistritoService distritoService = DistritoService();
   var selectedDistrito = Rxn<Distrito>(); // Distrito seleccionado
-  var selectedSexo = ''.obs; // Sexo seleccionado
+  var selectedGenero = 0.obs; // Género seleccionado como entero reactivo
 
   List<Distrito> distritos = [];
   final SesionController sesionController = Get.put(SesionController());
@@ -29,6 +30,7 @@ class PerfilController extends GetxController {
     super.onInit();
     resetPerfilData();
     fetchDistritos(); // Cargar los distritos al iniciar
+    autoRellenarCampos(); // Autocompletar datos del perfil
   }
 
   @override
@@ -39,39 +41,43 @@ class PerfilController extends GetxController {
 
   // Método para autocompletar campos desde el usuario actual
   void autoRellenarCampos() async {
+    // Cargar usuario y ciudadano desde el controlador de sesión
     final usuario = sesionController.usuario;
     final ciudadano = sesionController.ciudadano;
 
     if (usuario != null) {
       emailController.text = usuario.email;
-      passwordController.text = usuario.password;
+      passwordController.text = usuario.password; 
       nombreController.text = usuario.nombre;
-      apellidoPaternoController.text = usuario.apellidoPaterno;
-      apellidoMaternoController.text = usuario.apellidoMaterno;
+      apellidoPaternoController.text = usuario.apellido.split(' ')[0];
+      apellidoMaternoController.text = usuario.apellido.split(' ').length > 1
+          ? usuario.apellido.split(' ')[1]
+          : '';
+      selectedGenero.value = usuario.genderId ?? 0; // Asignar el género
 
       if (ciudadano != null) {
         dniController.text = ciudadano.dni;
       }
 
+      // Cargar distritos
       if (distritos.isEmpty) {
         await fetchDistritos();
       }
 
-      if (distritos.isNotEmpty) {
-        selectedDistrito.value = distritos.firstWhere(
-          (distrito) => distrito.id == usuario.distritoId,
-          orElse: () => distritos.first,
+      if (ciudadano != null && distritos.isNotEmpty) {
+        final distritoEncontrado = distritos.firstWhere(
+          (distrito) => distrito.id == ciudadano.districtId,
+          orElse: () => Distrito(
+              id: 0,
+              name:
+                  'No encontrado'), // Devuelve un distrito genérico si no encuentra.
         );
-      }
 
-      // Asegúrate de que el sexo tenga un valor válido
-      if (usuario.sexo != null &&
-          (usuario.sexo == "masculino" || usuario.sexo == "femenino")) {
-        selectedSexo.value = usuario.sexo!;
-      } else {
-        // Asigna un valor predeterminado si no está definido o es incorrecto
-        selectedSexo.value = "masculino";
+        selectedDistrito.value =
+            distritoEncontrado.id != 0 ? distritoEncontrado : null;
       }
+    } else {
+      print("No hay usuario en sesión");
     }
   }
 
@@ -88,8 +94,9 @@ class PerfilController extends GetxController {
     selectedDistrito.value = distrito;
   }
 
-  void onSexoChanged(String? sexo) {
-    selectedSexo.value = sexo ?? '';
+  // Método para cambiar el género
+  void onGeneroChanged(int generoId) {
+    selectedGenero.value = generoId;
   }
 
   // Método para seleccionar imagen desde la cámara o galería
@@ -108,13 +115,41 @@ class PerfilController extends GetxController {
     imageFile.value = image;
   }
 
-  void updateProfile(BuildContext context) {
-    // Mostrar el mensaje de éxito
-    Advise(
-      content: 'Perfil actualizado correctamente',
-      route: null, // No redirigimos automáticamente desde aquí
-      previousPage: false,
-    ).show(context);
+  void updateProfile(BuildContext context) async {
+    // Crear el mapa con los datos actualizados
+    final CiudadanoService ciudadanoService = CiudadanoService();
+    final data = {
+      "user_id": sesionController.usuario!.id, // ID del usuario
+      "email": emailController.text.trim(),
+      "password": passwordController.text.isNotEmpty
+          ? passwordController.text.trim()
+          : null,
+      "first_name": nombreController.text.trim(),
+      "last_name":
+          '${apellidoPaternoController.text.trim()} ${apellidoMaternoController.text.trim()}',
+      "gender_id": selectedGenero.value,
+      "dni": dniController.text.trim(),
+      "phone_number": sesionController.ciudadano?.phoneNumber ?? '',
+      "district": selectedDistrito.value?.id ?? 0,
+    };
+
+    try {
+      // Llamar al método del servicio
+      final response = await ciudadanoService.updateCiudadanoYUsuario(data);
+
+      if (response['success'] == true) {
+        Advise(
+          content: 'Perfil actualizado correctamente',
+          route: null,
+          previousPage: false,
+        ).show(context);
+      } else {
+        _showError(
+              context, response['message']);
+      }
+    } catch (e) {
+      _showError(context, "Error al registrar usuario: $e");
+    }
   }
 
   void resetPerfilData() {
@@ -127,11 +162,20 @@ class PerfilController extends GetxController {
     dniController.clear();
     distritoController.clear();
     selectedDistrito.value = null;
-    selectedSexo.value = '';
+    selectedGenero.value = 0;
   }
 
   // Método para abrir la cámara
   void openCamera() {
     seleccionarImagen(true);
+  }
+  void _showError(BuildContext context, String message) {
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(message)));
+  }
+
+  void _showSuccess(BuildContext context, String message) {
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(message)));
   }
 }

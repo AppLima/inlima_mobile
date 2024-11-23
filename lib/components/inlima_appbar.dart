@@ -21,7 +21,7 @@ class InLimaAppBar extends StatelessWidget implements PreferredSizeWidget {
 
     final SesionController sesionController = Get.find<SesionController>();
 
-    bool isAdmin = sesionController.usuario.rolId == 1;
+    bool isAdmin = sesionController.usuario?.rolId == 1;
 
     return AppBar(
       backgroundColor: AppColors.primaryColorInlima,

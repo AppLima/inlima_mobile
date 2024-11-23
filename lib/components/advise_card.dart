@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:inlima_mobile/_global_controllers/sesion_controller.dart';
 
 class Advise {
   final String content;
@@ -12,6 +14,7 @@ class Advise {
   });
 
   void show(BuildContext context) {
+    final SesionController sesionController = Get.put(SesionController());  
     showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
@@ -48,7 +51,7 @@ class Advise {
                 borderRadius: BorderRadius.circular(8), // Bordes redondeados para el botón
               ),
             ),
-            onPressed: () {
+            onPressed: () async{
               Navigator.pop(context, 'Aceptar'); // Cierra el diálogo
               
               // Redirigimos solo después de cerrar el diálogo
@@ -56,6 +59,7 @@ class Advise {
                 Navigator.pushNamed(context, route!); // Redirige si hay una ruta
               } else {
                 // Si no hay ruta, redirigimos a '/login/pagina_principal'
+                await sesionController.borrarToken();
                 Navigator.pushReplacementNamed(context, '/login/pagina_principal');
               }
 

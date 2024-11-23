@@ -10,8 +10,8 @@ import 'package:inlima_mobile/services/distrito_service.dart'; // Importa el ser
 
 class InicioController {
   ValueNotifier<bool> isLogin = ValueNotifier(true);
-  ValueNotifier<String> selectedSexo =
-      ValueNotifier(''); // Para manejar el sexo seleccionado
+  ValueNotifier<int> selectedSexoId =
+      ValueNotifier(0); // Maneja el ID del sexo (0 por defecto)
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -32,6 +32,10 @@ class InicioController {
   List<Distrito> distritos = []; // Lista de distritos
   Distrito? selectedDistrito; // Distrito seleccionado por nombre
 
+
+  InicioController({required bool isRegister})
+      : isLogin = ValueNotifier(!isRegister);
+      
   String getWelcomeText() {
     return isLogin.value ? 'Bienvenido a inLima' : 'Regístrate en inLima';
   }
@@ -46,6 +50,8 @@ class InicioController {
       distritos = await distritoService.fetchAll();
       if (distritos.isEmpty) {
         print("No se encontraron distritos");
+      } else {
+        print("Distritos cargados: $distritos");
       }
       selectedDistrito = null; // Inicializamos selectedDistrito como null
     } catch (e) {
@@ -60,7 +66,7 @@ class InicioController {
     if (distrito != null) {
       selectedDistrito = distrito;
       print(
-          "Distrito seleccionado: ${selectedDistrito!.id} - ${selectedDistrito!.nombre}");
+          "Distrito seleccionado: ${selectedDistrito!.id} - ${selectedDistrito!.name}");
     } else {
       print("Distrito no seleccionado");
       _showError(
@@ -70,27 +76,34 @@ class InicioController {
 
   Future<void> login(BuildContext context) async {
     try {
-      // Verifica si los campos están vacíos
       if (_areFieldsEmpty([emailController, passwordController])) {
         _showError(context, "Correo y contraseña son obligatorios");
         return;
       }
 
-      // Busca el usuario por correo
-      Usuario usuarioEncontrado =
-          await usuarioService.findByEmail(emailController.text);
+      final response = await usuarioService.iniciarSesion(
+        emailController.text,
+        passwordController.text,
+      );
 
-      // Si el usuario se encuentra, procede a verificar la contraseña (ejemplo básico)
-      if (usuarioEncontrado != null &&
-          usuarioEncontrado.password == passwordController.text) {
-        // Actualiza el controlador de sesión con el usuario logueado
-        sesion.iniciarSesion(usuarioEncontrado);
-        _showSuccess(context, "Inicio de sesión exitoso");
-        
-        Navigator.of(context).pushReplacementNamed('/home');
-        
+      if (response?.status == 200) {
+        final body = response!.body;
+        if (body['success'] == true) {
+          print("Respuesta completa del servidor: ${body['data']}");
+
+          // Guardar el token en el SesionController
+          final token = body['token'];
+          await sesion.guardarToken(token); // Guardar el token de autenticación
+
+          _showSuccess(context, body['message'] ?? "Inicio de sesión exitoso");
+          Navigator.of(context)
+              .pushReplacementNamed('/home'); // Navegar al Home
+        } else {
+          _showError(
+              context, body['message'] ?? "Correo o contraseña incorrectos");
+        }
       } else {
-        _showError(context, "Correo o contraseña incorrectos");
+        _showError(context, response?.body ?? "Error al iniciar sesión");
       }
     } catch (e) {
       _showError(context, "Error al iniciar sesión: $e");
@@ -107,130 +120,49 @@ class InicioController {
 
   Future<void> register(BuildContext context) async {
     try {
-      if (!_validateFields(context)) return;
-
-      // Verificar que el distrito haya sido seleccionado
       if (selectedDistrito == null) {
         _showError(context, "Por favor selecciona un distrito válido");
         return;
       }
-
-      // Verificar que el sexo haya sido seleccionado
-      if (selectedSexo.value.isEmpty) {
+      if (selectedSexoId.value == 0) {
         _showError(context, "Por favor selecciona un sexo");
         return;
       }
 
-      // Validar email y DNI usando servicios
-      if (await usuarioService.isEmailAlreadyRegistered(emailController.text)) {
-        _showError(context, "El correo ya está registrado");
-        return;
+      final data = {
+        "email": emailController.text,
+        "password": passwordController.text,
+        "first_name": nombresController.text,
+        "last_name":
+            "${apellidoPaternoController.text} ${apellidoMaternoController.text}",
+        "dni": dniController.text,
+        "phone_number": telefonoController.text,
+        "district": selectedDistrito?.id ?? 0,
+        "gender_id": selectedSexoId.value, // Convertir sexo a ID
+      };
+
+      final response = await usuarioService.registerUser(data);
+
+      if (response?.status == 200) {
+        // Verificar si el backend indicó éxito
+        if (response?.body['success'] == true) {
+          _showSuccess(
+              context, response?.body['message']); // Mostrar mensaje de éxito
+          limpiarCampos(); // Limpiar campos después del registro
+          Navigator.of(context)
+              .pushReplacementNamed('/login/inicio'); // Navegar al login
+        } else {
+          // Mostrar el mensaje de error del backend
+          _showError(context, response?.body['message'] ?? "Error desconocido");
+        }
+      } else {
+        // Mostrar mensaje de error en caso de fallo
+        _showError(context, response?.body ?? "Error al registrar usuario");
       }
-
-      if (await ciudadanoService.isDniAlreadyRegistered(dniController.text)) {
-        _showError(context, "El DNI ya está registrado");
-        return;
-      }
-
-      print(
-          "Distrito seleccionado para registro: ${selectedDistrito?.id} - ${selectedDistrito?.nombre}");
-
-      // Crear usuario y ciudadano, incluyendo el distrito_id y sexo seleccionado
-      final usuario = Usuario(
-        idUsuario: await usuarioService.getNewId(),
-        email: emailController.text,
-        password: passwordController.text,
-        nombre: nombresController.text,
-        apellidoPaterno: apellidoPaternoController.text,
-        apellidoMaterno: apellidoMaternoController.text,
-        rolId: 2,
-        sexo: selectedSexo.value, // Guardamos el sexo seleccionado
-        distritoId: selectedDistrito!
-            .id, // Aseguramos que el distrito_id se asigna correctamente
-      );
-
-      final ciudadano = Ciudadano(
-        id: await ciudadanoService.getNewId(),
-        dni: dniController.text,
-        numero: telefonoController.text,
-        usuarioId: usuario.idUsuario,
-      );
-
-      // Guardar el usuario y ciudadano en sus respectivos servicios
-      await usuarioService.addUsuario(usuario);
-      await ciudadanoService.addCiudadano(ciudadano);
-
-      _showSuccess(context, "Registro exitoso");
-
-      // Limpiar los campos después del registro
-      limpiarCampos();
-      isLogin.value = true;
-
-      // Obtener y mostrar todos los usuarios
-      List<Usuario> usuarios = await usuarioService.fetchAll();
-      List<Ciudadano> ciudadanos = await ciudadanoService.fetchAll();
-
-      print("Usuarios registrados:");
-      for (var user in usuarios) {
-        print(user
-            .toJson()); // Aquí asumo que tienes un método toJson() o puedes personalizar cómo mostrar los datos
-      }
-
-      print("Ciudadanos registrados:");
-      for (var citizen in ciudadanos) {
-        print(
-            citizen.toJson()); // Aquí también puedes personalizar la impresión
-      }
-      Navigator.of(context).pushReplacementNamed('/login/inicio');
     } catch (e) {
+      // Manejar errores de conexión u otros problemas
       _showError(context, "Error al registrar usuario: $e");
     }
-  }
-
-  bool _validateFields(BuildContext context) {
-    final emailPattern =
-        RegExp(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$");
-    final phonePattern = RegExp(r"^9[0-9]{8}$");
-    final dniPattern = RegExp(r"^[0-9]{8}$");
-    final passwordPattern =
-        RegExp(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$");
-
-    if (_areFieldsEmpty([
-      nombresController,
-      apellidoPaternoController,
-      apellidoMaternoController,
-      dniController,
-      emailController,
-      passwordController,
-      telefonoController
-    ])) {
-      _showError(context, "Todos los campos son obligatorios");
-      return false;
-    }
-
-    if (!emailPattern.hasMatch(emailController.text)) {
-      _showError(context, "Correo electrónico no válido");
-      return false;
-    }
-
-    if (!phonePattern.hasMatch(telefonoController.text)) {
-      _showError(context,
-          "El número de teléfono debe tener 9 dígitos y comenzar con 9");
-      return false;
-    }
-
-    if (!dniPattern.hasMatch(dniController.text)) {
-      _showError(context, "El DNI debe tener 8 dígitos");
-      return false;
-    }
-
-    if (!passwordPattern.hasMatch(passwordController.text)) {
-      _showError(context,
-          "La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula y un número. No se permiten otros caracteres especiales");
-      return false;
-    }
-
-    return true;
   }
 
   bool _areFieldsEmpty(List<TextEditingController> controllers) {
@@ -250,7 +182,7 @@ class InicioController {
       controller.clear();
     }
     selectedDistrito = null; // Limpiar el distrito seleccionado también
-    selectedSexo.value = ''; // Limpiar el sexo seleccionado
+    selectedSexoId.value == 0; // Limpiar el sexo seleccionado
   }
 
   void _showError(BuildContext context, String message) {

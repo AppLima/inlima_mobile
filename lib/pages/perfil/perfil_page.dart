@@ -126,17 +126,21 @@ class _PerfilPageState extends State<PerfilPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text("Sexo:"),
-                      RadioListTile<String>(
+                      RadioListTile<int>(
                         title: const Text("Masculino"),
-                        value: "masculino",
-                        groupValue: perfilController.selectedSexo.value,
-                        onChanged: perfilController.onSexoChanged,
+                        value: 1, // Género masculino
+                        groupValue: perfilController.selectedGenero.value,
+                        onChanged: (value) {
+                          perfilController.onGeneroChanged(value!);
+                        },
                       ),
-                      RadioListTile<String>(
+                      RadioListTile<int>(
                         title: const Text("Femenino"),
-                        value: "femenino",
-                        groupValue: perfilController.selectedSexo.value,
-                        onChanged: perfilController.onSexoChanged,
+                        value: 2, // Género femenino
+                        groupValue: perfilController.selectedGenero.value,
+                        onChanged: (value) {
+                          perfilController.onGeneroChanged(value!);
+                        },
                       ),
                     ],
                   );
@@ -166,7 +170,7 @@ class _PerfilPageState extends State<PerfilPage> {
                 backgroundColor: AppColors.secondaryColorInlima,
                 textColor: Colors.white,
                 borderRadius: BorderRadius.circular(30),
-                height: 50.0,
+                height: 50.0, //test
               ),
             ),
           ],

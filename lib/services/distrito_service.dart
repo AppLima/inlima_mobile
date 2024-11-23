@@ -1,20 +1,41 @@
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:inlima_mobile/configs/constants.dart';
 import 'package:inlima_mobile/models/distrito.dart';
+import '../models/service_http_response.dart';
+import 'package:http/http.dart' as http;
 
 class DistritoService {
   // Método para obtener todos los distritos desde un archivo JSON
+  final String baseUrl = '${BASE_URL}';
   Future<List<Distrito>> fetchAll() async {
-    try {
-      final String response = await rootBundle.loadString("assets/json/distritos.json");
-      final List<dynamic> data = jsonDecode(response);
+    final url = Uri.parse('${baseUrl}district');
 
-      return data.map((map) => Distrito.fromMap(map as Map<String, dynamic>)).toList();
+    try {
+      final response = await http.get(url, headers: {
+        'Content-Type': 'application/json',
+      });
+
+      if (response.statusCode == 200) {
+        final body = jsonDecode(response.body);
+
+        if (body['success'] == true) {
+          // Mapear los datos a una lista de objetos Distrito
+          return (body['data'] as List)
+              .map((map) =>
+                  Distrito.fromMap(map)) // Cambiar de `fromJson` a `fromMap`
+              .toList();
+        } else {
+          throw Exception(body['message']);
+        }
+      } else {
+        throw Exception("Error al cargar distritos: ${response.statusCode}");
+      }
     } catch (e) {
-      print("Error cargando distritos: $e");
-      return [];
+      throw Exception("Error al cargar distritos: $e");
     }
   }
+
 
   // Método para buscar el ID del distrito por el nombre
   Future<Distrito?> getDistritoByName(String nombre) async {
@@ -22,7 +43,7 @@ class DistritoService {
 
     try {
       // Buscar el distrito por el nombre
-      return distritos.firstWhere((distrito) => distrito.nombre == nombre);
+      return distritos.firstWhere((distrito) => distrito.name == nombre);
     } catch (e) {
       print("Distrito con el nombre $nombre no encontrado");
       return null; // Si no se encuentra el distrito, retornamos null
