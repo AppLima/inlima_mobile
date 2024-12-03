@@ -2,9 +2,10 @@ import 'package:get/get.dart';
 import '../../models/queja.dart';
 import '../../services/queja_service.dart';
 import '../../_global_controllers/sesion_controller.dart';
+import '../../apis/complaint_api.dart';
 
 class HistoricController extends GetxController {
-  QuejaService quejaService = QuejaService();
+  ComplaintApi quejaService = ComplaintApi();
   var auxlist = <Queja>[].obs;
   var complaints = <Queja>[].obs;
   var isLoading = true.obs;
@@ -18,13 +19,17 @@ class HistoricController extends GetxController {
   }
 
   void listComplaints() async {
-    auxlist.value = await quejaService.fetchAll();
-
-    int? userId = sesionController.usuario?.id;
-    //int userId = sesionController.usuario.id;
-    //print(userId);
-
-    complaints.value = auxlist.where((queja) => queja.usuarioId == userId).toList();
+    try {
+      final response = await quejaService.getUserComplaints();
+      print(response);
+      if (response != null){
+        complaints.value = response;
+      }else{
+        print("Error al obtener las quejas");
+      }
+    } catch(e){
+      print("Error al hacer algo xd");
+    }
 
     if (complaints.isEmpty) {
       isLoading(false);

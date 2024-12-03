@@ -8,12 +8,8 @@ class ServiceHttpResponse {
     return {'status': status, 'body': body};
   }
 
-  //factory ServiceHttpResponse.fromMap(Map<String, dynamic> map) {
-    //return ServiceHttpResponse(status: map['status'], body: map['data']);
-  //}
-
   factory ServiceHttpResponse.fromMap(Map<String, dynamic> map) {
-    return ServiceHttpResponse(status: map['status'], body: map['data']);
+    return ServiceHttpResponse(status: map['status'], body: map['body']);
   }
 
   @override

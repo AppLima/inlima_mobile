@@ -3,12 +3,15 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../components/advise_card.dart';
+import '../../apis/complaint_api.dart';
 
 class DescriptionController extends GetxController {
   final FirebaseStorage _storage = FirebaseStorage.instance;
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController locationController = TextEditingController();
   final TextEditingController districtController = TextEditingController();
+  String subject = '';
+  final complaintApi = ComplaintApi();
   
   RxList<File> selectedImages = <File>[].obs;
   Rx<String?> descriptionError = Rx<String?>(null);
@@ -43,8 +46,28 @@ class DescriptionController extends GetxController {
       final description = descriptionController.text.trim();
       final location = locationController.text.trim();
       final district = districtController.text.trim();
+
+      final data = {
+        "description": description,
+        "location_description": location,
+        "latitude": -12.04318,
+        "longitude": -77.02824,
+        "district": 1,
+        "subject": 1,
+        "photos": downloadUrls
+      };
+
+      try {
+        final response = await complaintApi.addComplaint(data);
+        print("Holaaaaa");
+        print(response);
+      } catch (e) {
+        print("Error: $e");
+      }
       
       printDetails(description, location, district, downloadUrls);
+
+
       
       adviseContent.value = "Queja enviada con éxito";
 

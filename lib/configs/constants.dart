@@ -1,1 +1,1 @@
-const BASE_URL = 'http://10.0.2.2:4567/';
+const BASE_URL = 'https://4e6ebd2d-e774-43d7-87a2-bf0224200543-00-3mrcoxfmw0xme.janeway.replit.dev/';

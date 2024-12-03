@@ -54,6 +54,11 @@ class DescriptionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String? asunto = ModalRoute.of(context)?.settings.arguments as String?;
+    if (asunto is String) {
+      _controller.subject = asunto;
+    } else {
+      _controller.subject = '';
+    }
 
     return Scaffold(
       key: _scaffoldKey,
@@ -159,7 +164,7 @@ class DescriptionPage extends StatelessWidget {
                   const SizedBox(height: 16),
                   ElevatedButton.icon(
                     onPressed: () async {
-                      await _controller.enviar(context); // Pasa el context al enviar
+                      await _controller.enviar(context);
                     },
                     icon: const Icon(Icons.send, color: Colors.black),
                     label: const Text(

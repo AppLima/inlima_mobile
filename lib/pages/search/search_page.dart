@@ -57,7 +57,7 @@ class SearchPage extends StatelessWidget {
                     return Obx(() {
                       final isSelected = searchController.selectedComplaints.contains(queja);
                       return SearchButtonCard(
-                        svgPath: queja.urlSvg,
+                        svgPath: queja.logo,
                         topic: queja.name,
                         isSelected: isSelected,
                         onTap: () {

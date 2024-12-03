@@ -3,24 +3,24 @@ import 'dart:convert';
 class Asunto {
   int id;
   String name;
-  String urlSvg;
+  String logo;
 
   Asunto({
     required this.id,
     required this.name,
-    required this.urlSvg,
+    required this.logo,
   });
 
   @override
   String toString() {
-    return 'Asunto{id: $id, name: $name, urlSvg: $urlSvg}';
+    return 'Asunto{id: $id, name: $name, logo: $logo}';
   }
 
   String toJSON(){
     final map = {
       'id': id,
       'name': name,
-      'url_svg': urlSvg,
+      'logo': logo,
     };
     return jsonEncode(map);
   }
@@ -29,7 +29,7 @@ class Asunto {
     return Asunto(
       id: map['id'] ?? 0,
       name: map['name'] ?? '',
-      urlSvg: map['url_svg'] ?? '',
+      logo: map['logo'] ?? '',
     );
   }
 }

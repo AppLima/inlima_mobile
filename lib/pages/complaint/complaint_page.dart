@@ -40,7 +40,7 @@ class ComplaintPage extends StatelessWidget {
                   itemBuilder: (context, index) {
                     final queja = complaintController.complaints[index];
                     return ComplaintButtonCard(
-                      svgPath: queja.urlSvg,
+                      svgPath: queja.logo,
                       topic: queja.name,
                     );
                   },
