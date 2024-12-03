@@ -132,9 +132,6 @@ class ComplaintApi {
 
       if (response.statusCode == 200) {
         final List<dynamic> data = jsonDecode(response.body)['data'];
-        print("Holaaaaaaaaaaaaaaaaaa");
-        print (data);
-        print("Holaaaaaaaaaaaaaaaaaa");
         quejas = data
           .map((map) => Queja.fromMap(map as Map<String, dynamic>))
           .toList();

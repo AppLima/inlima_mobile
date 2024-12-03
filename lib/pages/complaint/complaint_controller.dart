@@ -26,6 +26,6 @@ class ComplaintController extends GetxController {
       }
     } catch (e) {
       print("Error en fetchSubjects: $e");
-  }
+    }
   }
 }
