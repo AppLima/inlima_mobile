@@ -40,17 +40,23 @@ class Sondeo {
   }
 
   // Método fromMap
-  factory Sondeo.fromMap(Map<String, dynamic> map) {
-    return Sondeo(
-      idSondeo: map['id_sondeo'] as int,
-      titulo: map['titulo'] as String,
-      descripcion: map['descripcion'] as String,
-      foto: map['foto'] as String,
-      cantidad: map['cantidad'] as int,
-      fechaInicio: DateTime.parse(map['fecha_inicio'] as String),
-      fechaFin: DateTime.parse(map['fecha_fin'] as String),
-      disponible: map['disponible'] as bool,
-      idMunicipalidad: map['id_municipalidad'] as int,
-    );
-  }
+factory Sondeo.fromMap(Map<String, dynamic> map) {
+  return Sondeo(
+    idSondeo: map['id'] ?? 0, // Cambia 'id_sondeo' a 'id'
+    titulo: map['title'] ?? '', // Cambia 'titulo' a 'title'
+    descripcion: map['description'] ?? '', // Cambia 'descripcion' a 'description'
+    foto: map['photo'] ?? '', // Cambia 'foto' a 'photo'
+    cantidad: map['total_results'] ?? 0, // Cambia 'cantidad' a 'total_results'
+    fechaInicio: map['start_date'] != null
+        ? DateTime.parse(map['start_date'])
+        : DateTime.now(), // Cambia 'fecha_inicio' a 'start_date'
+    fechaFin: map['end_date'] != null
+        ? DateTime.parse(map['end_date'])
+        : DateTime.now(), // Cambia 'fecha_fin' a 'end_date'
+    disponible: map['status'] ?? false, // Cambia 'disponible' a 'status'
+    idMunicipalidad: map['district_id'] ?? 0, // Cambia 'id_municipalidad' a 'district_id'
+  );
+}
+
+
 }

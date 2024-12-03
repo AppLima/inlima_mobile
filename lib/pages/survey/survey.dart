@@ -14,6 +14,7 @@ class SurveyPage extends StatelessWidget {
   Widget _buildBody(BuildContext context) {
     return Obx(() {
       if (control.sondeosDisponibles.isEmpty) {
+        print("NO HAY SONDEOS");
         return const Center(child: CircularProgressIndicator());
       }
 
