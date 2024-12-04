@@ -1,15 +1,16 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 
 class CustomProfilePicture extends StatefulWidget {
   final File? imageFile;
+  final String? imageUrl; // Nueva propiedad para la URL de la imagen
   final VoidCallback onCameraPressed;
   final VoidCallback onGalleryPressed;
 
   const CustomProfilePicture({
     Key? key,
     this.imageFile,
+    this.imageUrl, // Inicializamos la URL de la imagen
     required this.onCameraPressed,
     required this.onGalleryPressed,
   }) : super(key: key);
@@ -68,19 +69,44 @@ class _CustomProfilePictureState extends State<CustomProfilePicture>
                       ],
                     ),
                     child: ClipOval(
-                      child: widget.imageFile != null
-                          ? Image.file(
-                              widget.imageFile!,
+                      child: widget.imageUrl != null
+                          ? Image.network(
+                              widget.imageUrl!,
                               fit: BoxFit.cover,
                               width: 150,
                               height: 150,
+                              loadingBuilder:
+                                  (context, child, loadingProgress) {
+                                if (loadingProgress == null) {
+                                  return child; // Si la imagen se carga, la mostramos
+                                } else {
+                                  return Center(
+                                    child:
+                                        CircularProgressIndicator(), // Mientras carga, mostrar indicador
+                                  );
+                                }
+                              },
+                              errorBuilder: (context, error, stackTrace) {
+                                return Center(
+                                  child: Icon(Icons.error,
+                                      color: Colors
+                                          .red), // Si hay error, mostrar un icono
+                                );
+                              },
                             )
-                          : Image.asset(
-                              'assets/userDefault.png', // Imagen por defecto
-                              fit: BoxFit.contain,
-                              width: 150,
-                              height: 150,
-                            ),
+                          : widget.imageFile != null
+                              ? Image.file(
+                                  widget.imageFile!,
+                                  fit: BoxFit.cover,
+                                  width: 150,
+                                  height: 150,
+                                )
+                              : Image.asset(
+                                  'assets/userDefault.png', // Imagen por defecto
+                                  fit: BoxFit.contain,
+                                  width: 150,
+                                  height: 150,
+                                ),
                     ),
                   ),
                 );

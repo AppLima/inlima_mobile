@@ -62,6 +62,8 @@ class _PerfilPageState extends State<PerfilPage> {
             Obx(() {
               return CustomProfilePicture(
                 imageFile: perfilController.imageFile.value,
+                imageUrl: perfilController
+                    .imageUrl.value, // Aquí pasas la URL de la imagen
                 onCameraPressed: () {
                   perfilController.seleccionarImagen(true);
                 },
