@@ -21,7 +21,7 @@ class InicioController {
   final apellidoMaternoController = TextEditingController();
   final telefonoController = TextEditingController();
   final distritoController = TextEditingController();
-
+  RxBool isPasswordHidden = true.obs;
   final UsuarioService usuarioService = UsuarioService();
   final CiudadanoService ciudadanoService = CiudadanoService();
   final DistritoService distritoService =
@@ -43,7 +43,9 @@ class InicioController {
   String getButtonText() {
     return isLogin.value ? 'Entrar' : 'Registrarse';
   }
-
+  void togglePasswordVisibility() {
+    isPasswordHidden.value = !isPasswordHidden.value;
+  }
   // Método para cargar distritos desde el servicio
   Future<void> fetchDistritos(BuildContext context) async {
     try {

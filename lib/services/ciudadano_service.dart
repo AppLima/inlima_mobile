@@ -42,7 +42,7 @@ class CiudadanoService {
   Future<Map<String, dynamic>> updateCiudadanoYUsuario(
       Map<String, dynamic> data) async {
     final url =
-        Uri.parse('$baseUrl/citizen/update'); // Endpoint para actualizar
+        Uri.parse('${baseUrl}citizen/update'); // Endpoint para actualizar
     print(data);
     try {
       // Realizar la solicitud PUT
@@ -54,7 +54,7 @@ class CiudadanoService {
         },
         body: jsonEncode(data), // Convertir datos a JSON
       );
-
+      print(response);
       // Manejar la respuesta
       if (response.statusCode == 200) {
         final body = jsonDecode(response.body);

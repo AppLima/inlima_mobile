@@ -6,6 +6,7 @@ import 'package:inlima_mobile/components/tab.dart';
 import 'package:inlima_mobile/configs/colors.dart';
 import 'package:inlima_mobile/models/distrito.dart';
 import 'inicio_controller.dart';
+import 'package:get/get.dart';
 
 class InicioPage extends StatefulWidget {
   final bool isRegister;
@@ -137,13 +138,21 @@ class _InicioPageState extends State<InicioPage> {
                               controller: control.emailController,
                               icon: Icons.email_outlined, // Ícono agregado
                             ),
-                            CustomTextField(
-                              labelText: 'Contraseña',
-                              inputType: TextInputType.text,
-                              controller: control.passwordController,
-                              obscureText: true,
-                              icon: Icons.lock_outline, // Ícono agregado
-                            ),
+                            Obx(() {
+                              return CustomTextField(
+                                labelText: 'Contraseña',
+                                controller: control.passwordController,
+                                inputType: TextInputType.text,
+                                obscureText: control.isPasswordHidden.value,
+                                icon: Icons.lock_outline,
+                                isPassword:
+                                    true, // Indica que es un campo de contraseña
+                                toggleVisibility: () {
+                                  control
+                                      .togglePasswordVisibility(); // Alternar visibilidad
+                                },
+                              );
+                            }),
                           ],
                         ),
                         const SizedBox(height: 20),

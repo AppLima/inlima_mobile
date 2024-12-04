@@ -17,7 +17,7 @@ class PerfilController extends GetxController {
   var apellidoMaternoController = TextEditingController();
   var dniController = TextEditingController();
   var distritoController = TextEditingController();
-
+  RxBool isPasswordHidden = true.obs;
   final DistritoService distritoService = DistritoService();
   var selectedDistrito = Rxn<Distrito>(); // Distrito seleccionado
   var selectedGenero = 0.obs; // Género seleccionado como entero reactivo
@@ -39,6 +39,10 @@ class PerfilController extends GetxController {
     super.dispose();
   }
 
+
+  void togglePasswordVisibility() {
+    isPasswordHidden.value = !isPasswordHidden.value;
+  }
   // Método para autocompletar campos desde el usuario actual
   void autoRellenarCampos() async {
     // Cargar usuario y ciudadano desde el controlador de sesión
