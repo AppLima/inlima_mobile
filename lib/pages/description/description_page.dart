@@ -102,14 +102,24 @@ class DescriptionPage extends StatelessWidget {
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 8),
-                  Obx(() => TextFormField(
-                    controller: _controller.locationController,
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                      labelText: 'Escribe la ubicación aquí...',
-                      errorText: _controller.locationError.value,
-                    ),
-                  )),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Obx(() => TextFormField(
+                          controller: _controller.locationController,
+                          decoration: InputDecoration(
+                            border: const OutlineInputBorder(),
+                            labelText: 'Escribe la ubicación aquí...',
+                            errorText: _controller.locationError.value,
+                          ),
+                        )),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.my_location, color: Colors.blue),
+                        onPressed: () => _controller.getCurrentLocation(),
+                      ),
+                    ],
+                  ),
                   const SizedBox(height: 16),
                   const Text(
                     'Distrito del incidente:',

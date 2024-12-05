@@ -75,10 +75,19 @@ class ComplaintApi {
   }
 
   // Obtener quejas filtradas
-  Future<ServiceHttpResponse?> getFilteredComplaints(Map<String, dynamic> filters) async {
+  Future<List<Queja>?> getFilteredComplaints(List<int> asuntos) async {
     final url = Uri.parse('${baseUrl}complaints/filtered');
+    List<Queja> quejas = [];
     try {
       final token = sesionController.token;
+      print("XDDDDD");
+      print(asuntos);
+
+      final filters = {
+        'subject_ids': asuntos,
+        'district_ids': [1],
+      };
+
       final response = await http.post(
         url,
         headers: {
@@ -89,7 +98,11 @@ class ComplaintApi {
       );
 
       if (response.statusCode == 200) {
-        return ServiceHttpResponse.fromMap(jsonDecode(response.body));
+        final List<dynamic> data = jsonDecode(response.body)['data'];
+        quejas = data
+          .map((map) => Queja.fromMap(map as Map<String, dynamic>))
+          .toList();
+        return quejas;
       } else {
         throw Exception("Error al obtener quejas filtradas: ${response.body}");
       }
@@ -123,19 +136,16 @@ class ComplaintApi {
     List<Queja> quejas = [];
     try {
       final token = sesionController.token;
-      print(token);
       final response = await http.get(url, headers: {
         'Content-Type': 'application/json',
         'Authorization': token,
       });
-      print(response.body);
 
       if (response.statusCode == 200) {
         final List<dynamic> data = jsonDecode(response.body)['data'];
         quejas = data
           .map((map) => Queja.fromMap(map as Map<String, dynamic>))
           .toList();
-        print(quejas);
         return quejas;
       } else {
         throw Exception("Error al obtener quejas del usuario: ${response.body}");

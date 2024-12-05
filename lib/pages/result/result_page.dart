@@ -11,20 +11,20 @@ class ResultPage extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   Widget _buildBody(BuildContext context) {
-    final ResultController control = Get.put(
-      ResultController(
-        ModalRoute.of(context)?.settings.arguments as List<String>
-      )
-    );
+    final arguments = ModalRoute.of(context)?.settings.arguments as List<Map<String, dynamic>>? ?? [];
 
+    final ResultController control = Get.put(ResultController(arguments));
     control.resetData();
-    control.topics.assignAll(ModalRoute.of(context)?.settings.arguments as List<String>);
+    control.topics.assignAll(arguments.map((e) => e['id'] as int).toList());
+    control.topicNames.assignAll(arguments.map((e) => e['name'] as String).toList());
     control.listComplaints();
-
+    
     return SafeArea(
       child: Obx(() {
-        if (control.complaints.isEmpty) {
+        if (control.isLoading.value) {
           return const Center(child: CircularProgressIndicator());
+        } else if (control.complaints.isEmpty) {
+          return const Center(child: Text('No hay quejas disponibles.'));
         } else {
           return ListView.builder(
             itemCount: control.complaints.length,
@@ -34,9 +34,15 @@ class ResultPage extends StatelessWidget {
               return ResultCard(
                 id: queja.id,
                 asunto: queja.asunto,
+                descripcion: queja.descripcion,
                 fecha: queja.fecha,
                 ubicacion: queja.ubicacion,
                 estado: queja.estado,
+                fotos: queja.fotos,
+                latitud: queja.latitud,
+                longitud: queja.longitud,
+                distrito: queja.distrito,
+                usuarioId: queja.usuarioId,
               );
             },
           );

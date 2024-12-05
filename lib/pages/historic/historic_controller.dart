@@ -24,6 +24,8 @@ class HistoricController extends GetxController {
       print(response);
       if (response != null){
         complaints.value = response;
+        print("Holaaa<aaassaa");
+        print(complaints.value);
       }else{
         print("Error al obtener las quejas");
       }

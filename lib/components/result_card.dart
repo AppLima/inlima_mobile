@@ -3,17 +3,29 @@ import 'package:flutter/material.dart';
 class ResultCard extends StatelessWidget {
   final int id;
   final String asunto;
+  final String descripcion;
   final String fecha;
   final String ubicacion;
   final String estado;
+  final List<String> fotos;
+  final double latitud; // Nuevo parámetro
+  final double longitud; // Nuevo parámetro
+  final String distrito; // Nuevo parámetro
+  final int usuarioId; // Nuevo parámetro
 
   const ResultCard({
     Key? key,
     required this.id,
     required this.asunto,
+    required this.descripcion,
     required this.fecha,
     required this.ubicacion,
     required this.estado,
+    required this.fotos,
+    required this.latitud, // Nuevo parámetro requerido
+    required this.longitud, // Nuevo parámetro requerido
+    required this.distrito, // Nuevo parámetro requerido
+    required this.usuarioId, // Nuevo parámetro requerido
   }) : super(key: key);
 
   @override
@@ -26,6 +38,16 @@ class ResultCard extends StatelessWidget {
           '/detail',
           arguments: {
             'id': id,
+            'asunto': asunto,
+            'descripcion': descripcion,
+            'fecha': fecha,
+            'ubicacion': ubicacion,
+            'estado': estado,
+            'fotos': fotos,
+            'latitud': latitud, // Agregado al mapa de argumentos
+            'longitud': longitud, // Agregado al mapa de argumentos
+            'distrito': distrito, // Agregado al mapa de argumentos
+            'usuarioId': usuarioId, // Agregado al mapa de argumentos
           },
         );
       },

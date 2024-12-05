@@ -72,7 +72,8 @@ class SearchPage extends StatelessWidget {
               Center(
                 child: ElevatedButton(
                   onPressed: () {
-                    final selectedTopics = searchController.selectedComplaints.map((queja) => queja.name).toList();
+                    final selectedTopics = searchController.selectedComplaints
+                    .map((queja) => {'id': queja.id, 'name': queja.name}).toList();
                     Navigator.pushNamed(
                         context,
                         '/result',

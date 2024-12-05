@@ -3,25 +3,40 @@ import 'package:get/get.dart';
 import 'detail_controller.dart';
 import '../../components/inlima_appbar.dart';
 import '../../components/lateral_bar.dart';
+import '../../models/queja.dart';
 
 class DetailPage extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
-    final Map<String, int> arguments = ModalRoute.of(context)?.settings.arguments as Map<String, int>? ?? {'id': 0};
+    // Recibe todos los datos como argumentos
+    final Map<String, dynamic> arguments = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>? ?? {};
 
-    final int complaintId = arguments['id'] ?? 0;
+    final DetailController control = Get.put(DetailController());
+    // Asigna la queja desde los argumentos directamente al controlador
+    control.updateComplaint(
+      Queja(
+        id: arguments['id'],
+        asunto: arguments['asunto'],
+        descripcion: arguments['descripcion'],
+        ubicacion: arguments['ubicacion'],
+        latitud: arguments['latitud'],
+        longitud: arguments['longitud'],
+        distrito: arguments['distrito'],
+        fecha: arguments['fecha'],
+        estado: arguments['estado'],
+        usuarioId: arguments['usuarioId'],
+        fotos: List<String>.from(arguments['fotos']),
+      ),
+    );
 
-    final DetailController control = Get.put(DetailController(complaintId));
-    control.updateComplaint(complaintId);
-    
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      key: _scaffoldKey, // Pass the key to Scaffold
+      key: _scaffoldKey,
       appBar: InLimaAppBar(
         isInPerfil: false,
-        scaffoldKey: _scaffoldKey, // Pass the scaffoldKey to the InLimaAppBar
+        scaffoldKey: _scaffoldKey,
       ),
       drawer: LateralBar(),
       body: _buildBody(context, control),
@@ -33,7 +48,7 @@ class DetailPage extends StatelessWidget {
       child: Obx(() {
         final queja = control.complaint.value;
 
-        if (queja == null || queja.id == 0) {
+        if (queja == null) {
           return const Center(child: Text('No se encontró la queja.'));
         }
 
@@ -64,7 +79,6 @@ class DetailPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              
               Text(
                 queja.descripcion,
                 textAlign: TextAlign.justify,
@@ -73,7 +87,6 @@ class DetailPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 8),
-
               Row(
                 children: [
                   const Icon(Icons.location_pin, color: Colors.grey),
@@ -96,17 +109,14 @@ class DetailPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-
               // Muestra las fotos de la queja
               _buildPhotosCarousel(context, queja.fotos),
-
               const SizedBox(height: 16),
               const Text(
                 'Cambiar estado:',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
-
               _buildStateSelector(control, queja.estado),
             ],
           ),
@@ -145,7 +155,7 @@ class DetailPage extends StatelessWidget {
       context: context,
       builder: (context) {
         return Dialog(
-          backgroundColor: Colors.black.withOpacity(0.8), // Fondo opaco
+          backgroundColor: Colors.black.withOpacity(0.8),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [

@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:geolocator/geolocator.dart'; // Importa geolocator
 import '../../components/advise_card.dart';
 import '../../apis/complaint_api.dart';
 
@@ -12,7 +13,7 @@ class DescriptionController extends GetxController {
   final TextEditingController districtController = TextEditingController();
   String subject = '';
   final complaintApi = ComplaintApi();
-  
+
   RxList<File> selectedImages = <File>[].obs;
   Rx<String?> descriptionError = Rx<String?>(null);
   Rx<String?> locationError = Rx<String?>(null);
@@ -24,14 +25,47 @@ class DescriptionController extends GetxController {
     final description = descriptionController.text.trim();
     final location = locationController.text.trim();
     final district = districtController.text.trim();
-    
+
     descriptionError.value = description.isEmpty ? 'Por favor ingrese una descripción.' : null;
     locationError.value = location.isEmpty ? 'Por favor ingrese una ubicación.' : null;
     districtError.value = district.isEmpty ? 'Por favor ingrese el distrito.' : null;
 
     return descriptionError.value == null &&
-           locationError.value == null &&
-           districtError.value == null;
+        locationError.value == null &&
+        districtError.value == null;
+  }
+
+  Future<void> getCurrentLocation() async {
+    try {
+      isLoading.value = true;
+      bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!serviceEnabled) {
+        throw 'El servicio de ubicación está desactivado.';
+      }
+
+      LocationPermission permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.denied) {
+          throw 'El permiso de ubicación fue denegado.';
+        }
+      }
+
+      if (permission == LocationPermission.deniedForever) {
+        throw 'El permiso de ubicación está permanentemente denegado.';
+      }
+
+      Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high,
+      );
+
+      // Actualiza el controlador con la ubicación actual
+      locationController.text = '${position.latitude}, ${position.longitude}';
+    } catch (e) {
+      locationError.value = 'Error al obtener la ubicación: $e';
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   Future<void> enviar(BuildContext context) async {
@@ -64,11 +98,9 @@ class DescriptionController extends GetxController {
       } catch (e) {
         print("Error: $e");
       }
-      
+
       printDetails(description, location, district, downloadUrls);
 
-
-      
       adviseContent.value = "Queja enviada con éxito";
 
       // Mostrar el pop-up de aviso
@@ -97,11 +129,11 @@ class DescriptionController extends GetxController {
     try {
       final String fileName = imageFile.path.split("/").last;
       Reference ref = _storage.ref().child('quejas/$fileName');
-      
+
       SettableMetadata metadata = SettableMetadata(
         contentType: 'image/jpeg',
       );
-      
+
       UploadTask uploadTask = ref.putFile(imageFile, metadata);
       TaskSnapshot snapshot = await uploadTask;
       String downloadUrl = await snapshot.ref.getDownloadURL();
@@ -116,7 +148,7 @@ class DescriptionController extends GetxController {
     descriptionController.clear();
     locationController.clear();
     districtController.clear();
-    
+
     descriptionError.value = null;
     locationError.value = null;
     districtError.value = null;
@@ -140,4 +172,3 @@ class DescriptionController extends GetxController {
     }
   }
 }
-
