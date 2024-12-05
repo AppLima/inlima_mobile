@@ -45,21 +45,29 @@ class SurveyPage extends StatelessWidget {
   }
 
 @override
-Widget build(BuildContext context) {
-  return Scaffold(
-    appBar: null,
-    body: _buildBody(context),
-    floatingActionButton: Obx(() {
-      if (sesion.usuario?.rolId == 1) {
-        return FloatingActionButton(
-          onPressed: () {
-            Navigator.pushNamed(context, '/survey_creation');
-          },
-          child: const Icon(Icons.add),
-        );
-      }
-      return const SizedBox.shrink();
-    }),
-  );
-}
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Sondeos'),
+      ),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          // Llama al método para recargar los datos
+         control.fetchSondeos();
+        },
+        child: _buildBody(context),
+      ),
+      floatingActionButton: Obx(() {
+        if (sesion.usuario?.rolId == 1) {
+          return FloatingActionButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/survey_creation');
+            },
+            child: const Icon(Icons.add),
+          );
+        }
+        return const SizedBox.shrink();
+      }),
+    );
+  }
 }

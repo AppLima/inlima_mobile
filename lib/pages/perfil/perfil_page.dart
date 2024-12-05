@@ -62,6 +62,8 @@ class _PerfilPageState extends State<PerfilPage> {
             Obx(() {
               return CustomProfilePicture(
                 imageFile: perfilController.imageFile.value,
+                imageUrl: perfilController
+                    .imageUrl.value, // Aquí pasas la URL de la imagen
                 onCameraPressed: () {
                   perfilController.seleccionarImagen(true);
                 },
@@ -81,13 +83,19 @@ class _PerfilPageState extends State<PerfilPage> {
                   controller: perfilController.emailController,
                   icon: Icons.email_outlined,
                 ),
-                CustomTextField(
-                  labelText: 'Contraseña',
-                  inputType: TextInputType.text,
-                  controller: perfilController.passwordController,
-                  obscureText: true,
-                  icon: Icons.lock_outline,
-                ),
+                Obx(() {
+                  return CustomTextField(
+                    labelText: 'Contraseña',
+                    controller: perfilController.passwordController,
+                    inputType: TextInputType.text,
+                    obscureText: perfilController.isPasswordHidden.value,
+                    icon: Icons.lock_outline,
+                    isPassword: true, // Activar funcionalidad de visibilidad
+                    toggleVisibility: () {
+                      perfilController.togglePasswordVisibility();
+                    },
+                  );
+                }),
                 CustomTextField(
                   labelText: 'DNI',
                   inputType: TextInputType.number,
@@ -145,18 +153,6 @@ class _PerfilPageState extends State<PerfilPage> {
                     ],
                   );
                 }),
-                Center(
-                  child: GestureDetector(
-                    onTap: perfilController.openCamera,
-                    child: Image.asset(
-                      Theme.of(context).brightness == Brightness.dark
-                          ? 'assets/faceid_white.png'
-                          : 'assets/faceid_negro.png',
-                      height: 80,
-                      width: 80,
-                    ),
-                  ),
-                ),
               ],
             ),
             const SizedBox(height: 30),

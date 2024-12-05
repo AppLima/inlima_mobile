@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,10 +18,12 @@ class PerfilController extends GetxController {
   var apellidoMaternoController = TextEditingController();
   var dniController = TextEditingController();
   var distritoController = TextEditingController();
-
+  RxBool isPasswordHidden = true.obs;
   final DistritoService distritoService = DistritoService();
   var selectedDistrito = Rxn<Distrito>(); // Distrito seleccionado
   var selectedGenero = 0.obs; // Género seleccionado como entero reactivo
+  var imageUrl = Rxn<String>(); // URL de la imagen guardada en Firebase
+  final FirebaseStorage _storage = FirebaseStorage.instance;
 
   List<Distrito> distritos = [];
   final SesionController sesionController = Get.put(SesionController());
@@ -39,7 +42,10 @@ class PerfilController extends GetxController {
     super.dispose();
   }
 
-  // Método para autocompletar campos desde el usuario actual
+  void togglePasswordVisibility() {
+    isPasswordHidden.value = !isPasswordHidden.value;
+  }
+
   void autoRellenarCampos() async {
     // Cargar usuario y ciudadano desde el controlador de sesión
     final usuario = sesionController.usuario;
@@ -47,13 +53,19 @@ class PerfilController extends GetxController {
 
     if (usuario != null) {
       emailController.text = usuario.email;
-      passwordController.text = usuario.password; 
+      passwordController.text = usuario.password;
       nombreController.text = usuario.nombre;
       apellidoPaternoController.text = usuario.apellido.split(' ')[0];
       apellidoMaternoController.text = usuario.apellido.split(' ').length > 1
           ? usuario.apellido.split(' ')[1]
           : '';
       selectedGenero.value = usuario.genderId ?? 0; // Asignar el género
+
+      // Aquí asignamos la foto del usuario al imageFile
+      if (usuario.foto != null) {
+        imageFile.value = File(
+            usuario.foto!); // Asumimos que la foto es una URL o ruta válida
+      }
 
       if (ciudadano != null) {
         dniController.text = ciudadano.dni;
@@ -111,44 +123,86 @@ class PerfilController extends GetxController {
     }
   }
 
-  Future<void> _procesarImagen(File image) async {
-    imageFile.value = image;
+  Future<String?> uploadImage(File imageFile) async {
+    try {
+      final String fileName = imageFile.path.split("/").last;
+      Reference ref = _storage.ref().child('quejas/$fileName');
+
+      SettableMetadata metadata = SettableMetadata(
+        contentType: 'image/jpeg',
+      );
+
+      UploadTask uploadTask = ref.putFile(imageFile, metadata);
+      TaskSnapshot snapshot = await uploadTask;
+      String downloadUrl = await snapshot.ref.getDownloadURL();
+      return downloadUrl;
+    } catch (e) {
+      print("Error al subir imagen: $e");
+      return null;
+    }
   }
 
-  void updateProfile(BuildContext context) async {
-    // Crear el mapa con los datos actualizados
-    final CiudadanoService ciudadanoService = CiudadanoService();
-    final data = {
-      "user_id": sesionController.usuario!.id, // ID del usuario
-      "email": emailController.text.trim(),
-      "password": passwordController.text.isNotEmpty
-          ? passwordController.text.trim()
-          : null,
-      "first_name": nombreController.text.trim(),
-      "last_name":
-          '${apellidoPaternoController.text.trim()} ${apellidoMaternoController.text.trim()}',
-      "gender_id": selectedGenero.value,
-      "dni": dniController.text.trim(),
-      "phone_number": sesionController.ciudadano?.phoneNumber ?? '',
-      "district": selectedDistrito.value?.id ?? 0,
-    };
+  Future<void> _procesarImagen(File image) async {
+    imageFile.value = image;
+    print("Imagen procesada: ${imageFile.value?.path}");
+  }
+
+  void _showLoadingDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible:
+          false, // No permite cerrar el diálogo tocando fuera de él
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Row(
+            children: const [
+              CircularProgressIndicator(),
+              SizedBox(width: 20),
+              Text("Actualizando perfil..."),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> updateProfile(BuildContext context) async {
+    final ciudadanoService = CiudadanoService();
+    String? downloadUrl;
+
+    _showLoadingDialog(context);
 
     try {
-      // Llamar al método del servicio
+      if (imageFile.value != null) {
+        downloadUrl = await uploadImage(imageFile.value!);
+      }
+
+      final data = {
+        "user_id": sesionController.usuario!.id,
+        "email": emailController.text.trim(),
+        "password": passwordController.text.isNotEmpty
+            ? passwordController.text.trim()
+            : null,
+        "first_name": nombreController.text.trim(),
+        "last_name":
+            '${apellidoPaternoController.text.trim()} ${apellidoMaternoController.text.trim()}',
+        "gender_id": selectedGenero.value,
+        "dni": dniController.text.trim(),
+        "photo": downloadUrl ?? sesionController.usuario?.foto,
+      };
+
       final response = await ciudadanoService.updateCiudadanoYUsuario(data);
+      Navigator.of(context).pop();
 
       if (response['success'] == true) {
-        Advise(
-          content: 'Perfil actualizado correctamente',
-          route: null,
-          previousPage: false,
-        ).show(context);
+        Advise(content: 'Perfil actualizado correctamente', route: null)
+            .show(context);
       } else {
-        _showError(
-              context, response['message']);
+        _showError(context, response['message']);
       }
     } catch (e) {
-      _showError(context, "Error al registrar usuario: $e");
+      Navigator.of(context).pop();
+      _showError(context, "Error al actualizar perfil: $e");
     }
   }
 
@@ -169,6 +223,7 @@ class PerfilController extends GetxController {
   void openCamera() {
     seleccionarImagen(true);
   }
+
   void _showError(BuildContext context, String message) {
     ScaffoldMessenger.of(context)
         .showSnackBar(SnackBar(content: Text(message)));

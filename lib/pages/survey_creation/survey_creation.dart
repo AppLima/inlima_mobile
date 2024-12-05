@@ -95,7 +95,8 @@ class SurveyCreationPage extends StatelessWidget {
                     control.enviarSondeo(context, () {
                       Advise(
                               content: "Sondeo creado con éxito",
-                              previousPage: true)
+                              previousPage: false,
+                              route: null)
                           .show(context);
                     });
                   },

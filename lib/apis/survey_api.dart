@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:inlima_mobile/models/service_http_response.dart';
 import 'package:inlima_mobile/_global_controllers/sesion_controller.dart';
@@ -6,7 +7,7 @@ import 'package:inlima_mobile/configs/constants.dart';
 
 class SurveyService {
   final String baseUrl = '${BASE_URL}';
-  final SesionController sesionController = SesionController();
+  final SesionController sesionController = Get.find<SesionController>();
 
   // Crear una encuesta
   Future<ServiceHttpResponse?> createSurvey(Map<String, dynamic> data) async {
@@ -21,7 +22,7 @@ class SurveyService {
         url,
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer $token',
+          'Authorization': token,
         },
         body: jsonEncode(data),
       );
