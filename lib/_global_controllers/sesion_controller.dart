@@ -78,6 +78,8 @@ class SesionController extends GetxController {
       if (roleId == 2) {
         final response =
             await ciudadanoService.fetchUsuarioYCiudadano(userId, token);
+        print(response?['usuario']);
+        print(response?['ciudadano']);
         if (response != null) {
           _usuario.value = response['usuario'];
           _ciudadano.value = response['ciudadano'];

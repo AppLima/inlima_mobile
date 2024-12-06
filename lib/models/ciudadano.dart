@@ -32,4 +32,9 @@ class Ciudadano {
       'district_id': districtId,
     };
   }
+
+  @override
+  String toString() {
+    return 'Ciudadano(id: $id, dni: $dni, phoneNumber: $phoneNumber, userId: $userId, districtId: $districtId)';
+  }
 }

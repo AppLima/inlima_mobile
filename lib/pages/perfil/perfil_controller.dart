@@ -48,6 +48,7 @@ class PerfilController extends GetxController {
 
   void autoRellenarCampos() async {
     final usuario = sesionController.usuario;
+    final ciudadano = sesionController.ciudadano;
 
     if (usuario != null) {
       emailController.text = usuario.email;
@@ -58,7 +59,26 @@ class PerfilController extends GetxController {
           ? usuario.apellido.split(' ')[1]
           : '';
       selectedGenero.value = usuario.genderId ?? 0;
+      if (ciudadano != null) {
+        dniController.text = ciudadano.dni;
+      }
 
+      // Cargar distritos
+      if (distritos.isEmpty) {
+        await fetchDistritos();
+      }
+      if (ciudadano != null && distritos.isNotEmpty) {
+        final distritoEncontrado = distritos.firstWhere(
+          (distrito) => distrito.id == ciudadano.districtId,
+          orElse: () => Distrito(
+              id: 0,
+              name:
+                  'No encontrado'), // Devuelve un distrito genérico si no encuentra.
+        );
+
+        selectedDistrito.value =
+            distritoEncontrado.id != 0 ? distritoEncontrado : null;
+      }
       // Configurar imagen remota o local
       if (usuario.foto != null && usuario.foto!.isNotEmpty) {
         imageUrl.value = usuario.foto; // URL remota
@@ -168,6 +188,7 @@ class PerfilController extends GetxController {
         "gender_id": selectedGenero.value,
         "dni": dniController.text.trim(),
         "photo": downloadUrl ?? sesionController.usuario?.foto,
+        "district": selectedDistrito.value?.id ?? 0
       };
 
       final response = await ciudadanoService.updateCiudadanoYUsuario(data);
