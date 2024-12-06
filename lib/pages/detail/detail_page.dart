@@ -108,13 +108,13 @@ class DetailPage extends StatelessWidget {
                 height: 300, // Altura del mapa
                 child: GoogleMap(
                   initialCameraPosition: CameraPosition(
-                    target: LatLng(-23.555555, -46.62932),
+                    target: LatLng(queja.latitud, queja.latitud),
                     zoom: 14.0,
                   ),
                   markers: {
                     Marker(
                       markerId: MarkerId('complaint_location'),
-                      position: LatLng(-23.555555, -46.62932),
+                      position: LatLng(queja.latitud, queja.latitud),
                       infoWindow: InfoWindow(
                         title: 'Ubicación',
                         snippet: queja.ubicacion,
