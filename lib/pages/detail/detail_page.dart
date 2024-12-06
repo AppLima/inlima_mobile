@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'detail_controller.dart';
 import '../../components/inlima_appbar.dart';
 import '../../components/lateral_bar.dart';
@@ -102,7 +103,27 @@ class DetailPage extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 16),
+              SizedBox(
+                height: 300, // Altura del mapa
+                child: GoogleMap(
+                  initialCameraPosition: CameraPosition(
+                    target: LatLng(-23.555555, -46.62932),
+                    zoom: 14.0,
+                  ),
+                  markers: {
+                    Marker(
+                      markerId: MarkerId('complaint_location'),
+                      position: LatLng(-23.555555, -46.62932),
+                      infoWindow: InfoWindow(
+                        title: 'Ubicación',
+                        snippet: queja.ubicacion,
+                      ),
+                    ),
+                  },
+                ),
+              ),
+              const SizedBox(height: 16),
               Text(
                 'Fecha: ${queja.fecha}',
                 style: const TextStyle(
