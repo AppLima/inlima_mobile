@@ -48,6 +48,7 @@ class SurveyService {
       });
 
       if (response.statusCode == 200) {
+        print("===========GET SONDEOS: ${ServiceHttpResponse.fromMap(jsonDecode(response.body))}");
         return ServiceHttpResponse.fromMap(jsonDecode(response.body));
       } else {
         throw Exception(

@@ -25,6 +25,7 @@ dependencies:
   flutter_secure_storage: ^8.0.0
   jwt_decoder: ^2.0.1
   geolocator: ^10.1.0
+  fl_chart: ^0.69.2
 
 
 dev_dependencies:

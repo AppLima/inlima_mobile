@@ -10,6 +10,8 @@ class Sondeo {
   DateTime fechaFin;
   bool disponible;
   int idMunicipalidad;
+  int positives; // Nuevo campo
+  int negatives; // Nuevo campo
 
   Sondeo({
     required this.idSondeo,
@@ -21,6 +23,8 @@ class Sondeo {
     required this.fechaFin,
     required this.disponible,
     required this.idMunicipalidad,
+    required this.positives, // Nuevo campo
+    required this.negatives, // Nuevo campo
   });
 
   // Método toJSON
@@ -35,28 +39,30 @@ class Sondeo {
       'fecha_fin': fechaFin.toIso8601String(),
       'disponible': disponible,
       'id_municipalidad': idMunicipalidad,
+      'positives': positives, // Nuevo campo
+      'negatives': negatives, // Nuevo campo
     };
     return jsonEncode(map);
   }
 
   // Método fromMap
-factory Sondeo.fromMap(Map<String, dynamic> map) {
-  return Sondeo(
-    idSondeo: map['id'] ?? 0, // Cambia 'id_sondeo' a 'id'
-    titulo: map['title'] ?? '', // Cambia 'titulo' a 'title'
-    descripcion: map['description'] ?? '', // Cambia 'descripcion' a 'description'
-    foto: map['photo'] ?? '', // Cambia 'foto' a 'photo'
-    cantidad: map['total_results'] ?? 0, // Cambia 'cantidad' a 'total_results'
-    fechaInicio: map['start_date'] != null
-        ? DateTime.parse(map['start_date'])
-        : DateTime.now(), // Cambia 'fecha_inicio' a 'start_date'
-    fechaFin: map['end_date'] != null
-        ? DateTime.parse(map['end_date'])
-        : DateTime.now(), // Cambia 'fecha_fin' a 'end_date'
-    disponible: map['status'] ?? false, // Cambia 'disponible' a 'status'
-    idMunicipalidad: map['district_id'] ?? 0, // Cambia 'id_municipalidad' a 'district_id'
-  );
-}
-
-
+  factory Sondeo.fromMap(Map<String, dynamic> map) {
+    return Sondeo(
+      idSondeo: map['id'] ?? 0, // Cambia 'id_sondeo' a 'id'
+      titulo: map['title'] ?? '', // Cambia 'titulo' a 'title'
+      descripcion: map['description'] ?? '', // Cambia 'descripcion' a 'description'
+      foto: map['photo'] ?? '', // Cambia 'foto' a 'photo'
+      cantidad: map['total_results'] ?? 0, // Cambia 'cantidad' a 'total_results'
+      fechaInicio: map['start_date'] != null
+          ? DateTime.parse(map['start_date'])
+          : DateTime.now(), // Cambia 'fecha_inicio' a 'start_date'
+      fechaFin: map['end_date'] != null
+          ? DateTime.parse(map['end_date'])
+          : DateTime.now(), // Cambia 'fecha_fin' a 'end_date'
+      disponible: map['status'] ?? false, // Cambia 'disponible' a 'status'
+      idMunicipalidad: map['district_id'] ?? 0, // Cambia 'id_municipalidad' a 'district_id'
+      positives: map['positives'] ?? 0, // Nuevo campo
+      negatives: map['negatives'] ?? 0, // Nuevo campo
+    );
+  }
 }

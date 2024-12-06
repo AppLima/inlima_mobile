@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:inlima_mobile/_global_controllers/sesion_controller.dart';
 import 'package:inlima_mobile/components/advise_card.dart';
+import 'package:inlima_mobile/models/respuesta.dart';
 import 'package:inlima_mobile/models/sondeo.dart';
 import 'package:inlima_mobile/pages/survey_description/survey_description_controller.dart';
 import 'package:inlima_mobile/components/inlima_appbar.dart';
 import '../../components/lateral_bar.dart';
+import 'package:fl_chart/fl_chart.dart';
 
 class SurveyDescription extends StatelessWidget {
   final SurveyDescriptionController control =
@@ -80,14 +82,26 @@ class SurveyDescription extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       ElevatedButton(
-                        onPressed: () {
-                          // Acción para desacuerdo
+                        onPressed: () async {
+                          // Crear objeto Respuesta para "Desacuerdo"
+                          final respuesta = Respuesta(
+                            idRespuesta: 0,
+                            nombre: "Desacuerdo",
+                            opcion: false,
+                            idCiudadano: sesion.usuario?.id ?? 0,
+                            idSondeo: sondeo.idSondeo,
+                          );
+
+                          // Llamar a enviarRespuesta
+                          await control.enviarRespuesta(respuesta);
+
+                          // Mostrar mensaje de éxito
                           Advise(
-                                  content:
-                                      "Se envió el sondeo correctamente. Gracias por tu contribución!",
-                                  previousPage: true)
-                              .show(context);
-                          print('Desacuerdo');
+                            content:
+                                "Se envió el sondeo correctamente. Gracias por tu contribución!",
+                            previousPage: false,
+                          ).show(context);
+                          print('Desacuerdo enviado');
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.grey,
@@ -100,13 +114,24 @@ class SurveyDescription extends StatelessWidget {
                         ),
                       ),
                       ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
+                          final respuesta = Respuesta(
+                            idRespuesta: 0,
+                            nombre: "De acuerdo",
+                            opcion: true,
+                            idCiudadano: sesion.usuario?.id ?? 0,
+                            idSondeo: sondeo.idSondeo,
+                          );
+
+                          await control.enviarRespuesta(respuesta);
+
                           Advise(
-                                  content:
-                                      "Se envió el sondeo correctamente. Gracias por tu contribución!",
-                                  previousPage: true)
-                              .show(context);
-                          print('De acuerdo');
+                            content:
+                                "Se envió el sondeo correctamente. Gracias por tu contribución!",
+                            previousPage: false,
+                            route: "/home",
+                          ).show(context);
+                          print('De acuerdo enviado');
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blue,
@@ -121,7 +146,55 @@ class SurveyDescription extends StatelessWidget {
                     ],
                   ),
                 ] else ...[
-                  //TODO: ESTADISTICA ADMIN
+                  const Text(
+                    'Estadísticas del sondeo',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    'Total respuestas: ${sondeo.positives + sondeo.negatives}',
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  // PieChart
+                  SizedBox(
+                    height: 200, // Altura del gráfico
+                    child: PieChart(
+                      PieChartData(
+                        sectionsSpace: 4,
+                        centerSpaceRadius: 40,
+                        sections: [
+                          PieChartSectionData(
+                            value: sondeo.positives.toDouble(),
+                            title: "Sí (${sondeo.positives})",
+                            color: Colors.green,
+                            radius: 60,
+                            titleStyle: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                          PieChartSectionData(
+                            value: sondeo.negatives.toDouble(),
+                            title: "No (${sondeo.negatives})",
+                            color: Colors.red,
+                            radius: 60,
+                            titleStyle: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ]
               ],
             ),
@@ -135,12 +208,12 @@ class SurveyDescription extends StatelessWidget {
   Widget build(BuildContext context) {
     final Sondeo sondeo = ModalRoute.of(context)!.settings.arguments as Sondeo;
     return Scaffold(
-      key: _scaffoldKey,
-      appBar: InLimaAppBar(
-        isInPerfil: true,
-        scaffoldKey: _scaffoldKey, 
-      ),
-      drawer: LateralBar(),
-      body: _buildBody(context, sondeo));
+        key: _scaffoldKey,
+        appBar: InLimaAppBar(
+          isInPerfil: true,
+          scaffoldKey: _scaffoldKey,
+        ),
+        drawer: LateralBar(),
+        body: _buildBody(context, sondeo));
   }
 }
