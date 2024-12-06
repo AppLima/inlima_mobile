@@ -47,9 +47,7 @@ class PerfilController extends GetxController {
   }
 
   void autoRellenarCampos() async {
-    // Cargar usuario y ciudadano desde el controlador de sesión
     final usuario = sesionController.usuario;
-    final ciudadano = sesionController.ciudadano;
 
     if (usuario != null) {
       emailController.text = usuario.email;
@@ -59,34 +57,15 @@ class PerfilController extends GetxController {
       apellidoMaternoController.text = usuario.apellido.split(' ').length > 1
           ? usuario.apellido.split(' ')[1]
           : '';
-      selectedGenero.value = usuario.genderId ?? 0; // Asignar el género
+      selectedGenero.value = usuario.genderId ?? 0;
 
-      // Aquí asignamos la foto del usuario al imageFile
-      if (usuario.foto != null) {
-        imageFile.value = File(
-            usuario.foto!); // Asumimos que la foto es una URL o ruta válida
-      }
-
-      if (ciudadano != null) {
-        dniController.text = ciudadano.dni;
-      }
-
-      // Cargar distritos
-      if (distritos.isEmpty) {
-        await fetchDistritos();
-      }
-
-      if (ciudadano != null && distritos.isNotEmpty) {
-        final distritoEncontrado = distritos.firstWhere(
-          (distrito) => distrito.id == ciudadano.districtId,
-          orElse: () => Distrito(
-              id: 0,
-              name:
-                  'No encontrado'), // Devuelve un distrito genérico si no encuentra.
-        );
-
-        selectedDistrito.value =
-            distritoEncontrado.id != 0 ? distritoEncontrado : null;
+      // Configurar imagen remota o local
+      if (usuario.foto != null && usuario.foto!.isNotEmpty) {
+        imageUrl.value = usuario.foto; // URL remota
+        imageFile.value = null; // No hay archivo local
+      } else {
+        imageUrl.value = null; // Sin URL remota
+        imageFile.value = null; // Sin archivo local
       }
     } else {
       print("No hay usuario en sesión");
@@ -126,7 +105,7 @@ class PerfilController extends GetxController {
   Future<String?> uploadImage(File imageFile) async {
     try {
       final String fileName = imageFile.path.split("/").last;
-      Reference ref = _storage.ref().child('quejas/$fileName');
+      Reference ref = _storage.ref().child('usuarios/$fileName');
 
       SettableMetadata metadata = SettableMetadata(
         contentType: 'image/jpeg',

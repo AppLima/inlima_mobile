@@ -2,15 +2,15 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 class CustomProfilePicture extends StatefulWidget {
-  final File? imageFile;
-  final String? imageUrl; // Nueva propiedad para la URL de la imagen
-  final VoidCallback onCameraPressed;
-  final VoidCallback onGalleryPressed;
+  final File? imageFile; // Archivo local de la imagen
+  final String? imageUrl; // URL de la imagen
+  final VoidCallback onCameraPressed; // Acción para la cámara
+  final VoidCallback onGalleryPressed; // Acción para la galería
 
   const CustomProfilePicture({
     Key? key,
     this.imageFile,
-    this.imageUrl, // Inicializamos la URL de la imagen
+    this.imageUrl,
     required this.onCameraPressed,
     required this.onGalleryPressed,
   }) : super(key: key);
@@ -53,6 +53,8 @@ class _CustomProfilePictureState extends State<CustomProfilePicture>
                 return Transform.scale(
                   scale: _animation.value,
                   child: Container(
+                    width: 150,
+                    height: 150,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       gradient: LinearGradient(
@@ -69,44 +71,8 @@ class _CustomProfilePictureState extends State<CustomProfilePicture>
                       ],
                     ),
                     child: ClipOval(
-                      child: widget.imageUrl != null
-                          ? Image.network(
-                              widget.imageUrl!,
-                              fit: BoxFit.cover,
-                              width: 150,
-                              height: 150,
-                              loadingBuilder:
-                                  (context, child, loadingProgress) {
-                                if (loadingProgress == null) {
-                                  return child; // Si la imagen se carga, la mostramos
-                                } else {
-                                  return Center(
-                                    child:
-                                        CircularProgressIndicator(), // Mientras carga, mostrar indicador
-                                  );
-                                }
-                              },
-                              errorBuilder: (context, error, stackTrace) {
-                                return Center(
-                                  child: Icon(Icons.error,
-                                      color: Colors
-                                          .red), // Si hay error, mostrar un icono
-                                );
-                              },
-                            )
-                          : widget.imageFile != null
-                              ? Image.file(
-                                  widget.imageFile!,
-                                  fit: BoxFit.cover,
-                                  width: 150,
-                                  height: 150,
-                                )
-                              : Image.asset(
-                                  'assets/userDefault.png', // Imagen por defecto
-                                  fit: BoxFit.contain,
-                                  width: 150,
-                                  height: 150,
-                                ),
+                      child:
+                          _buildImage(), // Método para decidir qué imagen mostrar
                     ),
                   ),
                 );
@@ -117,27 +83,67 @@ class _CustomProfilePictureState extends State<CustomProfilePicture>
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Botón para seleccionar imagen desde la cámara
               FloatingActionButton(
                 onPressed: widget.onCameraPressed,
                 mini: true,
                 backgroundColor: Colors.white,
-                heroTag: 'cameraButton', // Asignar un heroTag único
-                child: Icon(Icons.camera_alt, color: Colors.black),
+                heroTag: 'cameraButton',
+                child: const Icon(Icons.camera_alt, color: Colors.black),
               ),
               const SizedBox(width: 20),
-              // Botón para seleccionar imagen desde la galería
               FloatingActionButton(
                 onPressed: widget.onGalleryPressed,
                 mini: true,
                 backgroundColor: Colors.white,
-                heroTag: 'galleryButton', // Asignar un heroTag único
-                child: Icon(Icons.upload, color: Colors.black),
+                heroTag: 'galleryButton',
+                child: const Icon(Icons.upload, color: Colors.black),
               ),
             ],
           ),
         ],
       ),
     );
+  }
+
+  Widget _buildImage() {
+    if (widget.imageFile != null) {
+      // Mostrar imagen local
+      return Image.file(
+        widget.imageFile!,
+        fit: BoxFit.cover,
+        width: 150,
+        height: 150,
+      );
+    } else if (widget.imageUrl != null && widget.imageUrl!.isNotEmpty) {
+      // Mostrar imagen remota
+      return Image.network(
+        widget.imageUrl!,
+        fit: BoxFit.cover,
+        width: 150,
+        height: 150,
+        loadingBuilder: (context, child, loadingProgress) {
+          if (loadingProgress == null) return child; // Cuando se carga
+          return const Center(
+              child: CircularProgressIndicator()); // Mientras carga
+        },
+        errorBuilder: (context, error, stackTrace) {
+          // Fallback a imagen predeterminada en caso de error
+          return Image.asset(
+            'assets/userDefault.png',
+            fit: BoxFit.cover,
+            width: 150,
+            height: 150,
+          );
+        },
+      );
+    } else {
+      // Mostrar imagen predeterminada
+      return Image.asset(
+        'assets/userDefault.png',
+        fit: BoxFit.cover,
+        width: 150,
+        height: 150,
+      );
+    }
   }
 }
