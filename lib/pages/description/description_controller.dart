@@ -87,11 +87,22 @@ class DescriptionController extends GetxController {
       final location = locationController.text.trim();
       final district = districtController.text.trim();
 
+      Position? position;
+      try {
+        position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high,
+        );
+      } catch (e) {
+        locationError.value = 'No se pudo obtener la ubicación actual.';
+        isLoading.value = false;
+        return;
+      }
+
       final data = {
         "description": description,
         "location_description": location,
-        "latitude": -12.04318,
-        "longitude": -77.02824,
+        "latitude": position.latitude, // Usa la latitud obtenida
+        "longitude": position.longitude, // Usa la longitud obtenida
         "district": 1,
         "subject": 1,
         "photos": downloadUrls
