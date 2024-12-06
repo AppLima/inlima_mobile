@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:geolocator/geolocator.dart'; // Importa geolocator
 import '../../components/advise_card.dart';
 import '../../apis/complaint_api.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 
 class DescriptionController extends GetxController {
   final FirebaseStorage _storage = FirebaseStorage.instance;
@@ -13,6 +15,10 @@ class DescriptionController extends GetxController {
   final TextEditingController districtController = TextEditingController();
   String subject = '';
   final complaintApi = ComplaintApi();
+
+  //final locationController = TextEditingController();
+  //RxString locationError = ''.obs;
+
 
   RxList<File> selectedImages = <File>[].obs;
   Rx<String?> descriptionError = Rx<String?>(null);
@@ -141,6 +147,51 @@ class DescriptionController extends GetxController {
     } catch (e) {
       print("Error al subir imagen: $e");
       return null;
+    }
+  }
+
+  Future<void> getCurrentLocationAndAddress() async {
+    try {
+      // Verifica permisos y servicios de ubicación
+      bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!serviceEnabled) {
+        throw 'El servicio de ubicación está desactivado.';
+      }
+
+      LocationPermission permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.denied) {
+          throw 'El permiso de ubicación fue denegado.';
+        }
+      }
+
+      if (permission == LocationPermission.deniedForever) {
+        throw 'El permiso de ubicación está permanentemente denegado.';
+      }
+
+      // Obtén la posición actual
+      Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high,
+      );
+
+      // Obtén la dirección desde las coordenadas
+      List<Placemark> placemarks = await placemarkFromCoordinates(
+        position.latitude,
+        position.longitude,
+      );
+
+      if (placemarks.isNotEmpty) {
+        final Placemark place = placemarks.first;
+
+        // Combina la información de dirección
+        String address = '${place.street}, ${place.locality}, ${place.administrativeArea}, ${place.country}';
+        locationController.text = address;
+      } else {
+        locationError.value = 'No se pudo obtener la dirección.';
+      }
+    } catch (e) {
+      locationError.value = 'Error al obtener la ubicación: $e';
     }
   }
 

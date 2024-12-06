@@ -116,7 +116,9 @@ class DescriptionPage extends StatelessWidget {
                       ),
                       IconButton(
                         icon: const Icon(Icons.my_location, color: Colors.blue),
-                        onPressed: () => _controller.getCurrentLocation(),
+                        onPressed: () async {
+                          await _controller.getCurrentLocationAndAddress();
+                        },
                       ),
                     ],
                   ),
