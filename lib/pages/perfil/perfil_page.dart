@@ -60,10 +60,11 @@ class _PerfilPageState extends State<PerfilPage> {
             ),
             const SizedBox(height: 30),
             Obx(() {
+              print("Archivo local: ${perfilController.imageFile.value}");
+              print("URL remota: ${perfilController.imageUrl.value}");
               return CustomProfilePicture(
                 imageFile: perfilController.imageFile.value,
-                imageUrl: perfilController
-                    .imageUrl.value, // Aquí pasas la URL de la imagen
+                imageUrl: perfilController.imageUrl.value, // Pasa la URL
                 onCameraPressed: () {
                   perfilController.seleccionarImagen(true);
                 },
