@@ -11,7 +11,9 @@ class DetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Recibe todos los datos como argumentos
-    final Map<String, dynamic> arguments = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>? ?? {};
+    final Map<String, dynamic> arguments =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>? ??
+            {};
 
     final DetailController control = Get.put(DetailController());
     // Asigna la queja desde los argumentos directamente al controlador
@@ -117,7 +119,7 @@ class DetailPage extends StatelessWidget {
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
-              _buildStateSelector(control, queja.estado),
+              _buildStateSelector(control),
             ],
           ),
         );
@@ -174,42 +176,58 @@ class DetailPage extends StatelessWidget {
     );
   }
 
-  Widget _buildStateSelector(DetailController control, String currentState) {
-    final estados = ['En proceso', 'Archivado', 'Solucionado'];
+  Widget _buildStateSelector(DetailController control) {
+    final estados = ['En proceso', 'Archivado', 'Finalizado'];
     final colores = {
       'En proceso': Colors.yellow,
       'Archivado': Colors.grey,
-      'Solucionado': Colors.green,
+      'Finalizado': Colors.green,
     };
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: estados.map((estado) {
-        return GestureDetector(
-          onTap: () {
-            control.complaint.update((val) {
-              val?.estado = estado;
-            });
-          },
-          child: Column(
-            children: [
-              Container(
-                width: 50,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: colores[estado],
-                  borderRadius: BorderRadius.circular(8),
-                  border: estado == currentState
-                      ? Border.all(color: Colors.black, width: 3)
-                      : null,
-                ),
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: estados.map((estado) {
+            return GestureDetector(
+              onTap: () {
+                control.updateState(estado); // Actualiza el estado seleccionado
+              },
+              child: Column(
+                children: [
+                  Container(
+                    width: 50,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: colores[estado],
+                      borderRadius: BorderRadius.circular(8),
+                      border: estado == control.complaint.value?.estado
+                          ? Border.all(color: Colors.black, width: 3)
+                          : null,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(estado),
+                ],
               ),
-              const SizedBox(height: 8),
-              Text(estado),
-            ],
-          ),
-        );
-      }).toList(),
+            );
+          }).toList(),
+        ),
+        const SizedBox(height: 16),
+        Obx(() {
+          // Verifica si el estado actual ha cambiado
+          if (control.hasStateChanged()) {
+            return ElevatedButton(
+              onPressed: () {
+                print("Actualizando");
+                control.updateComplaintStatus();
+              },
+              child: const Text('Actualizar estado'),
+            );
+          }
+          return const SizedBox(); // No muestra el botón si no hay cambios
+        }),
+      ],
     );
   }
 }

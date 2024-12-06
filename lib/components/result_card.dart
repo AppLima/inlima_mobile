@@ -75,7 +75,7 @@ class ResultCard extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
-                      color: estado == 'Solucionado'
+                      color: estado == 'Finalizado'
                           ? Colors.green
                           : estado == 'En proceso'
                               ? Colors.yellow

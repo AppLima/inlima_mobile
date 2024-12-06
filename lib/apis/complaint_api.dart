@@ -155,4 +155,46 @@ class ComplaintApi {
       return null;
     }
   }
+
+  Future<bool?> updateComplaintStatus(int complaintId, int newStatus) async {
+  final url = Uri.parse('${baseUrl}complaint/$complaintId/status');
+  print("======= UPDATE STATUS =============");
+  print("url: $url");
+  try {
+    final token = sesionController.token;
+    if (token.isEmpty) {
+      throw Exception('Token no proporcionado');
+    }
+
+    final body = {
+      "new_status": newStatus,
+    };
+
+    final response = await http.put(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token,
+      },
+      body: jsonEncode(body),
+    );
+
+    if (response.statusCode == 200) {
+      final responseData = jsonDecode(response.body);
+      if (responseData['success'] == true) {
+        return true;
+      } else {
+        print("Error en el backend: ${responseData['message']}");
+        return false;
+      }
+    } else {
+      print("Error en la solicitud HTTP: ${response.body}");
+      return false;
+    }
+  } catch (e) {
+    print("Error en updateComplaintStatus: $e");
+    return null;
+  }
+}
+
 }
