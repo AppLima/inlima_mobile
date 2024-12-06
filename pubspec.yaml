@@ -26,6 +26,7 @@ dependencies:
   jwt_decoder: ^2.0.1
   geolocator: ^10.1.0
   fl_chart: ^0.69.2
+  google_maps_flutter: ^2.10.0
 
 
 dev_dependencies:
