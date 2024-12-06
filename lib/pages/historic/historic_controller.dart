@@ -18,7 +18,7 @@ class HistoricController extends GetxController {
     listComplaints();
   }
 
-  void listComplaints() async {
+  Future<void> listComplaints() async {
     print("============= RESPOONSE LIST COMPLAINTS ====================");
     try {
       final response = await quejaService.getUserComplaints();
@@ -31,6 +31,8 @@ class HistoricController extends GetxController {
       }
     } catch (e) {
       print("Error al hacer algo xd");
+    } finally{
+      isLoading(false);
     }
 
     if (complaints.isEmpty) {

@@ -94,15 +94,21 @@ class DetailPage extends StatelessWidget {
                 children: [
                   const Icon(Icons.location_pin, color: Colors.grey),
                   const SizedBox(width: 8),
-                  Text(
-                    queja.ubicacion,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey,
+                  Flexible(
+                    child: Text(
+                      queja.ubicacion,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey,
+                      ),
+                      overflow: TextOverflow
+                          .ellipsis, // Muestra "..." si el texto es muy largo
+                      maxLines: 2, // Limita el texto a 2 líneas
                     ),
                   ),
                 ],
               ),
+
               const SizedBox(height: 16),
               SizedBox(
                 height: 300, // Altura del mapa
