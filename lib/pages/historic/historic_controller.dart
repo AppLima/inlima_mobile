@@ -19,21 +19,22 @@ class HistoricController extends GetxController {
   }
 
   void listComplaints() async {
+    print("============= RESPOONSE LIST COMPLAINTS ====================");
     try {
       final response = await quejaService.getUserComplaints();
       print(response);
-      if (response != null){
+      if (response != null) {
         complaints.value = response;
-        print("Holaaa<aaassaa");
-        print(complaints.value);
-      }else{
+        print("LIST COMPLAINTS ${response}");
+      } else {
         print("Error al obtener las quejas");
       }
-    } catch(e){
+    } catch (e) {
       print("Error al hacer algo xd");
     }
 
     if (complaints.isEmpty) {
+      print("no hay data");
       isLoading(false);
       //print("No complaints found for user $userId");
     }

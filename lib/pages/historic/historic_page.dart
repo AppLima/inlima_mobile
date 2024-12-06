@@ -11,8 +11,15 @@ class HistoricPage extends StatelessWidget {
   Widget _buildBody(BuildContext context) {
     return SafeArea(
       child: Obx(() {
-        if (control.complaints.isEmpty) {
+        if (control.isLoading.value) {
           return const Center(child: CircularProgressIndicator());
+        } else if (!control.isLoading.value && control.complaints.isEmpty) {
+          return const Center(
+            child: Text(
+              "Aún no tienes quejas registradas en el historial",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+            ),
+          );
         } else {
           return ListView.builder(
             itemCount: control.complaints.length,

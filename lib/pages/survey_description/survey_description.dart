@@ -100,6 +100,7 @@ class SurveyDescription extends StatelessWidget {
                             content:
                                 "Se envió el sondeo correctamente. Gracias por tu contribución!",
                             previousPage: false,
+                            route: "/home",
                           ).show(context);
                           print('Desacuerdo enviado');
                         },
